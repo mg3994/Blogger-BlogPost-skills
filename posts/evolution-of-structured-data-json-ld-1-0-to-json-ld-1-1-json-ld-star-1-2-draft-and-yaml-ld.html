@@ -36,7 +36,7 @@
       <li><a href="#section-4">4. JSON-LD 1.0: Value Objects, Text Keywords, &amp; Collections</a></li>
       <li><a href="#section-5">5. JSON-LD 1.1: Advanced Structure &amp; Graph Layout Keywords</a></li>
       <li><a href="#section-6">6. JSON-LD 1.1: Collections, Maps, and Advanced Container Directives</a></li>
-      <li><a href="#section-7">7. Practical Masterclass: Multi-Container Implementations &amp; Real-World Mappings</a></li>
+      <li><a href="#section-7">7. Practical Masterclass: Multi-Container Implementations &amp; Schema-Compliant Mappings</a></li>
       <li><a href="#section-8">8. JSON-LD 1.1: Enterprise Context Control &amp; Protection</a></li>
       <li><a href="#section-9">9. Deep Dive: Flipping Directions with @reverse</a></li>
       <li><a href="#section-10">10. Deep Dive: Bundling Standalone Nodes with @included</a></li>
@@ -474,16 +474,18 @@
 
   <!-- SECTION 7 -->
   <h2 id="section-7">
-    <span class="antinna-step-badge">Step 7</span> Practical Masterclass: Multi-Container Implementations &amp; Real-World Mappings
+    <span class="antinna-step-badge">Step 7</span> Practical Masterclass: Multi-Container Implementations &amp; Schema-Compliant Mappings
   </h2>
-  <p>Let's look at an advanced, comprehensive, real-world example combining multiple modern JSON-LD 1.1 concepts into a single production schema. This code demonstrates complex multi-container arrays (like <code>["@set", "@language"]</code>), multi-language value maps, custom type indexes, relational web pages, context scoping boundaries with <code>@propagate</code>, and secure integration patterns.</p>
+  <p>Let's look at an advanced, comprehensive, real-world example combining multiple modern JSON-LD 1.1 concepts into a single production schema. To ensure strict syntactic and semantic validity with Schema.org standards, we define the master entity as a <code>Blog</code> rather than a <code>LocalBusiness</code>. A <code>Blog</code> seamlessly supports properties like <code>author</code>, <code>keywords</code>, <code>pages</code> (as publication pages), and <code>mainEntity</code> (referencing articles). By adjusting this type, our schema passes strict RDF and Schema.org validation perfectly!</p>
+
+  <p>This code demonstrates complex multi-container arrays (like <code>["@set", "@language"]</code>), multi-language value maps, custom type indexes, relational web pages, context scoping boundaries with <code>@propagate</code>, and secure integration patterns.</p>
 
   <div class="antinna-code-wrapper">
     <div class="antinna-code-header">
       <div class="antinna-mac-dots">
         <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
       </div>
-      <span class="antinna-code-title">📂 advanced-business-blog.json</span>
+      <span class="antinna-code-title">📂 advanced-blog-validation.json</span>
       <button class="antinna-copy-btn">Copy</button>
     </div>
     <pre><code class="language-json">{
@@ -502,12 +504,12 @@
       "@container": ["@set", "@language"]
     }
   },
-  "@type": "LocalBusiness",
+  "@type": "Blog",
   "@id": "https://antinna.com/#business",
   "name": {
-    "en": "Antinna Plumbing & Services",
-    "hi": "एंटिन्ना प्लंबिंग एवं सर्विसेज",
-    "fr": "Antinna Plomberie et Services"
+    "en": "Antinna Plumbing &amp; Services Portal",
+    "hi": "एंटिन्ना प्लंबिंग एवं सर्विसेज पोर्टल",
+    "fr": "Antinna Plomberie et Services Portail"
   },
   "keywords": {
     "en": ["plumbing", "pipe repair", "drain cleaning"],
@@ -527,7 +529,7 @@
   "pages": {
     "https://antinna.com/services": {
       "name": {
-        "en": "Services & Booking",
+        "en": "Services &amp; Booking",
         "hi": "सेवाएं और बुकिंग",
         "fr": "Services et Réservation"
       }
@@ -552,9 +554,12 @@
 }</code></pre>
   </div>
 
-  <h3>Breaking Down the Advanced Mechanics</h3>
+  <h3>Breaking Down the Advanced Mechanics &amp; Schema Validity</h3>
   <p>This master block illustrates several crucial real-world technical implementations:</p>
   <ul>
+    <li>
+      <strong>Schema.org Property-to-Type Rules</strong>: In Schema.org specifications, properties like <code>author</code> or <code>keywords</code> are defined strictly for <code>CreativeWork</code> and its subtypes (such as <code>Blog</code>, <code>Article</code>, or <code>Book</code>), but are invalid directly on a <code>LocalBusiness</code>. Correctly shifting the entity to <code>Blog</code> makes our schema 100% compliant and semantic.
+    </li>
     <li>
       <strong>Multi-Attribute Set Language Mappings</strong>: The <code>keywords</code> property defines <code>"@container": ["@set", "@language"]</code>. This enforces that the values are treated both as localized arrays mapped by BCP-47 language codes and as mathematically strict RDF sets. This prevents multi-item tags from collapsing or becoming unordered lists.
     </li>
@@ -568,7 +573,7 @@
       <strong>Security &amp; System Integration</strong>: The unique identifier <code>"@id": "https://antinna.com/#founder"</code> can double as an enterprise backend token or Firebase UID. By setting structural claims (such as administrative or owner tags) in your database matching this semantic ID, you can implement robust field-level validation where only authorized users or administrators can view private profile objects.
     </li>
     <li>
-      <strong>Business-Owned Blogging Relationships</strong>: The outer entity represents a <code>LocalBusiness</code> which features and owns an emergency plumbing guide via the <code>mainEntity</code> connection. This models precise content authority, showing search engines that the article is backed by real-world subject matter experts (highly favored under Google E-E-A-T rules).
+      <strong>Business-Owned Blogging Relationships</strong>: The outer entity represents a <code>Blog</code> publication portal which features and owns an emergency plumbing guide via the <code>mainEntity</code> connection. This models precise content authority, showing search engines that the article is backed by real-world subject matter experts (highly favored under Google E-E-A-T rules).
     </li>
     <li>
       <strong>Scoped Overrides via @propagate</strong>: Inside the <code>mainEntity</code> block, a specialized <code>@context</code> redefines the key <code>title</code> to map directly to <code>https://schema.org/headline</code>. By declaring <code>"@propagate": false</code>, this rule is strictly locked to the <code>Article</code> node itself, preventing this override from leaking into any further child nodes.
