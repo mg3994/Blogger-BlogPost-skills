@@ -20,7 +20,7 @@
 
   <!-- CALLOUT BOX INFO -->
   <div class="antinna-callout antinna-callout-info">
-    <div class="antinna-callout-title">ℹ️ Google AdSense & Rich Results Notice</div>
+    <div class="antinna-callout-title">ℹ️ Google AdSense &amp; Rich Results Notice</div>
     <p class="antinna-callout-body">Implementing fully-validated and error-free JSON-LD schema is one of the most effective ways to achieve rich snippets on Google Search, which dramatically boosts click-through rates. Additionally, publishing highly informative, structured technical content about specialized topics improves your site's E-E-A-T (Experience, Expertise, Authoritativeness, and Trustworthiness), paving a smoother path to Google AdSense program approval.</p>
   </div>
 
@@ -31,19 +31,21 @@
     <h3>📖 Quick Navigation</h3>
     <ul>
       <li><a href="#section-1">1. JSON-LD 1.0 Foundations: Node &amp; Vocabulary Keywords</a></li>
-      <li><a href="#section-2">2. JSON-LD 1.0: Value Objects, Text Keywords, &amp; Collections</a></li>
-      <li><a href="#section-3">3. JSON-LD 1.1: Advanced Structure &amp; Graph Layout Keywords</a></li>
-      <li><a href="#section-4">4. JSON-LD 1.1: Collections, Maps, and Advanced Container Directives</a></li>
-      <li><a href="#section-5">5. JSON-LD 1.1: Enterprise Context Control &amp; Protection</a></li>
-      <li><a href="#section-6">6. Deep Dive: Flipping Directions with @reverse</a></li>
-      <li><a href="#section-7">7. Deep Dive: Bundling Standalone Nodes with @included</a></li>
-      <li><a href="#section-8">8. Deep Dive: Local Lookup and UI Metadata with @index</a></li>
-      <li><a href="#section-9">9. Deep Dive: Simplifying Verbosity with @container</a></li>
-      <li><a href="#section-10">10. Deep Dive: Safeguarding Schemas with @protected and @propagate</a></li>
-      <li><a href="#section-11">11. JSON-LD 1.2 (JSON-LD-star) Draft: Annotating Arcs &amp; Triple Reification</a></li>
-      <li><a href="#section-12">12. YAML-LD 1.0: Semantic Metadata with Elegant YAML Syntax</a></li>
-      <li><a href="#section-13">13. Keyword Comparison Reference Table</a></li>
-      <li><a href="#section-14">14. Summary &amp; Best Practices</a></li>
+      <li><a href="#section-2">2. Deep Dive: Enterprise Namespaces in @context</a></li>
+      <li><a href="#section-3">3. Deep Dive: Relative URI Resolution with @base and @id</a></li>
+      <li><a href="#section-4">4. JSON-LD 1.0: Value Objects, Text Keywords, &amp; Collections</a></li>
+      <li><a href="#section-5">5. JSON-LD 1.1: Advanced Structure &amp; Graph Layout Keywords</a></li>
+      <li><a href="#section-6">6. JSON-LD 1.1: Collections, Maps, and Advanced Container Directives</a></li>
+      <li><a href="#section-7">7. JSON-LD 1.1: Enterprise Context Control &amp; Protection</a></li>
+      <li><a href="#section-8">8. Deep Dive: Flipping Directions with @reverse</a></li>
+      <li><a href="#section-9">9. Deep Dive: Bundling Standalone Nodes with @included</a></li>
+      <li><a href="#section-10">10. Deep Dive: Local Lookup and UI Metadata with @index</a></li>
+      <li><a href="#section-11">11. Deep Dive: Simplifying Verbosity with @container</a></li>
+      <li><a href="#section-12">12. Deep Dive: Safeguarding Schemas with @protected and @propagate</a></li>
+      <li><a href="#section-13">13. JSON-LD 1.2 (JSON-LD-star) Draft: Annotating Arcs &amp; Triple Reification</a></li>
+      <li><a href="#section-14">14. YAML-LD 1.0: Semantic Metadata with Elegant YAML Syntax</a></li>
+      <li><a href="#section-15">15. Keyword Comparison Reference Table</a></li>
+      <li><a href="#section-16">16. Summary &amp; Best Practices</a></li>
     </ul>
   </div>
 
@@ -133,15 +135,130 @@
 }</code></pre>
   </div>
 
-  <h3>Resolving Relative Identifiers with @base</h3>
-  <p>The <code>@base</code> keyword defines a base IRI which is used to resolve relative IRIs or paths inside the document (specifically inside the <code>@id</code> keyword values).</p>
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 2 -->
+  <h2 id="section-2">
+    <span class="antinna-step-badge">Step 2</span> Deep Dive: Enterprise Namespaces in @context
+  </h2>
+  <p>In massive corporate and semantic graph deployments, it is rare to rely on a single vocabulary like <code>Schema.org</code>. Enterprises connect a multitude of distinct taxonomies together—combining financial ontologies (FIBO), metadata cores (Dublin Core), social networks (FOAF), data catalogs (DCAT), and country representations (LCC). Instead of defining long-winded absolute URIs for every property, we establish a robust dictionary of short prefix namespaces directly inside the <code>@context</code> block.</p>
+
+  <p>Here is an enterprise-ready namespace mapping dictionary configured within JSON-LD. This allows developers to prefix any term with its namespace shorthand (e.g., <code>dct:created</code>, <code>foaf:name</code>, or <code>fibo-fnd-org-org:Organization</code>):</p>
 
   <div class="antinna-code-wrapper">
     <div class="antinna-code-header">
       <div class="antinna-mac-dots">
         <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
       </div>
-      <span class="antinna-code-title">📂 relative-base.json</span>
+      <span class="antinna-code-title">📂 enterprise-namespaces.json</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-json">{
+  "@context": {
+    "bibo": "http://purl.org/ontology/bibo/",
+    "brick": "https://brickschema.org/schema/Brick#",
+    "cmns-cls": "https://www.omg.org/spec/Commons/Classifiers/",
+    "cmns-col": "https://www.omg.org/spec/Commons/Collections/",
+    "cmns-dt": "https://www.omg.org/spec/Commons/DatesAndTimes/",
+    "cmns-ge": "https://www.omg.org/spec/Commons/GeopoliticalEntities/",
+    "cmns-id": "https://www.omg.org/spec/Commons/Identifiers/",
+    "cmns-loc": "https://www.omg.org/spec/Commons/Locations/",
+    "cmns-q": "https://www.omg.org/spec/Commons/Quantities/",
+    "cmns-txt": "https://www.omg.org/spec/Commons/Text/",
+    "csvw": "http://www.w3.org/ns/csvw#",
+    "dc": "http://purl.org/dc/elements/1.1/",
+    "dcam": "http://purl.org/dc/dcam/",
+    "dcat": "http://www.w3.org/ns/dcat#",
+    "dct": "http://purl.org/dc/terms/",
+    "dctype": "http://purl.org/dc/dcmitype/",
+    "doap": "http://usefulinc.com/ns/doap#",
+    "eli": "http://data.europa.eu/eli/ontology#",
+    "fibo-be-corp-corp": "https://spec.edmcouncil.org/fibo/ontology/BE/Corporations/Corporations/",
+    "fibo-be-ge-ge": "https://spec.edmcouncil.org/fibo/ontology/BE/GovernmentEntities/GovernmentEntities/",
+    "fibo-be-le-cb": "https://spec.edmcouncil.org/fibo/ontology/BE/LegalEntities/CorporateBodies/",
+    "fibo-be-le-lp": "https://spec.edmcouncil.org/fibo/ontology/BE/LegalEntities/LegalPersons/",
+    "fibo-be-nfp-nfp": "https://spec.edmcouncil.org/fibo/ontology/BE/NotForProfitOrganizations/NotForProfitOrganizations/",
+    "fibo-be-oac-cctl": "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateControl/",
+    "fibo-fbc-dae-dbt": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/",
+    "fibo-fbc-pas-fpas": "https://spec.edmcouncil.org/fibo/ontology/FBC/ProductsAndServices/FinancialProductsAndServices/",
+    "fibo-fnd-acc-cur": "https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/CurrencyAmount/",
+    "fibo-fnd-agr-ctr": "https://spec.edmcouncil.org/fibo/ontology/FND/Agreements/Contracts/",
+    "fibo-fnd-arr-doc": "https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Documents/",
+    "fibo-fnd-arr-lif": "https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Lifecycles/",
+    "fibo-fnd-dt-oc": "https://spec.edmcouncil.org/fibo/ontology/FND/DatesAndTimes/Occurrences/",
+    "fibo-fnd-org-org": "https://spec.edmcouncil.org/fibo/ontology/FND/Organizations/Organizations/",
+    "fibo-fnd-pas-pas": "https://spec.edmcouncil.org/fibo/ontology/FND/ProductsAndServices/ProductsAndServices/",
+    "fibo-fnd-plc-adr": "https://spec.edmcouncil.org/fibo/ontology/FND/Places/Addresses/",
+    "fibo-fnd-plc-fac": "https://spec.edmcouncil.org/fibo/ontology/FND/Places/Facilities/",
+    "fibo-fnd-plc-loc": "https://spec.edmcouncil.org/fibo/ontology/FND/Places/Locations/",
+    "fibo-fnd-pty-pty": "https://spec.edmcouncil.org/fibo/ontology/FND/Parties/Parties/",
+    "fibo-fnd-rel-rel": "https://spec.edmcouncil.org/fibo/ontology/FND/Relations/Relations/",
+    "fibo-pay-ps-ps": "https://spec.edmcouncil.org/fibo/ontology/PAY/PaymentServices/PaymentServices/",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "geo": "http://www.opengis.net/ont/geosparql#",
+    "gleif-L1": "https://www.gleif.org/ontology/L1/",
+    "gs1": "https://ref.gs1.org/voc/",
+    "hydra": "http://www.w3.org/ns/hydra/core#",
+    "lcc-3166-1": "https://www.omg.org/spec/LCC/Countries/ISO3166-1-CountryCodes/",
+    "lcc-4217": "https://www.omg.org/spec/LCC/Countries/ISO4217-CurrencyCodes/",
+    "lcc-cr": "https://www.omg.org/spec/LCC/Countries/CountryRepresentation/",
+    "lcc-lr": "https://www.omg.org/spec/LCC/Languages/LanguageRepresentation/",
+    "lrmoo": "http://iflastandards.info/ns/lrm/lrmoo/",
+    "mo": "http://purl.org/ontology/mo/",
+    "odrl": "http://www.w3.org/ns/odrl/2/",
+    "og": "http://ogp.me/ns#",
+    "org": "http://www.w3.org/ns/org#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "prof": "http://www.w3.org/ns/dx/prof/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "qb": "http://purl.org/linked-data/cube#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "sarif": "http://sarif.info/",
+    "schema": "https://schema.org/",
+    "sh": "http://www.w3.org/ns/shacl#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "snomed": "http://purl.bioontology.org/ontology/SNOMEDCT/",
+    "sosa": "http://www.w3.org/ns/sosa/",
+    "ssn": "http://www.w3.org/ns/ssn/",
+    "time": "http://www.w3.org/2006/time#",
+    "unece": "http://unece.org/vocab#",
+    "vann": "http://purl.org/vocab/vann/",
+    "vcard": "http://www.w3.org/2006/vcard/ns#",
+    "void": "http://rdfs.org/ns/void#",
+    "wgs": "https://www.w3.org/2003/01/geo/wgs84_pos#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
+  },
+  "@id": "https://example.com/data/company-node",
+  "@type": "fibo-be-corp-corp:Corporation",
+  "dct:title": "Global Tech Entity",
+  "foaf:homepage": {
+    "@id": "https://example.com"
+  }
+}</code></pre>
+  </div>
+
+  <p>Using namespaces inside <code>@context</code> allows cross-organizational ontologies to coexist harmoniously in a single document. Instead of repeating <code>https://spec.edmcouncil.org/fibo/ontology/BE/Corporations/Corporations/</code> for every class definition, semantic applications can use simple CURIEs (Compact URIs) like <code>fibo-be-corp-corp:Corporation</code>, significantly reducing overall bundle size.</p>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 3 -->
+  <h2 id="section-3">
+    <span class="antinna-step-badge">Step 3</span> Deep Dive: Relative URI Resolution with @base and @id
+  </h2>
+  <p>One of the most powerful and misunderstood features in JSON-LD is the interaction between <code>@base</code> and <code>@id</code>. It provides syntactic compression for local entity paths.</p>
+
+  <h3>How Relative URI Resolution Works</h3>
+  <p>In standard web documents, relative links are resolved against the document's host URL. Inside a JSON-LD parser, the <code>@base</code> keyword sets a designated base URI explicitly for resolving all relative paths within the document—specifically targeting the values inside the <code>@id</code> keyword.</p>
+
+  <p>This means that if you have a base declared as <code>https://example.com/products/</code>, and a relative identifier declared as <code>"widget-101"</code>, the parser automatically concatenates them to form an absolute semantic path: <code>https://example.com/products/widget-101</code>.</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 base-resolution.json</span>
       <button class="antinna-copy-btn">Copy</button>
     </div>
     <pre><code class="language-json">{
@@ -150,18 +267,34 @@
     "@base": "https://example.com/products/"
   },
   "@type": "Product",
-  "@id": "widget-101"
+  "@id": "widget-101",
+  "name": "Heavy Duty Widget",
+  "category": {
+    "@id": "industrial-tools"
+  }
 }</code></pre>
   </div>
-  <p>In the above snippet, the <code>@id</code> resolving logic yields <code>https://example.com/products/widget-101</code> behind the scenes.</p>
+
+  <p>In the above example, let's trace how the JSON-LD processor computes the identifiers:</p>
+  <ul>
+    <li>The entity class resolves to the absolute schema URL: <code>https://schema.org/Product</code> (due to <code>@vocab</code>).</li>
+    <li>The main object <code>@id</code> computes directly to: <code>https://example.com/products/widget-101</code> (due to <code>@base</code> + relative <code>widget-101</code>).</li>
+    <li>The sub-entity <code>category</code>'s <code>@id</code> computes directly to: <code>https://example.com/products/industrial-tools</code> (due to <code>@base</code> + relative <code>industrial-tools</code>).</li>
+  </ul>
+
+  <!-- CALLOUT SUCCESS -->
+  <div class="antinna-callout antinna-callout-success">
+    <div class="antinna-callout-title">💡 Why This Matters for Portability</div>
+    <p class="antinna-callout-body">Using relative identifiers mapped to an explicit <code>@base</code> means your structured data documents are completely portable! If your domain changes from <code>example.com</code> to <code>enterprise.com</code>, you only need to change the single <code>@base</code> parameter in the context block, rather than refactoring thousands of individual absolute <code>@id</code> values scattered throughout your graph database.</p>
+  </div>
 
   <hr class="antinna-divider" />
 
-  <!-- SECTION 2 -->
-  <h2 id="section-2">
-    <span class="antinna-step-badge">Step 2</span> JSON-LD 1.0: Value Objects, Text Keywords, &amp; Collections
+  <!-- SECTION 4 -->
+  <h2 id="section-4">
+    <span class="antinna-step-badge">Step 4</span> JSON-LD 1.0: Value Objects, Text Keywords, &amp; Collections
   </h2>
-  <p>When deal with semantic data, simple string values are not always sufficient. Frequently, you need to append supplementary details, such as localized languages, specific datatypes, or strict ordering constraints.</p>
+  <p>When dealing with semantic data, simple string values are not always sufficient. Frequently, you need to append supplementary details, such as localized languages, specific datatypes, or strict ordering constraints.</p>
 
   <h3>Representing Raw Values with @value</h3>
   <p>The <code>@value</code> keyword specifies the raw literal payload inside a Value Object. This is utilized when you need to attach metadata (like a language code or datatype) to a primitive value rather than a complex object structure.</p>
@@ -232,9 +365,9 @@
 
   <hr class="antinna-divider" />
 
-  <!-- SECTION 3 -->
-  <h2 id="section-3">
-    <span class="antinna-step-badge">Step 3</span> JSON-LD 1.1: Advanced Structure &amp; Graph Layout Keywords
+  <!-- SECTION 5 -->
+  <h2 id="section-5">
+    <span class="antinna-step-badge">Step 5</span> JSON-LD 1.1: Advanced Structure &amp; Graph Layout Keywords
   </h2>
   <p>While JSON-LD 1.0 excelled at simple hierarchical document mappings, developers ran into complex document structural limitations when managing non-linear object hierarchies, deep nested variables, and unlinked top-level nodes. JSON-LD 1.1 resolved these developer experience limitations by introducing dedicated graph layout keywords.</p>
 
@@ -296,9 +429,9 @@
 
   <hr class="antinna-divider" />
 
-  <!-- SECTION 4 -->
-  <h2 id="section-4">
-    <span class="antinna-step-badge">Step 4</span> JSON-LD 1.1: Collections, Maps, and Advanced Container Directives
+  <!-- SECTION 6 -->
+  <h2 id="section-6">
+    <span class="antinna-step-badge">Step 6</span> JSON-LD 1.1: Collections, Maps, and Advanced Container Directives
   </h2>
   <p>Standard JSON-LD parsing treats custom dictionaries and multi-language structures in a highly verbose manner. JSON-LD 1.1 introduces powerful <code>@container</code> mappings to streamline syntactic developer workflow.</p>
 
@@ -338,9 +471,9 @@
 
   <hr class="antinna-divider" />
 
-  <!-- SECTION 5 -->
-  <h2 id="section-5">
-    <span class="antinna-step-badge">Step 5</span> JSON-LD 1.1: Enterprise Context Control &amp; Protection
+  <!-- SECTION 7 -->
+  <h2 id="section-7">
+    <span class="antinna-step-badge">Step 7</span> JSON-LD 1.1: Enterprise Context Control &amp; Protection
   </h2>
   <p>In highly collaborative corporate environments, schemas and contexts are often managed by multi-disciplinary software teams or third-party SDK packages. In such scenarios, nested sub-objects run the dangerous risk of accidentally overriding root level context vocabulary. JSON-LD 1.1 added key context control features to defend against schema overrides.</p>
 
@@ -371,9 +504,9 @@
 
   <hr class="antinna-divider" />
 
-  <!-- SECTION 6 -->
-  <h2 id="section-6">
-    <span class="antinna-step-badge">Step 6</span> Deep Dive: Flipping Directions with @reverse
+  <!-- SECTION 8 -->
+  <h2 id="section-8">
+    <span class="antinna-step-badge">Step 8</span> Deep Dive: Flipping Directions with @reverse
   </h2>
   <p>RDF Knowledge graphs are strictly directional schemas built on the (Subject → Property → Object) model. For instance, in Schema.org, an <code>Organization</code> has an <code>employee</code> property which points to a <code>Person</code>. However, what if your local JSON payload is organized around a <code>Person</code> (e.g. Alice's bio profile), and you want to declare that Acme Corp employs her? Standard Schema.org doesn't officially define an inverse <code>employer</code> property on <code>Person</code>.</p>
   <p>This is where <code>@reverse</code> works its magic. It tells graph processors that the relationship direction is reversed behind the scenes, allowing you to represent the exact semantic relation without violating schema definitions.</p>
@@ -407,9 +540,9 @@
 
   <hr class="antinna-divider" />
 
-  <!-- SECTION 7 -->
-  <h2 id="section-7">
-    <span class="antinna-step-badge">Step 7</span> Deep Dive: Bundling Standalone Nodes with @included
+  <!-- SECTION 9 -->
+  <h2 id="section-9">
+    <span class="antinna-step-badge">Step 9</span> Deep Dive: Bundling Standalone Nodes with @included
   </h2>
   <p>Normally, including standalone nodes that aren't nested directly under a child property requires wrapping your whole payload inside a flat <code>@graph</code> array structure. If you want to keep your JSON organized around a primary object (such as an <code>Article</code>) but still package separate auxiliary nodes (like an independent <code>Person</code> author profile or <code>Organization</code> publisher), standard nesting breaks. The <code>@included</code> keyword allows you to seamlessly bundle secondary nodes inside your primary object's payload:</p>
 
@@ -438,9 +571,9 @@
 
   <hr class="antinna-divider" />
 
-  <!-- SECTION 8 -->
-  <h2 id="section-8">
-    <span class="antinna-step-badge">Step 8</span> Deep Dive: Local Lookup and UI Metadata with @index
+  <!-- SECTION 10 -->
+  <h2 id="section-10">
+    <span class="antinna-step-badge">Step 10</span> Deep Dive: Local Lookup and UI Metadata with @index
   </h2>
   <p>Your local UI code or backend architecture frequently needs temporary identifier keys to manage application state (e.g., active tabs, sorting orders, or content draft versions). If you place these custom keys directly into semantic JSON-LD structures, search engine crawlers will get confused and report validation errors. The <code>@index</code> keyword solves this issue by attaching a local tracking key that graph processors store as metadata, but completely exclude from the parsed RDF triple graph.</p>
 
@@ -465,9 +598,9 @@
 
   <hr class="antinna-divider" />
 
-  <!-- SECTION 9 -->
-  <h2 id="section-9">
-    <span class="antinna-step-badge">Step 9</span> Deep Dive: Simplifying Verbosity with @container
+  <!-- SECTION 11 -->
+  <h2 id="section-11">
+    <span class="antinna-step-badge">Step 11</span> Deep Dive: Simplifying Verbosity with @container
   </h2>
   <p>Let's look at how verbose multi-language structures look in standard JSON-LD 1.0:</p>
 
@@ -522,9 +655,9 @@
 
   <hr class="antinna-divider" />
 
-  <!-- SECTION 10 -->
-  <h2 id="section-10">
-    <span class="antinna-step-badge">Step 10</span> Deep Dive: Safeguarding Schemas with @protected and @propagate
+  <!-- SECTION 12 -->
+  <h2 id="section-12">
+    <span class="antinna-step-badge">Step 12</span> Deep Dive: Safeguarding Schemas with @protected and @propagate
   </h2>
   <p>Let's look at how <code>@protected</code> stops third-party libraries or internal nesting layers from accidentally remapping important ID structures:</p>
 
@@ -564,9 +697,9 @@
 
   <hr class="antinna-divider" />
 
-  <!-- SECTION 11 -->
-  <h2 id="section-11">
-    <span class="antinna-step-badge">Step 11</span> JSON-LD 1.2 (JSON-LD-star) Draft: Annotating Arcs &amp; Triple Reification
+  <!-- SECTION 13 -->
+  <h2 id="section-13">
+    <span class="antinna-step-badge">Step 13</span> JSON-LD 1.2 (JSON-LD-star) Draft: Annotating Arcs &amp; Triple Reification
   </h2>
   <p>The next major leap in Linked Data semantics comes from the W3C's <strong>JSON-LD-star (JSON-LD-star/RDF-star)</strong> draft proposal. Historically, in semantic graphs, properties link a subject to an object. But what if you want to annotate the property link itself? For instance, how do you express that "Bob knows Alice" is <em>only 80% certain</em>, or was <em>reported by Alice herself</em>?</p>
   <p>JSON-LD-star addresses this challenge by introducing three experimental keywords: <code>@annotation</code>, <code>@reifies</code>, and <code>@triple</code>. These allow developers to annotate semantic relationships directly.</p>
@@ -631,9 +764,9 @@
 
   <hr class="antinna-divider" />
 
-  <!-- SECTION 12 -->
-  <h2 id="section-12">
-    <span class="antinna-step-badge">Step 12</span> YAML-LD 1.0: Semantic Metadata with Elegant YAML Syntax
+  <!-- SECTION 14 -->
+  <h2 id="section-14">
+    <span class="antinna-step-badge">Step 14</span> YAML-LD 1.0: Semantic Metadata with Elegant YAML Syntax
   </h2>
   <p>While JSON is incredibly popular, many developers find its syntax verbose, prone to trailing comma syntax errors, and lacking built-in support for code comments. To address these developers, the W3C published the <strong>YAML-LD 1.0 Working Draft</strong>.</p>
   <p>YAML-LD maps YAML syntax concepts directly onto the JSON-LD standard. Since YAML is a natural superset of JSON, any valid JSON-LD file is technically valid YAML-LD. However, YAML-LD allows you to use clean indentation, write inline comments to explain your schema structure, and omit messy curly braces and quotation marks entirely!</p>
@@ -663,9 +796,9 @@
 
   <hr class="antinna-divider" />
 
-  <!-- SECTION 13 -->
-  <h2 id="section-13">
-    <span class="antinna-step-badge">Step 13</span> Keyword Comparison Reference Table
+  <!-- SECTION 15 -->
+  <h2 id="section-15">
+    <span class="antinna-step-badge">Step 15</span> Keyword Comparison Reference Table
   </h2>
   <p>To help you quickly identify when and where to use these key structured data components, we've compiled a comprehensive compatibility and usage reference table:</p>
 
@@ -703,6 +836,12 @@
           <td>JSON-LD 1.0</td>
           <td>Sets default namespace base URL</td>
           <td>The global namespace declaration</td>
+        </tr>
+        <tr>
+          <td><code>@base</code></td>
+          <td>JSON-LD 1.0</td>
+          <td>Resolves relative IRIs inside @id</td>
+          <td>Root context directory resolver</td>
         </tr>
         <tr>
           <td><code>@reverse</code></td>
@@ -752,9 +891,9 @@
 
   <hr class="antinna-divider" />
 
-  <!-- SECTION 14 -->
-  <h2 id="section-14">
-    <span class="antinna-step-badge">Step 14</span> Summary &amp; Best Practices
+  <!-- SECTION 16 -->
+  <h2 id="section-16">
+    <span class="antinna-step-badge">Step 16</span> Summary &amp; Best Practices
   </h2>
   <p>To ensure your structured data maps parse seamlessly for both SEO crawlers and semantic graph engines, adhere strictly to these proven production guidelines:</p>
   <ol>
@@ -955,12 +1094,15 @@
   }
   .antinna-callout-success .antinna-callout-body {
     color: #276749 !important;
+    margin: 0 !important;
   }
   .antinna-callout-warning .antinna-callout-body {
     color: #9c4221 !important;
+    margin: 0 !important;
   }
   .antinna-callout-info .antinna-callout-body {
     color: #2a69ac !important;
+    margin: 0 !important;
   }
 
   /* 6. Table of Contents */
