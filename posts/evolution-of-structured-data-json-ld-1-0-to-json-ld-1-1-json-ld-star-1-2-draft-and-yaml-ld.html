@@ -36,16 +36,17 @@
       <li><a href="#section-4">4. JSON-LD 1.0: Value Objects, Text Keywords, &amp; Collections</a></li>
       <li><a href="#section-5">5. JSON-LD 1.1: Advanced Structure &amp; Graph Layout Keywords</a></li>
       <li><a href="#section-6">6. JSON-LD 1.1: Collections, Maps, and Advanced Container Directives</a></li>
-      <li><a href="#section-7">7. JSON-LD 1.1: Enterprise Context Control &amp; Protection</a></li>
-      <li><a href="#section-8">8. Deep Dive: Flipping Directions with @reverse</a></li>
-      <li><a href="#section-9">9. Deep Dive: Bundling Standalone Nodes with @included</a></li>
-      <li><a href="#section-10">10. Deep Dive: Local Lookup and UI Metadata with @index</a></li>
-      <li><a href="#section-11">11. Deep Dive: Simplifying Verbosity with @container</a></li>
-      <li><a href="#section-12">12. Deep Dive: Safeguarding Schemas with @protected and @propagate</a></li>
-      <li><a href="#section-13">13. JSON-LD 1.2 (JSON-LD-star) Draft: Annotating Arcs &amp; Triple Reification</a></li>
-      <li><a href="#section-14">14. YAML-LD 1.0: Semantic Metadata with Elegant YAML Syntax</a></li>
-      <li><a href="#section-15">15. Keyword Comparison Reference Table</a></li>
-      <li><a href="#section-16">16. Summary &amp; Best Practices</a></li>
+      <li><a href="#section-7">7. Practical Masterclass: Multi-Container Implementations &amp; Real-World Mappings</a></li>
+      <li><a href="#section-8">8. JSON-LD 1.1: Enterprise Context Control &amp; Protection</a></li>
+      <li><a href="#section-9">9. Deep Dive: Flipping Directions with @reverse</a></li>
+      <li><a href="#section-10">10. Deep Dive: Bundling Standalone Nodes with @included</a></li>
+      <li><a href="#section-11">11. Deep Dive: Local Lookup and UI Metadata with @index</a></li>
+      <li><a href="#section-12">12. Deep Dive: Simplifying Verbosity with @container</a></li>
+      <li><a href="#section-13">13. Deep Dive: Safeguarding Schemas with @protected and @propagate</a></li>
+      <li><a href="#section-14">14. JSON-LD 1.2 (JSON-LD-star) Draft: Annotating Arcs &amp; Triple Reification</a></li>
+      <li><a href="#section-15">15. YAML-LD 1.0: Semantic Metadata with Elegant YAML Syntax</a></li>
+      <li><a href="#section-16">16. Keyword Comparison Reference Table</a></li>
+      <li><a href="#section-17">17. Summary &amp; Best Practices</a></li>
     </ul>
   </div>
 
@@ -473,7 +474,112 @@
 
   <!-- SECTION 7 -->
   <h2 id="section-7">
-    <span class="antinna-step-badge">Step 7</span> JSON-LD 1.1: Enterprise Context Control &amp; Protection
+    <span class="antinna-step-badge">Step 7</span> Practical Masterclass: Multi-Container Implementations &amp; Real-World Mappings
+  </h2>
+  <p>Let's look at an advanced, comprehensive, real-world example combining multiple modern JSON-LD 1.1 concepts into a single production schema. This code demonstrates complex multi-container arrays (like <code>["@set", "@language"]</code>), multi-language value maps, custom type indexes, relational web pages, context scoping boundaries with <code>@propagate</code>, and secure integration patterns.</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 advanced-business-blog.json</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-json">{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "name": {
+      "@container": "@language"
+    },
+    "author": {
+      "@container": "@type"
+    },
+    "pages": {
+      "@container": "@id"
+    },
+    "keywords": {
+      "@container": ["@set", "@language"]
+    }
+  },
+  "@type": "LocalBusiness",
+  "@id": "https://antinna.com/#business",
+  "name": {
+    "en": "Antinna Plumbing & Services",
+    "hi": "एंटिन्ना प्लंबिंग एवं सर्विसेज",
+    "fr": "Antinna Plomberie et Services"
+  },
+  "keywords": {
+    "en": ["plumbing", "pipe repair", "drain cleaning"],
+    "hi": ["प्लंबिंग", "पाइप मरम्मत", "नाली सफाई"],
+    "fr": ["plomberie", "réparation de tuyaux", "débouchage"]
+  },
+  "author": {
+    "Person": {
+      "@id": "https://antinna.com/#founder",
+      "name": {
+        "en": "Manish",
+        "hi": "मनीष",
+        "fr": "Manish"
+      }
+    }
+  },
+  "pages": {
+    "https://antinna.com/services": {
+      "name": {
+        "en": "Services & Booking",
+        "hi": "सेवाएं और बुकिंग",
+        "fr": "Services et Réservation"
+      }
+    },
+    "https://antinna.com/contact": {
+      "name": {
+        "en": "Contact Support",
+        "hi": "संपर्क सहायता",
+        "fr": "Support de Contact"
+      }
+    }
+  },
+  "mainEntity": {
+    "@context": {
+      "@propagate": false,
+      "title": "https://schema.org/headline"
+    },
+    "@type": "Article",
+    "title": "How to Fix Emergency Pipe Leaks",
+    "description": "Quick solutions for household plumbing issues before a plumber arrives."
+  }
+}</code></pre>
+  </div>
+
+  <h3>Breaking Down the Advanced Mechanics</h3>
+  <p>This master block illustrates several crucial real-world technical implementations:</p>
+  <ul>
+    <li>
+      <strong>Multi-Attribute Set Language Mappings</strong>: The <code>keywords</code> property defines <code>"@container": ["@set", "@language"]</code>. This enforces that the values are treated both as localized arrays mapped by BCP-47 language codes and as mathematically strict RDF sets. This prevents multi-item tags from collapsing or becoming unordered lists.
+    </li>
+    <li>
+      <strong>Type-Scoping Node Containers</strong>: The <code>author</code> mapping has <code>"@container": "@type"</code>. This allows the JSON keys themselves (e.g. <code>"Person"</code>) to denote the semantic <code>@type</code> of the inner block!
+    </li>
+    <li>
+      <strong>Key-to-URI Mapping Containers</strong>: The <code>pages</code> mapping applies <code>"@container": "@id"</code>. This maps the local keys directly to subject <code>@id</code> identifiers (such as <code>https://antinna.com/services</code>), making custom portal indexes exceptionally clean.
+    </li>
+    <li>
+      <strong>Security &amp; System Integration</strong>: The unique identifier <code>"@id": "https://antinna.com/#founder"</code> can double as an enterprise backend token or Firebase UID. By setting structural claims (such as administrative or owner tags) in your database matching this semantic ID, you can implement robust field-level validation where only authorized users or administrators can view private profile objects.
+    </li>
+    <li>
+      <strong>Business-Owned Blogging Relationships</strong>: The outer entity represents a <code>LocalBusiness</code> which features and owns an emergency plumbing guide via the <code>mainEntity</code> connection. This models precise content authority, showing search engines that the article is backed by real-world subject matter experts (highly favored under Google E-E-A-T rules).
+    </li>
+    <li>
+      <strong>Scoped Overrides via @propagate</strong>: Inside the <code>mainEntity</code> block, a specialized <code>@context</code> redefines the key <code>title</code> to map directly to <code>https://schema.org/headline</code>. By declaring <code>"@propagate": false</code>, this rule is strictly locked to the <code>Article</code> node itself, preventing this override from leaking into any further child nodes.
+    </li>
+  </ul>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 8 -->
+  <h2 id="section-8">
+    <span class="antinna-step-badge">Step 8</span> JSON-LD 1.1: Enterprise Context Control &amp; Protection
   </h2>
   <p>In highly collaborative corporate environments, schemas and contexts are often managed by multi-disciplinary software teams or third-party SDK packages. In such scenarios, nested sub-objects run the dangerous risk of accidentally overriding root level context vocabulary. JSON-LD 1.1 added key context control features to defend against schema overrides.</p>
 
@@ -504,9 +610,9 @@
 
   <hr class="antinna-divider" />
 
-  <!-- SECTION 8 -->
-  <h2 id="section-8">
-    <span class="antinna-step-badge">Step 8</span> Deep Dive: Flipping Directions with @reverse
+  <!-- SECTION 9 -->
+  <h2 id="section-9">
+    <span class="antinna-step-badge">Step 9</span> Deep Dive: Flipping Directions with @reverse
   </h2>
   <p>RDF Knowledge graphs are strictly directional schemas built on the (Subject → Property → Object) model. For instance, in Schema.org, an <code>Organization</code> has an <code>employee</code> property which points to a <code>Person</code>. However, what if your local JSON payload is organized around a <code>Person</code> (e.g. Alice's bio profile), and you want to declare that Acme Corp employs her? Standard Schema.org doesn't officially define an inverse <code>employer</code> property on <code>Person</code>.</p>
   <p>This is where <code>@reverse</code> works its magic. It tells graph processors that the relationship direction is reversed behind the scenes, allowing you to represent the exact semantic relation without violating schema definitions.</p>
@@ -540,9 +646,9 @@
 
   <hr class="antinna-divider" />
 
-  <!-- SECTION 9 -->
-  <h2 id="section-9">
-    <span class="antinna-step-badge">Step 9</span> Deep Dive: Bundling Standalone Nodes with @included
+  <!-- SECTION 10 -->
+  <h2 id="section-10">
+    <span class="antinna-step-badge">Step 10</span> Deep Dive: Bundling Standalone Nodes with @included
   </h2>
   <p>Normally, including standalone nodes that aren't nested directly under a child property requires wrapping your whole payload inside a flat <code>@graph</code> array structure. If you want to keep your JSON organized around a primary object (such as an <code>Article</code>) but still package separate auxiliary nodes (like an independent <code>Person</code> author profile or <code>Organization</code> publisher), standard nesting breaks. The <code>@included</code> keyword allows you to seamlessly bundle secondary nodes inside your primary object's payload:</p>
 
@@ -571,9 +677,9 @@
 
   <hr class="antinna-divider" />
 
-  <!-- SECTION 10 -->
-  <h2 id="section-10">
-    <span class="antinna-step-badge">Step 10</span> Deep Dive: Local Lookup and UI Metadata with @index
+  <!-- SECTION 11 -->
+  <h2 id="section-11">
+    <span class="antinna-step-badge">Step 11</span> Deep Dive: Local Lookup and UI Metadata with @index
   </h2>
   <p>Your local UI code or backend architecture frequently needs temporary identifier keys to manage application state (e.g., active tabs, sorting orders, or content draft versions). If you place these custom keys directly into semantic JSON-LD structures, search engine crawlers will get confused and report validation errors. The <code>@index</code> keyword solves this issue by attaching a local tracking key that graph processors store as metadata, but completely exclude from the parsed RDF triple graph.</p>
 
@@ -598,9 +704,9 @@
 
   <hr class="antinna-divider" />
 
-  <!-- SECTION 11 -->
-  <h2 id="section-11">
-    <span class="antinna-step-badge">Step 11</span> Deep Dive: Simplifying Verbosity with @container
+  <!-- SECTION 12 -->
+  <h2 id="section-12">
+    <span class="antinna-step-badge">Step 12</span> Deep Dive: Simplifying Verbosity with @container
   </h2>
   <p>Let's look at how verbose multi-language structures look in standard JSON-LD 1.0:</p>
 
@@ -655,9 +761,9 @@
 
   <hr class="antinna-divider" />
 
-  <!-- SECTION 12 -->
-  <h2 id="section-12">
-    <span class="antinna-step-badge">Step 12</span> Deep Dive: Safeguarding Schemas with @protected and @propagate
+  <!-- SECTION 13 -->
+  <h2 id="section-13">
+    <span class="antinna-step-badge">Step 13</span> Deep Dive: Safeguarding Schemas with @protected and @propagate
   </h2>
   <p>Let's look at how <code>@protected</code> stops third-party libraries or internal nesting layers from accidentally remapping important ID structures:</p>
 
@@ -693,13 +799,13 @@
     <p class="antinna-callout-body">The nested <code>review</code> block attempts to redefine the term <code>id</code>. Because the root context has declared <code>id</code> as <code>@protected: true</code>, the JSON-LD 1.1 parser will instantly halt and throw a fatal compilation error, protecting your master data schema from corruption.</p>
   </div>
 
-  <p>Similarly, the <code>@propagate</code> keyword regulates context bleeding. Setting <code>"@propagate": false</code> confines your specialized mappings to the scope of the node in which they are defined, preventing leakage into deeper child nodes.</p>
+  <p>Similarly, the <code>@propagate</code> keyword regulates context bleeding. Setting <code>"@propagate": false</code> confines your specialized mappings to the scope of the node in which they are defined, preventing leakage into further child nodes.</p>
 
   <hr class="antinna-divider" />
 
-  <!-- SECTION 13 -->
-  <h2 id="section-13">
-    <span class="antinna-step-badge">Step 13</span> JSON-LD 1.2 (JSON-LD-star) Draft: Annotating Arcs &amp; Triple Reification
+  <!-- SECTION 14 -->
+  <h2 id="section-14">
+    <span class="antinna-step-badge">Step 14</span> JSON-LD 1.2 (JSON-LD-star) Draft: Annotating Arcs &amp; Triple Reification
   </h2>
   <p>The next major leap in Linked Data semantics comes from the W3C's <strong>JSON-LD-star (JSON-LD-star/RDF-star)</strong> draft proposal. Historically, in semantic graphs, properties link a subject to an object. But what if you want to annotate the property link itself? For instance, how do you express that "Bob knows Alice" is <em>only 80% certain</em>, or was <em>reported by Alice herself</em>?</p>
   <p>JSON-LD-star addresses this challenge by introducing three experimental keywords: <code>@annotation</code>, <code>@reifies</code>, and <code>@triple</code>. These allow developers to annotate semantic relationships directly.</p>
@@ -764,9 +870,9 @@
 
   <hr class="antinna-divider" />
 
-  <!-- SECTION 14 -->
-  <h2 id="section-14">
-    <span class="antinna-step-badge">Step 14</span> YAML-LD 1.0: Semantic Metadata with Elegant YAML Syntax
+  <!-- SECTION 15 -->
+  <h2 id="section-15">
+    <span class="antinna-step-badge">Step 15</span> YAML-LD 1.0: Semantic Metadata with Elegant YAML Syntax
   </h2>
   <p>While JSON is incredibly popular, many developers find its syntax verbose, prone to trailing comma syntax errors, and lacking built-in support for code comments. To address these developers, the W3C published the <strong>YAML-LD 1.0 Working Draft</strong>.</p>
   <p>YAML-LD maps YAML syntax concepts directly onto the JSON-LD standard. Since YAML is a natural superset of JSON, any valid JSON-LD file is technically valid YAML-LD. However, YAML-LD allows you to use clean indentation, write inline comments to explain your schema structure, and omit messy curly braces and quotation marks entirely!</p>
@@ -796,9 +902,9 @@
 
   <hr class="antinna-divider" />
 
-  <!-- SECTION 15 -->
-  <h2 id="section-15">
-    <span class="antinna-step-badge">Step 15</span> Keyword Comparison Reference Table
+  <!-- SECTION 16 -->
+  <h2 id="section-16">
+    <span class="antinna-step-badge">Step 16</span> Keyword Comparison Reference Table
   </h2>
   <p>To help you quickly identify when and where to use these key structured data components, we've compiled a comprehensive compatibility and usage reference table:</p>
 
@@ -891,9 +997,9 @@
 
   <hr class="antinna-divider" />
 
-  <!-- SECTION 16 -->
-  <h2 id="section-16">
-    <span class="antinna-step-badge">Step 16</span> Summary &amp; Best Practices
+  <!-- SECTION 17 -->
+  <h2 id="section-17">
+    <span class="antinna-step-badge">Step 17</span> Summary &amp; Best Practices
   </h2>
   <p>To ensure your structured data maps parse seamlessly for both SEO crawlers and semantic graph engines, adhere strictly to these proven production guidelines:</p>
   <ol>
