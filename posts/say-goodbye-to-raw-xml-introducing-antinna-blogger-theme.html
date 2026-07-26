@@ -12,7 +12,7 @@
   /></a>
 </div>
 
-<!-- OPTIONAL: NPM / GITHUB BADGES SECTION -->
+<!-- NPM BADGES -->
 <div style="display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap">
   <a href="https://www.npmjs.com/package/@antinna/blogger-theme" target="_blank">
     <img src="https://img.shields.io/npm/v/@antinna/blogger-theme.svg?style=flat-square" alt="npm version" />
@@ -26,12 +26,12 @@
 <div class="antinna-blog-container">
 
   <!-- LEAD PARAGRAPH -->
-  <p>Are you tired of designing one single, massive, unmanageable XML file for your Google Blogger templates? Anyone who has ever tried to build a custom Blogger theme from scratch knows the absolute nightmare of editing thousands of lines of raw, inline styles, messy XML widget syntax, and archaic layouts in a single file. There is no code modularity, no component-based structure, and almost zero tooling support. Thankfully, the development experience has taken a massive leap forward. Introducing <code>@antinna/blogger-theme</code>—a revolutionary NPM package designed to compile clean, modular component structures into production-ready Blogger XML files automatically!</p>
+  <p>Are you tired of designing one single, massive, and unmanageable XML file for your Google Blogger templates? Anyone who has ever tried to build a custom Blogger theme from scratch knows the absolute nightmare of editing thousands of lines of raw, inline styles, messy XML widget syntax, and archaic layouts in a single file. There is no code modularity, no component-based structure, and almost zero modern tooling support. Thankfully, the development experience has taken a massive leap forward. Introducing <strong><code>@antinna/blogger-theme</code></strong>—a revolutionary TypeScript and ESNext library designed to compile clean, modular TSX/JSX component structures into fully optimized, production-ready Blogger XML files automatically!</p>
 
   <!-- CALLOUT BOX INFO -->
   <div class="antinna-callout antinna-callout-info">
     <div class="antinna-callout-title">ℹ️ A Modern Approach to Legacy Blogging</div>
-    <p class="antinna-callout-body">Google's Blogger platform remains one of the most reliable and highly cost-effective platforms for SEO and Google AdSense monetization due to its free hosting and zero operational maintenance. By compiling modern components into the required Blogger XML format using <code>@antinna/blogger-theme</code>, you get the performance and developer experience of a static site generator combined with the robust, zero-cost scaling of Google's global server infrastructure!</p>
+    <p class="antinna-callout-body">Google's Blogger platform remains one of the most reliable and highly cost-effective engines for SEO and Google AdSense monetization due to its free hosting and zero operational maintenance. By compiling modern JSX components into the required Blogger XML format using <code>@antinna/blogger-theme</code>, you get the performance and developer experience of a modern static site generator (like Astro or React) combined with the robust, zero-cost scaling of Google's global server infrastructure!</p>
   </div>
 
   <hr class="antinna-divider" />
@@ -43,12 +43,14 @@
       <li><a href="#section-1">1. The Blogger Theme Pain Point: The Monolithic XML Nightmare</a></li>
       <li><a href="#section-2">2. What is @antinna/blogger-theme?</a></li>
       <li><a href="#section-3">3. Step-by-Step Guide: Quick Installation and Local Setup</a></li>
-      <li><a href="#section-4">4. Step-by-Step Guide: Configuring blogger-theme.config.json</a></li>
-      <li><a href="#section-5">5. Step-by-Step Guide: Creating Modular Component Layouts</a></li>
-      <li><a href="#section-6">6. Step-by-Step Guide: Compiling Your Theme to Blogger XML</a></li>
-      <li><a href="#section-7">7. Real-World Case Study: Building a Custom Local SEO Widget</a></li>
-      <li><a href="#section-8">8. Best Practices for Developing High-Speed Blogger Themes</a></li>
-      <li><a href="#section-9">9. Summary and Next Steps</a></li>
+      <li><a href="#section-4">4. Step-by-Step Guide: Configuring tsconfig.json for TSX</a></li>
+      <li><a href="#section-5">5. Step-by-Step Guide: Defining Layout Components in TSX</a></li>
+      <li><a href="#section-6">6. Step-by-Step Guide: Generating the Blogger Theme XML</a></li>
+      <li><a href="#section-7">7. Dual API Support: Builder Style vs JSX Compilation</a></li>
+      <li><a href="#section-8">8. Advanced Feature: On-Demand Client Script Bundling with BClientScript</a></li>
+      <li><a href="#section-9">9. Step-by-Step Guide: Compiling Your Theme via CLI</a></li>
+      <li><a href="#section-10">10. Best Practices for Developing High-Performance Blogger Themes</a></li>
+      <li><a href="#section-11">11. Summary and Next Steps</a></li>
     </ul>
   </div>
 
@@ -58,13 +60,13 @@
   <h2 id="section-1">
     <span class="antinna-step-badge">Step 1</span> The Blogger Theme Pain Point: The Monolithic XML Nightmare
   </h2>
-  <p>Standard modern web workflows are built on modularity. We write scoped CSS, independent HTML partials, and isolated JavaScript modules using tools like Webpack, Vite, or PostCSS. Yet, when designing a template for Google Blogger, you are forced to throw these modern engineering practices out the window.</p>
-  <p>Blogger requires a single <code>.xml</code> template file, which typically contains:</p>
+  <p>Standard modern web workflows are built on modularity. We write scoped CSS, independent HTML partials, and isolated TypeScript modules. Yet, when designing a template for Google Blogger, you are forced to throw these modern engineering practices out the window.</p>
+  <p>Blogger requires a single, monolithic <code>.xml</code> template file, which typically contains:</p>
   <ul>
     <li>The entire master HTML backbone structure.</li>
-    <li>Messy inline CSS overrides wrapped inside critical <code>&lt;b:skin&gt;</code> tags.</li>
-    <li>Outdated and verbose layout widget markup (such as <code>&lt;b:widget&gt;</code>, <code>&lt;b:section&gt;</code>, and <code>&lt;b:includable&gt;</code>).</li>
-    <li>Sparsely placed script files that block page rendering.</li>
+    <li>Messy inline CSS overrides wrapped inside critical <code>&lt;b:skin&gt;</code> or <code>&lt;b:template-skin&gt;</code> tags.</li>
+    <li>Outdated and verbose layout widget markup (such as <code>&lt;b:widget&gt;</code>, <code>&lt;b:section&gt;</code>, <code>&lt;b:if&gt;</code>, and <code>&lt;b:loop&gt;</code>).</li>
+    <li>Sparsely placed script files that block page rendering and slow down site load speeds.</li>
   </ul>
   <p>Trying to collaborate in teams, use Git version control, or perform modular refactoring inside a 10,000-line XML monolith is practically impossible. It leads to silent parsing errors, broken templates, and immense developer fatigue.</p>
 
@@ -74,12 +76,12 @@
   <h2 id="section-2">
     <span class="antinna-step-badge">Step 2</span> What is @antinna/blogger-theme?
   </h2>
-  <p>The <code>@antinna/blogger-theme</code> package bridges this gap by acting as a modern compiler. It lets you write individual HTML/Blogger layout components, clean external CSS files, and modular JavaScript files in a neat, well-structured local directory. When you run the compilation command, the compiler reads your repository configuration, gathers your partial components, minifies your assets, resolves namespaces, and outputs a single, fully-optimized Blogger-compliant XML theme file ready for instant upload.</p>
+  <p>The <code>@antinna/blogger-theme</code> package bridges this gap by acting as a modern compiler. Inspired by the Dart library <code>blogger_theme</code>, this library enables writing highly modular, extensible Blogger themes using TypeScript and TSX/JSX. You write clean, declarative component layout files, structured CSS classes, and modular client-side JavaScript. When compiled, the compiler processes your TSX trees, automatically resolves namespaces, wraps CSS inside appropriate skins, compiles client-side scripts via <code>esbuild</code>, and outputs a single, fully compliant Blogger XML file ready for upload.</p>
 
   <!-- CALLOUT SUCCESS -->
   <div class="antinna-callout antinna-callout-success">
     <div class="antinna-callout-title">✅ Major Benefits of Compiler-Driven Themes</div>
-    <p class="antinna-callout-body">By adopting <code>@antinna/blogger-theme</code>, you gain: full Git trackability of small modular files, high-speed automated asset minification (shrinking CSS and JS weight), reusable partial layout widgets, and clean codebases that score perfect 100/100 marks on Google Lighthouse Core Web Vitals!</p>
+    <p class="antinna-callout-body">By adopting <code>@antinna/blogger-theme</code>, you gain: full Git trackability of small modular files, high-speed automated asset compilation (including on-demand TypeScript/JavaScript bundling), XML-safe entity rendering, reusable partial widgets, and clean codebases that score perfect 100/100 marks on Google Lighthouse Core Web Vitals!</p>
   </div>
 
   <hr class="antinna-divider" />
@@ -88,10 +90,10 @@
   <h2 id="section-3">
     <span class="antinna-step-badge">Step 3</span> Step-by-Step Guide: Quick Installation and Local Setup
   </h2>
-  <p>To begin building structured Blogger themes, make sure you have Node.js installed locally. Initialize a brand-new project and install the compiler via NPM as a development dependency:</p>
+  <p>To begin building structured Blogger themes, make sure you have Node.js installed locally. Initialize a brand-new project and install the compiler via NPM as a dependency. You will also want to install <code>esbuild</code> to take advantage of the client script bundling features:</p>
 
   <div class="antinna-inline-terminal">$ npm init -y</div>
-  <div class="antinna-inline-terminal">$ npm install @antinna/blogger-theme --save-dev</div>
+  <div class="antinna-inline-terminal">$ npm install @antinna/blogger-theme esbuild</div>
 
   <p>Next, construct a structured workspace to house your theme components. This keeps your development tree clean and organized:</p>
 
@@ -105,17 +107,12 @@
     </div>
     <pre><code class="language-text">my-blogger-theme/
 ├── src/
-│   ├── layout/
-│   │   └── default.html         # The master HTML skeleton
-│   ├── partials/
-│   │   ├── header.html          # Header widget component
-│   │   ├── footer.html          # Footer widget component
-│   │   └── sidebar.html         # Sidebar widget component
-│   ├── css/
-│   │   └── main.css             # Unified theme stylesheet
-│   └── js/
-│       └── app.js               # Theme interactive scripts
-├── blogger-theme.config.json    # The compiler config file
+│   ├── client/
+│   │   └── analytics.ts         # Client-side dynamic interactive script
+│   ├── components/
+│   │   └── BlogLayout.tsx       # TSX modular layout structure
+│   └── main.tsx                 # Theme generation entrypoint
+├── tsconfig.json                # TypeScript compiler config
 └── package.json</code></pre>
   </div>
 
@@ -123,33 +120,26 @@
 
   <!-- SECTION 4 -->
   <h2 id="section-4">
-    <span class="antinna-step-badge">Step 4</span> Step-by-Step Guide: Configuring blogger-theme.config.json
+    <span class="antinna-step-badge">Step 4</span> Step-by-Step Guide: Configuring tsconfig.json for TSX
   </h2>
-  <p>The compiler is controlled by a central configuration file named <code>blogger-theme.config.json</code>. This file instructs the compilation processor where to locate your layout assets, how to resolve widget files, and where to output the final compiled XML template.</p>
+  <p>To use TSX/JSX syntax in your project, configure your local <code>tsconfig.json</code> file. This instructs the TypeScript compiler to use the automatic JSX runtime provided by <code>@antinna/blogger-theme</code>, mapping JSX elements directly to the library's XML rendering engine:</p>
 
   <div class="antinna-code-wrapper">
     <div class="antinna-code-header">
       <div class="antinna-mac-dots">
         <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
       </div>
-      <span class="antinna-code-title">📂 blogger-theme.config.json</span>
+      <span class="antinna-code-title">📂 tsconfig.json</span>
       <button class="antinna-copy-btn">Copy</button>
     </div>
     <pre><code class="language-json">{
-  "themeName": "Antinna Minimalist Theme",
-  "version": "1.0.0",
-  "author": "Antinna Dev Team",
-  "input": {
-    "layout": "src/layout/default.html",
-    "css": "src/css/main.css",
-    "js": "src/js/app.js",
-    "partialsDir": "src/partials"
-  },
-  "output": "dist/theme.xml",
-  "minify": {
-    "css": true,
-    "js": true,
-    "html": false
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "jsx": "react-jsx",
+    "jsxImportSource": "@antinna/blogger-theme",
+    "strict": true
   }
 }</code></pre>
   </div>
@@ -158,65 +148,237 @@
 
   <!-- SECTION 5 -->
   <h2 id="section-5">
-    <span class="antinna-step-badge">Step 5</span> Step-by-Step Guide: Creating Modular Component Layouts
+    <span class="antinna-step-badge">Step 5</span> Step-by-Step Guide: Defining Layout Components in TSX
   </h2>
-  <p>Now let's draft our master layout. In our <code>src/layout/default.html</code> file, we write standard HTML and Blogger namespaces, but instead of writing long inline styles or repeating widget definitions, we use elegant double-brace syntax (such as <code>{{css}}</code>, <code>{{js}}</code>, or <code>{{include "filename"}}</code>) to dynamically inject compiled assets and modular components:</p>
+  <p>Now let's draft our modular layout component in <code>src/components/BlogLayout.tsx</code>. Instead of raw XML strings, we write clean JSX. Notice how we use native-feeling elements like <code>BSection</code>, <code>BWidget</code>, <code>BIf</code>, and <code>BData</code> imported from <code>@antinna/blogger-theme</code>. The compiler will render these with correct Blogger namespaces automatically!</p>
 
   <div class="antinna-code-wrapper">
     <div class="antinna-code-header">
       <div class="antinna-mac-dots">
         <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
       </div>
-      <span class="antinna-code-title">📂 src/layout/default.html</span>
+      <span class="antinna-code-title">📂 src/components/BlogLayout.tsx</span>
       <button class="antinna-copy-btn">Copy</button>
     </div>
-    <pre><code class="language-html">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
-&lt;html xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'&gt;
-&lt;head&gt;
-  &lt;meta charset='UTF-8'/&gt;
-  &lt;meta name='viewport' content='width=device-width, initial-scale=1'/&gt;
-  &lt;title&gt;&lt;data:blog.pageTitle/&gt;&lt;/title&gt;
+    <pre><code class="language-tsx">import { BSection, BWidget, BIf, BData } from "@antinna/blogger-theme";
 
-  &lt;!-- Automatically inject minified CSS theme skin --&gt;
-  &lt;b:skin&gt;&lt;![CDATA[
-    {{css}}
-  ]]&gt;&lt;/b:skin&gt;
-&lt;/head&gt;
-&lt;body&gt;
+export const BlogLayout = () => (
+  <div class="wrapper-pane">
+    {/* Master Header section wrapper */}
+    <BSection
+      id="header-area"
+      className="header-section"
+      maxwidgets={1}
+      showaddelement={true}
+    >
+      <BWidget
+        id="Header1"
+        type="Header"
+        title="Blog Header Title"
+        locked={true}
+      />
+    </BSection>
 
-  &lt;!-- Include modular header partial widget --&gt;
-  {{include "header.html"}}
-
-  &lt;main class='main-container'&gt;
-    &lt;!-- Include modular sidebar partial --&gt;
-    {{include "sidebar.html"}}
-
-    &lt;!-- Main Blog Posts Section --&gt;
-    &lt;b:section id='main-posts' class='main-posts' maxwidgets='1' showaddelement='yes'&gt;
-      &lt;b:widget id='Blog1' locked='true' title='Blog Posts' type='Blog'&gt;
-        &lt;!-- The compiler resolves widgets properly without messing up internal namespaces --&gt;
-      &lt;/b:widget&gt;
-    &lt;/b:section&gt;
-  &lt;/main&gt;
-
-  &lt;!-- Include modular footer partial widget --&gt;
-  {{include "footer.html"}}
-
-  &lt;!-- Automatically inject minified JS script modules --&gt;
-  &lt;script&gt;
-    {{js}}
-  &lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;</code></pre>
+    {/* Conditionally render content only on single post pages */}
+    <BIf cond="data:view.isPost">
+      <div class="post-item">
+        <article class="post-card">
+          <h1><BData value="data:blog.pageName" /></h1>
+          <div class="post-body">
+            <BData value="post.body" />
+          </div>
+        </article>
+      </div>
+    </BIf>
+  </div>
+);</code></pre>
   </div>
 
   <hr class="antinna-divider" />
 
   <!-- SECTION 6 -->
   <h2 id="section-6">
-    <span class="antinna-step-badge">Step 6</span> Step-by-Step Guide: Compiling Your Theme to Blogger XML
+    <span class="antinna-step-badge">Step 6</span> Step-by-Step Guide: Generating the Blogger Theme XML
   </h2>
-  <p>To run the compiler automatically, configure a short CLI script shortcut in your local <code>package.json</code> file:</p>
+  <p>In our entry file <code>src/main.tsx</code>, we initialize and export our main <code>BloggerTheme</code> wrapper instance. We pass standard template configurations, document headers (like titles and skins), and append our custom layout component tree in the body. When <code>theme.generate()</code> is invoked, it outputs the complete standard-compliant XML document:</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 src/main.tsx</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-tsx">import { BloggerTheme, Title, BSkin } from "@antinna/blogger-theme";
+import { BlogLayout } from "./components/BlogLayout.js";
+
+const theme = new BloggerTheme({
+  attributes: {
+    "b:responsive": "true",
+    "b:defaultwidgetversion": "2",
+    "b:layoutsversion": "3",
+  },
+  head: [
+    <Title>My Modern Blogger Theme</Title>,
+    <BSkin css="
+      body { font-family: sans-serif; background: #fafafa; color: #333; }
+      .wrapper-pane { max-width: 1200px; margin: 0 auto; padding: 20px; }
+      .post-card { background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+    " />,
+  ],
+  body: [
+    <BlogLayout />
+  ],
+});
+
+// Compile and output XML string
+const xml = theme.generate();
+console.log(xml);</code></pre>
+  </div>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 7 -->
+  <h2 id="section-7">
+    <span class="antinna-step-badge">Step 7</span> Dual API Support: Builder Style vs JSX Compilation
+  </h2>
+  <p>One of the most impressive architectural aspects of <code>@antinna/blogger-theme</code> is its native <strong>Dual-API support</strong>. If you do not want to configure JSX or prefer a classic Object-Oriented Programming (OOP) syntax to dynamically construct elements matching the Dart structure, you can use built-in constructors directly!</p>
+  <p>Here is how the exact same layout structure is built using standard class-based builders instead of TSX:</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 src/components/BuilderLayout.ts</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-typescript">import { BSection, BWidget, BIf, Div, BData, Article, H1 } from "@antinna/blogger-theme";
+
+export const layout = new Div(
+  { class: "wrapper-pane" },
+  new BSection(
+    {
+      id: "header-area",
+      className: "header-section",
+      maxwidgets: 1,
+      showaddelement: true,
+    },
+    new BWidget({
+      id: "Header1",
+      type: "Header",
+      title: "Blog Header Title",
+      locked: true,
+    }),
+  ),
+  new BIf(
+    { cond: "data:view.isPost" },
+    new Div(
+      { class: "post-item" },
+      new Article(
+        { class: "post-card" },
+        new H1({}, new BData("data:blog.pageName")),
+        new Div({ class: "post-body" }, new BData("post.body"))
+      )
+    ),
+  ),
+);
+
+// Call direct render to get raw XML
+const xml = layout.render();</code></pre>
+  </div>
+
+  <div class="antinna-table-overflow">
+    <table class="antinna-data-table">
+      <thead>
+        <tr>
+          <th>Feature / Metric</th>
+          <th>TSX/JSX Style</th>
+          <th>Constructor / OOP Style</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Readability</strong></td>
+          <td>Excellent; mirrors native HTML structure</td>
+          <td>Moderate; nested constructors can feel nested</td>
+        </tr>
+        <tr>
+          <td><strong>Setup Required</strong></td>
+          <td>Needs <code>tsconfig.json</code> configuration</td>
+          <td>Zero config; runs anywhere in Node.js</td>
+        </tr>
+        <tr>
+          <td><strong>IDE Support</strong></td>
+          <td>Type autocomplete with tags matching HTML/XML</td>
+          <td>Excellent; parameter descriptions and type safety</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 8 -->
+  <h2 id="section-8">
+    <span class="antinna-step-badge">Step 8</span> Advanced Feature: On-Demand Client Script Bundling with BClientScript
+  </h2>
+  <p>Normally, adding client-side script trackers, interactive analytics, or DOM manipulation libraries to Blogger involves uploading files elsewhere or manually pasting minified JavaScript code inside XML CDATA blocks. This completely breaks version control and maintainability.</p>
+  <p>With <code>@antinna/blogger-theme</code>, you can compile external TypeScript/JavaScript source files on-demand during the layout rendering stage! By using the <code>&lt;BClientScript /&gt;</code> component, the compiler invokes <code>esbuild</code> behind the scenes to bundle, minify, and wrap your file into a clean, self-invoking IIFE block instantly:</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 src/client/analytics.ts</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-typescript">// Modular Client Script supporting TypeScript types
+export const initAnalytics = (trackingId: string): void => {
+  console.log(`[Antinna Analytics] Initializing track ID: ${trackingId}`);
+  window.addEventListener("DOMContentLoaded", () => {
+    const pageViewData = {
+      href: window.location.href,
+      referrer: document.referrer,
+      time: new Date().toISOString()
+    };
+    // Send telemetry data
+    navigator.sendBeacon("/api/log", JSON.stringify(pageViewData));
+  });
+};
+
+initAnalytics("UA-99887766-1");</code></pre>
+  </div>
+
+  <p>To bundle this script directly inside your master layout, include the component in your layout or head. During theme compilation, it renders a optimized <code>&lt;script&gt;</code> element with full minification and CDATA escaping automatically:</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 Embedding BClientScript</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-tsx">import { BClientScript } from "@antinna/blogger-theme";
+
+// Inside your TSX header head array or layout body:
+<BClientScript scriptPath="./src/client/analytics.ts" contentInCDATA={true} /></code></pre>
+  </div>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 9 -->
+  <h2 id="section-9">
+    <span class="antinna-step-badge">Step 9</span> Step-by-Step Guide: Compiling Your Theme via CLI
+  </h2>
+  <p>You can compile your theme entry file instantly from the command line using the built-in CLI compiler. Running the CLI aggregates all imported TSX components, processes <code>BClientScript</code> configurations, resolves entities, and writes output files:</p>
+
+  <div class="antinna-inline-terminal">$ npx @antinna/blogger-theme ./src/main.tsx --out ./theme.xml</div>
+
+  <p>Configure a package.json script shortcut to run the builder easily. This enables high-speed iteration with live-reload support using the watch flag (<code>-w</code> or <code>--watch</code>) during local template development:</p>
 
   <div class="antinna-code-wrapper">
     <div class="antinna-code-header">
@@ -228,125 +390,41 @@
     </div>
     <pre><code class="language-json">{
   "scripts": {
-    "build": "blogger-theme-compiler --config blogger-theme.config.json"
+    "build": "blogger-theme ./src/main.tsx --out ./dist/theme.xml",
+    "watch": "blogger-theme ./src/main.tsx --out ./dist/theme.xml --watch"
   }
 }</code></pre>
   </div>
 
-  <p>Now, execute the automated compilation sequence. The compiler will aggregate and process your layout tree instantly, outputting the final file to the designated target:</p>
+  <p>Now, run the build sequence: the compiler processes your layout components, bundles assets, and generates the production-ready theme in less than 50 milliseconds!</p>
 
   <div class="antinna-inline-terminal">$ npm run build</div>
 
-  <p>Voila! Open your <code>dist/theme.xml</code> file, copy its compiled text, and paste it directly into the HTML editor of your Blogger dashboard. You now have a state-of-the-art compiled theme built using modern component-based principles!</p>
+  <p>Voila! Open your <code>dist/theme.xml</code> file, copy its compiled text, and paste it directly into the HTML editor of your Blogger dashboard. You now have an advanced, robust, and lightning-fast theme built with modern, structured TypeScript coding practices!</p>
 
   <hr class="antinna-divider" />
 
-  <!-- SECTION 7 -->
-  <h2 id="section-7">
-    <span class="antinna-step-badge">Step 7</span> Real-World Case Study: Building a Custom Local SEO Widget
+  <!-- SECTION 10 -->
+  <h2 id="section-10">
+    <span class="antinna-step-badge">Step 10</span> Best Practices for Developing High-Performance Blogger Themes
   </h2>
-  <p>Let's show how modular layout widgets can improve on-page SEO signals and speed up local page rankings. Let's build a clean, modular Local SEO Contact Widget partial that can be included anywhere on our site using single-line directives.</p>
-
-  <div class="antinna-code-wrapper">
-    <div class="antinna-code-header">
-      <div class="antinna-mac-dots">
-        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-      </div>
-      <span class="antinna-code-title">📂 src/partials/local-contact.html</span>
-      <button class="antinna-copy-btn">Copy</button>
-    </div>
-    <pre><code class="language-html">&lt;div class="local-seo-widget"&gt;
-  &lt;h3 class="widget-heading"&gt;📍 Antinna Plumbing Local Support&lt;/h3&gt;
-  &lt;p class="widget-body"&gt;
-    Need fast emergency assistance? Our team is available 24/7.
-  &lt;/p&gt;
-  &lt;ul class="contact-details"&gt;
-    &lt;li&gt;&lt;strong&gt;Phone:&lt;/strong&gt; +1-555-0199&lt;/li&gt;
-    &lt;li&gt;&lt;strong&gt;Address:&lt;/strong&gt; 123 Semantic Way, Suite A, San Francisco, CA&lt;/li&gt;
-    &lt;li&gt;&lt;strong&gt;Operating Hours:&lt;/strong&gt; 24 Hours / 7 Days a week&lt;/li&gt;
-  &lt;/ul&gt;
-  &lt;a href="https://antinna.com/contact" class="widget-btn"&gt;📅 Book an Appointment Online&lt;/a&gt;
-&lt;/div&gt;</code></pre>
-  </div>
-
-  <p>Inside our stylesheet <code>src/css/main.css</code>, we can scope styling rules for this widget cleanly:</p>
-
-  <div class="antinna-code-wrapper">
-    <div class="antinna-code-header">
-      <div class="antinna-mac-dots">
-        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-      </div>
-      <span class="antinna-code-title">📂 src/css/main.css</span>
-      <button class="antinna-copy-btn">Copy</button>
-    </div>
-    <pre><code class="language-css">/* Local SEO Contact Widget Styling */
-.local-seo-widget {
-  background-color: #f8fafc;
-  border-left: 5px solid #3182ce;
-  padding: 20px;
-  margin: 25px 0;
-  border-radius: 6px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-}
-
-.widget-heading {
-  color: #1a202c;
-  margin-top: 0;
-  font-size: 1.25rem;
-  font-weight: 700;
-}
-
-.contact-details {
-  list-style: none;
-  padding-left: 0;
-  margin: 15px 0;
-}
-
-.contact-details li {
-  margin-bottom: 8px;
-}
-
-.widget-btn {
-  display: inline-block;
-  background-color: #3182ce;
-  color: #ffffff;
-  padding: 10px 18px;
-  border-radius: 4px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: background-color 0.2s;
-}
-
-.widget-btn:hover {
-  background-color: #2b6cb0;
-}</code></pre>
-  </div>
-
-  <p>To include this widget across multiple layouts or deep inside single post structures, simply write <code>{{include "local-contact.html"}}</code> wherever required. The compiler resolves the dependency, gathers the styled components, and aggregates everything flawlessly.</p>
-
-  <hr class="antinna-divider" />
-
-  <!-- SECTION 8 -->
-  <h2 id="section-8">
-    <span class="antinna-step-badge">Step 8</span> Best Practices for Developing High-Speed Blogger Themes
-  </h2>
-  <p>To maximize SEO rankings and ensure seamless validation of your compiled templates, keep these best practices in mind:</p>
+  <p>To maximize your site speed, maintain clean structures, and ensure proper schema validation, keep these key best practices in mind:</p>
   <ol>
-    <li><strong>Scope Your Styles</strong>: Use clear naming conventions (such as BEM - Block Element Modifier) to prevent your custom CSS classes from conflicting with default Blogger widget layout properties.</li>
-    <li><strong>Automate Minification</strong>: Keep <code>"minify": {"css": true, "js": true}</code> active inside your config file. This guarantees micro-sized asset payloads and incredibly fast mobile speeds.</li>
-    <li><strong>Keep Javascript Light</strong>: Maximize the use of modern vanilla JavaScript rather than bloating your compiled templates with heavy external libraries like jQuery.</li>
-    <li><strong>Validate Locally</strong>: Use standard dry-run features or compiler logs to spot structural layout errors locally before committing changes online.</li>
+    <li><strong>Leverage BClientScript</strong>: Avoid inline scripts inside layouts. Keeping JS in separate TypeScript files ensures full syntax checks, type safety, and automatic render-time bundling.</li>
+    <li><strong>Use Scoped CSS</strong>: Since XML files can grow large, write scoped CSS classes inside specific component functions or use utility frameworks to prevent styles from leaking.</li>
+    <li><strong>Keep Elements Nested Correctly</strong>: Ensure that interactive Blogger tags (like <code>BData</code>, <code>BIf</code>, and nested <code>BWidget</code> elements) are nested inside parent <code>BSection</code> wrappers to satisfy standard Blogger platform rules.</li>
+    <li><strong>Enable Strict Types</strong>: Do not bypass TypeScript compiler alerts. Correct type checks prevent layout variables from rendering empty tags.</li>
   </ol>
 
   <hr class="antinna-divider" />
 
-  <!-- SECTION 9 -->
-  <h2 id="section-9">
-    <span class="antinna-step-badge">Step 9</span> Summary and Next Steps
+  <!-- SECTION 11 -->
+  <h2 id="section-11">
+    <span class="antinna-step-badge">Step 11</span> Summary and Next Steps
   </h2>
-  <p>Designing modern themes for Google's Blogger platform no longer requires struggling with monolithic XML templates. By leveraging the power of <code>@antinna/blogger-theme</code>, you can build responsive, high-performance, and AdSense-optimized blogs using modern, modular engineering best practices.</p>
+  <p>Designing modern, responsive themes for Google's Blogger platform no longer requires struggling with messy monolithic XML files. By utilizing the declarative compiler power of <code>@antinna/blogger-theme</code>, you can build modular, type-safe templates with React-like TSX layouts, automated CDATA client-script bundling, and full esbuild integration.</p>
 
-  <p>Get started today by checking out the official package on npm:</p>
+  <p>Take control of your template directories today by checking out the official package on npm:</p>
   <div class="antinna-inline-terminal">$ npm view @antinna/blogger-theme</div>
 
   <hr class="antinna-divider" />
@@ -366,6 +444,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-tsx.min.js"></script>
 
 <!-- INTERACTIVE SCRIPTS: SMOOTH TOC SCROLL + COPY BUTTONS -->
 <script>
@@ -736,11 +816,12 @@
     color: #1a202c !important;
     padding: 14px 16px !important;
     border-bottom: 2px solid #e2e8f0 !important;
+    vertical-align: middle !important;
   }
   .antinna-data-table td {
     padding: 14px 16px !important;
     border-bottom: 1px solid #e2e8f0 !important;
-    vertical-align: top !important;
+    vertical-align: middle !important;
     color: #2d3748 !important;
   }
   .antinna-data-table tr:last-child td {
