@@ -44,13 +44,14 @@
       <li><a href="#section-2">2. What is @antinna/blogger-theme?</a></li>
       <li><a href="#section-3">3. Step-by-Step Guide: Quick Installation and Local Setup</a></li>
       <li><a href="#section-4">4. Step-by-Step Guide: Configuring tsconfig.json for TSX</a></li>
-      <li><a href="#section-5">5. Step-by-Step Guide: Defining Layout Components in TSX</a></li>
-      <li><a href="#section-6">6. Step-by-Step Guide: Generating the Blogger Theme XML</a></li>
-      <li><a href="#section-7">7. Dual API Support: Builder Style vs JSX Compilation</a></li>
-      <li><a href="#section-8">8. Advanced Feature: On-Demand Client Script Bundling with BClientScript</a></li>
-      <li><a href="#section-9">9. Step-by-Step Guide: Compiling Your Theme via CLI</a></li>
-      <li><a href="#section-10">10. Best Practices for Developing High-Performance Blogger Themes</a></li>
-      <li><a href="#section-11">11. Summary and Next Steps</a></li>
+      <li><a href="#section-5">5. Step-by-Step Guide: Configuring Full JSX Global Typings (blogger-theme.d.ts)</a></li>
+      <li><a href="#section-6">6. Step-by-Step Guide: Defining Layout Components in TSX</a></li>
+      <li><a href="#section-7">7. Step-by-Step Guide: Generating the Blogger Theme XML (main.tsx)</a></li>
+      <li><a href="#section-8">8. Dual API Support: Builder Style vs JSX Compilation</a></li>
+      <li><a href="#section-9">9. Advanced Feature: On-Demand Client Script Bundling with BClientScript</a></li>
+      <li><a href="#section-10">10. Step-by-Step Guide: Compiling Your Theme via CLI</a></li>
+      <li><a href="#section-11">11. Best Practices for Developing High-Performance Blogger Themes</a></li>
+      <li><a href="#section-12">12. Summary and Next Steps</a></li>
     </ul>
   </div>
 
@@ -111,6 +112,8 @@
 │   │   └── analytics.ts         # Client-side dynamic interactive script
 │   ├── components/
 │   │   └── BlogLayout.tsx       # TSX modular layout structure
+│   ├── types/
+│   │   └── blogger-theme.d.ts   # Global JSX Type Declarations
 │   └── main.tsx                 # Theme generation entrypoint
 ├── tsconfig.json                # TypeScript compiler config
 └── package.json</code></pre>
@@ -148,9 +151,140 @@
 
   <!-- SECTION 5 -->
   <h2 id="section-5">
-    <span class="antinna-step-badge">Step 5</span> Step-by-Step Guide: Defining Layout Components in TSX
+    <span class="antinna-step-badge">Step 5</span> Step-by-Step Guide: Configuring Full JSX Global Typings (blogger-theme.d.ts)
   </h2>
-  <p>Now let's draft our modular layout component in <code>src/components/BlogLayout.tsx</code>. Instead of raw XML strings, we write clean JSX. Notice how we use native-feeling elements like <code>BSection</code>, <code>BWidget</code>, <code>BIf</code>, and <code>BData</code> imported from <code>@antinna/blogger-theme</code>. The compiler will render these with correct Blogger namespaces automatically!</p>
+  <p>To enable flawless TypeScript autocomplete and type safety for both standard HTML elements and specialized Blogger-native tags (like <code>&lt;b:section&gt;</code>, <code>&lt;b:widget&gt;</code>, <code>&lt;b:if&gt;</code>, etc.), configure a global typing definition file named <code>src/types/blogger-theme.d.ts</code> in your project. This maps the elements directly to the core <code>Component</code> class:</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 src/types/blogger-theme.d.ts</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-typescript">import { Component } from '@antinna/blogger-theme';
+
+declare global {
+  namespace JSX {
+    interface Element extends Component {}
+    interface ElementClass extends Component {}
+
+    interface HTMLAttributes {
+      id?: string;
+      class?: string;
+      className?: string;
+      style?: string;
+      title?: string;
+      name?: string;
+      type?: string;
+      value?: string | number;
+      placeholder?: string;
+      disabled?: boolean;
+      href?: string;
+      target?: string;
+      src?: string;
+      alt?: string;
+      width?: string | number;
+      height?: string | number;
+      async?: boolean | string;
+      defer?: boolean | string;
+      rel?: string;
+      media?: string;
+      method?: string;
+      action?: string;
+      rows?: number;
+      cols?: number;
+      checked?: boolean;
+      selected?: boolean;
+      [attributeName: string]: any;
+    }
+
+    interface IntrinsicElements {
+      // Standard HTML elements
+      html: HTMLAttributes;
+      head: HTMLAttributes;
+      body: HTMLAttributes;
+      title: HTMLAttributes;
+      meta: HTMLAttributes;
+      link: HTMLAttributes;
+      base: HTMLAttributes;
+      div: HTMLAttributes;
+      span: HTMLAttributes;
+      p: HTMLAttributes;
+      h1: HTMLAttributes;
+      h2: HTMLAttributes;
+      h3: HTMLAttributes;
+      h4: HTMLAttributes;
+      h5: HTMLAttributes;
+      h6: HTMLAttributes;
+      ul: HTMLAttributes;
+      li: HTMLAttributes;
+      ol: HTMLAttributes;
+      a: HTMLAttributes;
+      img: HTMLAttributes;
+      input: HTMLAttributes;
+      button: HTMLAttributes;
+      form: HTMLAttributes;
+      label: HTMLAttributes;
+      select: HTMLAttributes;
+      option: HTMLAttributes;
+      textarea: HTMLAttributes;
+      script: HTMLAttributes &amp; { src?: string; type?: string; async?: boolean | string; contentInCDATA?: boolean };
+      style: HTMLAttributes;
+      br: HTMLAttributes;
+      hr: HTMLAttributes;
+      header: HTMLAttributes;
+      footer: HTMLAttributes;
+      main: HTMLAttributes;
+      nav: HTMLAttributes;
+      section: HTMLAttributes;
+      article: HTMLAttributes;
+      aside: HTMLAttributes;
+      details: HTMLAttributes;
+      summary: HTMLAttributes;
+
+      // Blogger native lowercase elements (for developers who prefer lowercase tag syntax)
+      'b:section': HTMLAttributes &amp; { id: string; class?: string; maxwidgets?: number | string; showaddelement?: boolean | string; growth?: string; preferred?: boolean | string };
+      'b:widget': HTMLAttributes &amp; { id: string; type: string; title?: string; locked?: boolean | string; pageType?: string; mobile?: string; version?: number | string; visible?: boolean | string };
+      'b:widget-settings': HTMLAttributes;
+      'b:widget-setting': HTMLAttributes &amp; { name: string };
+      'b:if': HTMLAttributes &amp; { cond: string };
+      'b:elseif': HTMLAttributes &amp; { cond: string };
+      'b:else': HTMLAttributes;
+      'b:loop': HTMLAttributes &amp; { values: string; var: string; index?: string };
+      'b:include': HTMLAttributes &amp; { name: string; data?: string; cond?: string };
+      'b:includable': HTMLAttributes &amp; { id: string; var?: string };
+      'b:attr': HTMLAttributes &amp; { name: string; value: string; 'expr:value'?: string; cond?: string };
+      'b:class': HTMLAttributes &amp; { name: string; cond: string };
+      'b:tag': HTMLAttributes &amp; { name?: string; cond?: string };
+      'b:eval': HTMLAttributes &amp; { expr: string };
+      'b:with': HTMLAttributes &amp; { var: string; value: string };
+      'b:switch': HTMLAttributes &amp; { var: string };
+      'b:case': HTMLAttributes &amp; { value: string };
+      'b:default': HTMLAttributes;
+      'b:message': HTMLAttributes &amp; { name: string };
+      'b:comment': HTMLAttributes;
+      'b:template-skin': HTMLAttributes;
+      'b:template-script': HTMLAttributes &amp; { name: string; version: string; async?: boolean | string };
+      'b:param': HTMLAttributes &amp; { value?: string; 'expr:value'?: string };
+      'b:defaultmarkup': HTMLAttributes &amp; { type: string };
+      'b:defaultmarkups': HTMLAttributes;
+
+      // Dynamic tags fallback
+      [elemName: string]: any;
+    }
+  }
+}</code></pre>
+  </div>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 6 -->
+  <h2 id="section-6">
+    <span class="antinna-step-badge">Step 6</span> Step-by-Step Guide: Defining Layout Components in TSX
+  </h2>
+  <p>Now let's draft our modular layout component. Notice how we import components like <code>BSection</code>, <code>BWidget</code>, <code>BIf</code>, and <code>BData</code> directly from <code>@antinna/blogger-theme</code>. The global declarations we configured above guarantee full type safety during building!</p>
 
   <div class="antinna-code-wrapper">
     <div class="antinna-code-header">
@@ -196,11 +330,11 @@ export const BlogLayout = () => (
 
   <hr class="antinna-divider" />
 
-  <!-- SECTION 6 -->
-  <h2 id="section-6">
-    <span class="antinna-step-badge">Step 6</span> Step-by-Step Guide: Generating the Blogger Theme XML
+  <!-- SECTION 7 -->
+  <h2 id="section-7">
+    <span class="antinna-step-badge">Step 7</span> Step-by-Step Guide: Generating the Blogger Theme XML (main.tsx)
   </h2>
-  <p>In our entry file <code>src/main.tsx</code>, we initialize and export our main <code>BloggerTheme</code> wrapper instance. We pass standard template configurations, document headers (like titles and skins), and append our custom layout component tree in the body. When <code>theme.generate()</code> is invoked, it outputs the complete standard-compliant XML document:</p>
+  <p>In our main entrypoint file <code>src/main.tsx</code>, we initialize our theme utilizing the declarative TSX style. We import our layout, setup default layout versions, provide our skin CSS definitions, and invoke the generator to output the production template string:</p>
 
   <div class="antinna-code-wrapper">
     <div class="antinna-code-header">
@@ -210,38 +344,60 @@ export const BlogLayout = () => (
       <span class="antinna-code-title">📂 src/main.tsx</span>
       <button class="antinna-copy-btn">Copy</button>
     </div>
-    <pre><code class="language-tsx">import { BloggerTheme, Title, BSkin } from "@antinna/blogger-theme";
-import { BlogLayout } from "./components/BlogLayout.js";
+    <pre><code class="language-tsx">import { Component } from '@antinna/blogger-theme';
+import {
+  BloggerTheme,
+  BSection,
+  BWidget,
+  BIf,
+  BData,
+  BSkin,
+  Title,
+  h,
+  Fragment,
+} from '@antinna/blogger-theme';
 
+// 1. Define your layout component using TSX (Declarative JSX Style)
+const BlogLayout = () => (
+  <div class="wrapper-pane">
+    <BSection id="header-area" className="header-section" maxwidgets={1} showaddelement={true}>
+      <BWidget id="Header1" type="Header" title="Blog Header Title" locked={true} />
+    </BSection>
+
+    <BIf cond="data:view.isPost">
+      <div class="post-item">
+        <BData value="post.body" />
+      </div>
+    </BIf>
+  </div>
+);
+
+// 2. Generate Blogger theme XML
 const theme = new BloggerTheme({
   attributes: {
-    "b:responsive": "true",
-    "b:defaultwidgetversion": "2",
-    "b:layoutsversion": "3",
+    'b:responsive': 'true',
+    'b:defaultwidgetversion': '2',
+    'b:layoutsversion': '3',
   },
   head: [
-    <Title>My Modern Blogger Theme</Title>,
-    <BSkin css="
-      body { font-family: sans-serif; background: #fafafa; color: #333; }
-      .wrapper-pane { max-width: 1200px; margin: 0 auto; padding: 20px; }
-      .post-card { background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-    " />,
+    <Title>Generated Blogger Theme</Title>,
+    <BSkin css="body { font-family: Arial, sans-serif; }" />,
   ],
-  body: [
-    <BlogLayout />
-  ],
+  body: [<BlogLayout />],
 });
 
-// Compile and output XML string
 const xml = theme.generate();
-console.log(xml);</code></pre>
+console.log('--- GENERATED BLOGGER TEMPLATE XML ---');
+console.log(xml);
+
+export default theme;</code></pre>
   </div>
 
   <hr class="antinna-divider" />
 
-  <!-- SECTION 7 -->
-  <h2 id="section-7">
-    <span class="antinna-step-badge">Step 7</span> Dual API Support: Builder Style vs JSX Compilation
+  <!-- SECTION 8 -->
+  <h2 id="section-8">
+    <span class="antinna-step-badge">Step 8</span> Dual API Support: Builder Style vs JSX Compilation
   </h2>
   <p>One of the most impressive architectural aspects of <code>@antinna/blogger-theme</code> is its native <strong>Dual-API support</strong>. If you do not want to configure JSX or prefer a classic Object-Oriented Programming (OOP) syntax to dynamically construct elements matching the Dart structure, you can use built-in constructors directly!</p>
   <p>Here is how the exact same layout structure is built using standard class-based builders instead of TSX:</p>
@@ -320,9 +476,9 @@ const xml = layout.render();</code></pre>
 
   <hr class="antinna-divider" />
 
-  <!-- SECTION 8 -->
-  <h2 id="section-8">
-    <span class="antinna-step-badge">Step 8</span> Advanced Feature: On-Demand Client Script Bundling with BClientScript
+  <!-- SECTION 9 -->
+  <h2 id="section-9">
+    <span class="antinna-step-badge">Step 9</span> Advanced Feature: On-Demand Client Script Bundling with BClientScript
   </h2>
   <p>Normally, adding client-side script trackers, interactive analytics, or DOM manipulation libraries to Blogger involves uploading files elsewhere or manually pasting minified JavaScript code inside XML CDATA blocks. This completely breaks version control and maintainability.</p>
   <p>With <code>@antinna/blogger-theme</code>, you can compile external TypeScript/JavaScript source files on-demand during the layout rendering stage! By using the <code>&lt;BClientScript /&gt;</code> component, the compiler invokes <code>esbuild</code> behind the scenes to bundle, minify, and wrap your file into a clean, self-invoking IIFE block instantly:</p>
@@ -352,7 +508,7 @@ export const initAnalytics = (trackingId: string): void => {
 initAnalytics("UA-99887766-1");</code></pre>
   </div>
 
-  <p>To bundle this script directly inside your master layout, include the component in your layout or head. During theme compilation, it renders a optimized <code>&lt;script&gt;</code> element with full minification and CDATA escaping automatically:</p>
+  <p>To bundle this script directly inside your master layout, include the component in your layout or head. During theme compilation, it renders an optimized <code>&lt;script&gt;</code> element with full minification and CDATA escaping automatically:</p>
 
   <div class="antinna-code-wrapper">
     <div class="antinna-code-header">
@@ -370,15 +526,11 @@ initAnalytics("UA-99887766-1");</code></pre>
 
   <hr class="antinna-divider" />
 
-  <!-- SECTION 9 -->
-  <h2 id="section-9">
-    <span class="antinna-step-badge">Step 9</span> Step-by-Step Guide: Compiling Your Theme via CLI
+  <!-- SECTION 10 -->
+  <h2 id="section-10">
+    <span class="antinna-step-badge">Step 10</span> Step-by-Step Guide: Compiling Your Theme via CLI
   </h2>
-  <p>You can compile your theme entry file instantly from the command line using the built-in CLI compiler. Running the CLI aggregates all imported TSX components, processes <code>BClientScript</code> configurations, resolves entities, and writes output files:</p>
-
-  <div class="antinna-inline-terminal">$ npx @antinna/blogger-theme ./src/main.tsx --out ./theme.xml</div>
-
-  <p>Configure a package.json script shortcut to run the builder easily. This enables high-speed iteration with live-reload support using the watch flag (<code>-w</code> or <code>--watch</code>) during local template development:</p>
+  <p>To compile your theme entry file easily, configure short package scripts that automatically ensure target distribution folders exist before running the compiler. This prevents directory-not-found errors during compilation:</p>
 
   <div class="antinna-code-wrapper">
     <div class="antinna-code-header">
@@ -390,13 +542,13 @@ initAnalytics("UA-99887766-1");</code></pre>
     </div>
     <pre><code class="language-json">{
   "scripts": {
-    "build": "blogger-theme ./src/main.tsx --out ./dist/theme.xml",
-    "watch": "blogger-theme ./src/main.tsx --out ./dist/theme.xml --watch"
+    "build": "node -e \"require('fs').mkdirSync('dist', { recursive: true })\" &amp;&amp; npx @antinna/blogger-theme ./src/main.tsx --out ./dist/theme.xml",
+    "watch": "node -e \"require('fs').mkdirSync('dist', { recursive: true })\" &amp;&amp; npx @antinna/blogger-theme ./src/main.tsx --out ./dist/theme.xml --watch"
   }
 }</code></pre>
   </div>
 
-  <p>Now, run the build sequence: the compiler processes your layout components, bundles assets, and generates the production-ready theme in less than 50 milliseconds!</p>
+  <p>Execute the automated build command. The compiler will aggregate and process your layout tree, compile your assets, and output the target theme.xml file in less than 50 milliseconds:</p>
 
   <div class="antinna-inline-terminal">$ npm run build</div>
 
@@ -404,9 +556,9 @@ initAnalytics("UA-99887766-1");</code></pre>
 
   <hr class="antinna-divider" />
 
-  <!-- SECTION 10 -->
-  <h2 id="section-10">
-    <span class="antinna-step-badge">Step 10</span> Best Practices for Developing High-Performance Blogger Themes
+  <!-- SECTION 11 -->
+  <h2 id="section-11">
+    <span class="antinna-step-badge">Step 11</span> Best Practices for Developing High-Performance Blogger Themes
   </h2>
   <p>To maximize your site speed, maintain clean structures, and ensure proper schema validation, keep these key best practices in mind:</p>
   <ol>
@@ -418,9 +570,9 @@ initAnalytics("UA-99887766-1");</code></pre>
 
   <hr class="antinna-divider" />
 
-  <!-- SECTION 11 -->
-  <h2 id="section-11">
-    <span class="antinna-step-badge">Step 11</span> Summary and Next Steps
+  <!-- SECTION 12 -->
+  <h2 id="section-12">
+    <span class="antinna-step-badge">Step 12</span> Summary and Next Steps
   </h2>
   <p>Designing modern, responsive themes for Google's Blogger platform no longer requires struggling with messy monolithic XML files. By utilizing the declarative compiler power of <code>@antinna/blogger-theme</code>, you can build modular, type-safe templates with React-like TSX layouts, automated CDATA client-script bundling, and full esbuild integration.</p>
 
