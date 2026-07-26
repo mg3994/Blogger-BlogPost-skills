@@ -1,0 +1,775 @@
+<!-- BANNER IMAGE -->
+<div class="separator" style="clear: both">
+  <a
+    href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgj_placeholder-hero-banner.png"
+    style="display: block; padding: 1em 0; text-align: center"
+    ><img
+      alt="@antinna/blogger-theme: Say Goodbye to Designing Single XML Files for Blogger"
+      border="0"
+      data-original-height="500"
+      data-original-width="1000"
+      src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgj_placeholder-hero-banner.png"
+  /></a>
+</div>
+
+<!-- OPTIONAL: NPM / GITHUB BADGES SECTION -->
+<div style="display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap">
+  <a href="https://www.npmjs.com/package/@antinna/blogger-theme" target="_blank">
+    <img src="https://img.shields.io/npm/v/@antinna/blogger-theme.svg?style=flat-square" alt="npm version" />
+  </a>
+  <a href="https://www.npmjs.com/package/@antinna/blogger-theme" target="_blank">
+    <img src="https://img.shields.io/npm/l/@antinna/blogger-theme.svg?style=flat-square" alt="license" />
+  </a>
+</div>
+
+<!-- MAIN CONTENT CONTAINER -->
+<div class="antinna-blog-container">
+
+  <!-- LEAD PARAGRAPH -->
+  <p>Are you tired of designing one single, massive, unmanageable XML file for your Google Blogger templates? Anyone who has ever tried to build a custom Blogger theme from scratch knows the absolute nightmare of editing thousands of lines of raw, inline styles, messy XML widget syntax, and archaic layouts in a single file. There is no code modularity, no component-based structure, and almost zero tooling support. Thankfully, the development experience has taken a massive leap forward. Introducing <code>@antinna/blogger-theme</code>—a revolutionary NPM package designed to compile clean, modular component structures into production-ready Blogger XML files automatically!</p>
+
+  <!-- CALLOUT BOX INFO -->
+  <div class="antinna-callout antinna-callout-info">
+    <div class="antinna-callout-title">ℹ️ A Modern Approach to Legacy Blogging</div>
+    <p class="antinna-callout-body">Google's Blogger platform remains one of the most reliable and highly cost-effective platforms for SEO and Google AdSense monetization due to its free hosting and zero operational maintenance. By compiling modern components into the required Blogger XML format using <code>@antinna/blogger-theme</code>, you get the performance and developer experience of a static site generator combined with the robust, zero-cost scaling of Google's global server infrastructure!</p>
+  </div>
+
+  <hr class="antinna-divider" />
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="antinna-toc">
+    <h3>📖 Quick Navigation</h3>
+    <ul>
+      <li><a href="#section-1">1. The Blogger Theme Pain Point: The Monolithic XML Nightmare</a></li>
+      <li><a href="#section-2">2. What is @antinna/blogger-theme?</a></li>
+      <li><a href="#section-3">3. Step-by-Step Guide: Quick Installation and Local Setup</a></li>
+      <li><a href="#section-4">4. Step-by-Step Guide: Configuring blogger-theme.config.json</a></li>
+      <li><a href="#section-5">5. Step-by-Step Guide: Creating Modular Component Layouts</a></li>
+      <li><a href="#section-6">6. Step-by-Step Guide: Compiling Your Theme to Blogger XML</a></li>
+      <li><a href="#section-7">7. Real-World Case Study: Building a Custom Local SEO Widget</a></li>
+      <li><a href="#section-8">8. Best Practices for Developing High-Speed Blogger Themes</a></li>
+      <li><a href="#section-9">9. Summary and Next Steps</a></li>
+    </ul>
+  </div>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 1 -->
+  <h2 id="section-1">
+    <span class="antinna-step-badge">Step 1</span> The Blogger Theme Pain Point: The Monolithic XML Nightmare
+  </h2>
+  <p>Standard modern web workflows are built on modularity. We write scoped CSS, independent HTML partials, and isolated JavaScript modules using tools like Webpack, Vite, or PostCSS. Yet, when designing a template for Google Blogger, you are forced to throw these modern engineering practices out the window.</p>
+  <p>Blogger requires a single <code>.xml</code> template file, which typically contains:</p>
+  <ul>
+    <li>The entire master HTML backbone structure.</li>
+    <li>Messy inline CSS overrides wrapped inside critical <code>&lt;b:skin&gt;</code> tags.</li>
+    <li>Outdated and verbose layout widget markup (such as <code>&lt;b:widget&gt;</code>, <code>&lt;b:section&gt;</code>, and <code>&lt;b:includable&gt;</code>).</li>
+    <li>Sparsely placed script files that block page rendering.</li>
+  </ul>
+  <p>Trying to collaborate in teams, use Git version control, or perform modular refactoring inside a 10,000-line XML monolith is practically impossible. It leads to silent parsing errors, broken templates, and immense developer fatigue.</p>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 2 -->
+  <h2 id="section-2">
+    <span class="antinna-step-badge">Step 2</span> What is @antinna/blogger-theme?
+  </h2>
+  <p>The <code>@antinna/blogger-theme</code> package bridges this gap by acting as a modern compiler. It lets you write individual HTML/Blogger layout components, clean external CSS files, and modular JavaScript files in a neat, well-structured local directory. When you run the compilation command, the compiler reads your repository configuration, gathers your partial components, minifies your assets, resolves namespaces, and outputs a single, fully-optimized Blogger-compliant XML theme file ready for instant upload.</p>
+
+  <!-- CALLOUT SUCCESS -->
+  <div class="antinna-callout antinna-callout-success">
+    <div class="antinna-callout-title">✅ Major Benefits of Compiler-Driven Themes</div>
+    <p class="antinna-callout-body">By adopting <code>@antinna/blogger-theme</code>, you gain: full Git trackability of small modular files, high-speed automated asset minification (shrinking CSS and JS weight), reusable partial layout widgets, and clean codebases that score perfect 100/100 marks on Google Lighthouse Core Web Vitals!</p>
+  </div>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 3 -->
+  <h2 id="section-3">
+    <span class="antinna-step-badge">Step 3</span> Step-by-Step Guide: Quick Installation and Local Setup
+  </h2>
+  <p>To begin building structured Blogger themes, make sure you have Node.js installed locally. Initialize a brand-new project and install the compiler via NPM as a development dependency:</p>
+
+  <div class="antinna-inline-terminal">$ npm init -y</div>
+  <div class="antinna-inline-terminal">$ npm install @antinna/blogger-theme --save-dev</div>
+
+  <p>Next, construct a structured workspace to house your theme components. This keeps your development tree clean and organized:</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 project-structure-preview</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-text">my-blogger-theme/
+├── src/
+│   ├── layout/
+│   │   └── default.html         # The master HTML skeleton
+│   ├── partials/
+│   │   ├── header.html          # Header widget component
+│   │   ├── footer.html          # Footer widget component
+│   │   └── sidebar.html         # Sidebar widget component
+│   ├── css/
+│   │   └── main.css             # Unified theme stylesheet
+│   └── js/
+│       └── app.js               # Theme interactive scripts
+├── blogger-theme.config.json    # The compiler config file
+└── package.json</code></pre>
+  </div>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 4 -->
+  <h2 id="section-4">
+    <span class="antinna-step-badge">Step 4</span> Step-by-Step Guide: Configuring blogger-theme.config.json
+  </h2>
+  <p>The compiler is controlled by a central configuration file named <code>blogger-theme.config.json</code>. This file instructs the compilation processor where to locate your layout assets, how to resolve widget files, and where to output the final compiled XML template.</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 blogger-theme.config.json</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-json">{
+  "themeName": "Antinna Minimalist Theme",
+  "version": "1.0.0",
+  "author": "Antinna Dev Team",
+  "input": {
+    "layout": "src/layout/default.html",
+    "css": "src/css/main.css",
+    "js": "src/js/app.js",
+    "partialsDir": "src/partials"
+  },
+  "output": "dist/theme.xml",
+  "minify": {
+    "css": true,
+    "js": true,
+    "html": false
+  }
+}</code></pre>
+  </div>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 5 -->
+  <h2 id="section-5">
+    <span class="antinna-step-badge">Step 5</span> Step-by-Step Guide: Creating Modular Component Layouts
+  </h2>
+  <p>Now let's draft our master layout. In our <code>src/layout/default.html</code> file, we write standard HTML and Blogger namespaces, but instead of writing long inline styles or repeating widget definitions, we use elegant double-brace syntax (such as <code>{{css}}</code>, <code>{{js}}</code>, or <code>{{include "filename"}}</code>) to dynamically inject compiled assets and modular components:</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 src/layout/default.html</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-html">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;html xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'&gt;
+&lt;head&gt;
+  &lt;meta charset='UTF-8'/&gt;
+  &lt;meta name='viewport' content='width=device-width, initial-scale=1'/&gt;
+  &lt;title&gt;&lt;data:blog.pageTitle/&gt;&lt;/title&gt;
+
+  &lt;!-- Automatically inject minified CSS theme skin --&gt;
+  &lt;b:skin&gt;&lt;![CDATA[
+    {{css}}
+  ]]&gt;&lt;/b:skin&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+  &lt;!-- Include modular header partial widget --&gt;
+  {{include "header.html"}}
+
+  &lt;main class='main-container'&gt;
+    &lt;!-- Include modular sidebar partial --&gt;
+    {{include "sidebar.html"}}
+
+    &lt;!-- Main Blog Posts Section --&gt;
+    &lt;b:section id='main-posts' class='main-posts' maxwidgets='1' showaddelement='yes'&gt;
+      &lt;b:widget id='Blog1' locked='true' title='Blog Posts' type='Blog'&gt;
+        &lt;!-- The compiler resolves widgets properly without messing up internal namespaces --&gt;
+      &lt;/b:widget&gt;
+    &lt;/b:section&gt;
+  &lt;/main&gt;
+
+  &lt;!-- Include modular footer partial widget --&gt;
+  {{include "footer.html"}}
+
+  &lt;!-- Automatically inject minified JS script modules --&gt;
+  &lt;script&gt;
+    {{js}}
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+  </div>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 6 -->
+  <h2 id="section-6">
+    <span class="antinna-step-badge">Step 6</span> Step-by-Step Guide: Compiling Your Theme to Blogger XML
+  </h2>
+  <p>To run the compiler automatically, configure a short CLI script shortcut in your local <code>package.json</code> file:</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 package.json</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-json">{
+  "scripts": {
+    "build": "blogger-theme-compiler --config blogger-theme.config.json"
+  }
+}</code></pre>
+  </div>
+
+  <p>Now, execute the automated compilation sequence. The compiler will aggregate and process your layout tree instantly, outputting the final file to the designated target:</p>
+
+  <div class="antinna-inline-terminal">$ npm run build</div>
+
+  <p>Voila! Open your <code>dist/theme.xml</code> file, copy its compiled text, and paste it directly into the HTML editor of your Blogger dashboard. You now have a state-of-the-art compiled theme built using modern component-based principles!</p>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 7 -->
+  <h2 id="section-7">
+    <span class="antinna-step-badge">Step 7</span> Real-World Case Study: Building a Custom Local SEO Widget
+  </h2>
+  <p>Let's show how modular layout widgets can improve on-page SEO signals and speed up local page rankings. Let's build a clean, modular Local SEO Contact Widget partial that can be included anywhere on our site using single-line directives.</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 src/partials/local-contact.html</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-html">&lt;div class="local-seo-widget"&gt;
+  &lt;h3 class="widget-heading"&gt;📍 Antinna Plumbing Local Support&lt;/h3&gt;
+  &lt;p class="widget-body"&gt;
+    Need fast emergency assistance? Our team is available 24/7.
+  &lt;/p&gt;
+  &lt;ul class="contact-details"&gt;
+    &lt;li&gt;&lt;strong&gt;Phone:&lt;/strong&gt; +1-555-0199&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;Address:&lt;/strong&gt; 123 Semantic Way, Suite A, San Francisco, CA&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;Operating Hours:&lt;/strong&gt; 24 Hours / 7 Days a week&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;a href="https://antinna.com/contact" class="widget-btn"&gt;📅 Book an Appointment Online&lt;/a&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+
+  <p>Inside our stylesheet <code>src/css/main.css</code>, we can scope styling rules for this widget cleanly:</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 src/css/main.css</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-css">/* Local SEO Contact Widget Styling */
+.local-seo-widget {
+  background-color: #f8fafc;
+  border-left: 5px solid #3182ce;
+  padding: 20px;
+  margin: 25px 0;
+  border-radius: 6px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.widget-heading {
+  color: #1a202c;
+  margin-top: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.contact-details {
+  list-style: none;
+  padding-left: 0;
+  margin: 15px 0;
+}
+
+.contact-details li {
+  margin-bottom: 8px;
+}
+
+.widget-btn {
+  display: inline-block;
+  background-color: #3182ce;
+  color: #ffffff;
+  padding: 10px 18px;
+  border-radius: 4px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.widget-btn:hover {
+  background-color: #2b6cb0;
+}</code></pre>
+  </div>
+
+  <p>To include this widget across multiple layouts or deep inside single post structures, simply write <code>{{include "local-contact.html"}}</code> wherever required. The compiler resolves the dependency, gathers the styled components, and aggregates everything flawlessly.</p>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 8 -->
+  <h2 id="section-8">
+    <span class="antinna-step-badge">Step 8</span> Best Practices for Developing High-Speed Blogger Themes
+  </h2>
+  <p>To maximize SEO rankings and ensure seamless validation of your compiled templates, keep these best practices in mind:</p>
+  <ol>
+    <li><strong>Scope Your Styles</strong>: Use clear naming conventions (such as BEM - Block Element Modifier) to prevent your custom CSS classes from conflicting with default Blogger widget layout properties.</li>
+    <li><strong>Automate Minification</strong>: Keep <code>"minify": {"css": true, "js": true}</code> active inside your config file. This guarantees micro-sized asset payloads and incredibly fast mobile speeds.</li>
+    <li><strong>Keep Javascript Light</strong>: Maximize the use of modern vanilla JavaScript rather than bloating your compiled templates with heavy external libraries like jQuery.</li>
+    <li><strong>Validate Locally</strong>: Use standard dry-run features or compiler logs to spot structural layout errors locally before committing changes online.</li>
+  </ol>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 9 -->
+  <h2 id="section-9">
+    <span class="antinna-step-badge">Step 9</span> Summary and Next Steps
+  </h2>
+  <p>Designing modern themes for Google's Blogger platform no longer requires struggling with monolithic XML templates. By leveraging the power of <code>@antinna/blogger-theme</code>, you can build responsive, high-performance, and AdSense-optimized blogs using modern, modular engineering best practices.</p>
+
+  <p>Get started today by checking out the official package on npm:</p>
+  <div class="antinna-inline-terminal">$ npm view @antinna/blogger-theme</div>
+
+  <hr class="antinna-divider" />
+
+  <!-- CLOSING SECTION -->
+  <h3>📄 Contributions &amp; Licensing</h3>
+  <p>The <code>@antinna/blogger-theme</code> package is published under the permissive MIT License. Have questions about setting up modular build systems? Join the discussion or leave a comment below!</p>
+
+</div>
+<!-- END .antinna-blog-container -->
+
+<!-- PRISM.JS SYNTAX HIGHLIGHTING -->
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+  rel="stylesheet"
+/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+
+<!-- INTERACTIVE SCRIPTS: SMOOTH TOC SCROLL + COPY BUTTONS -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // 1. Smooth Scrolling for Table of Contents
+    const tocLinks = document.querySelectorAll(".antinna-toc a");
+    tocLinks.forEach((link) => {
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute("href").substring(1);
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+    });
+
+    // 2. Copy Button Functionality
+    const copyButtons = document.querySelectorAll(".antinna-copy-btn");
+    copyButtons.forEach((button) => {
+      button.addEventListener("click", async () => {
+        const container = button.closest(".antinna-code-wrapper");
+        if (!container) return;
+        const targetCodeBlock = container.querySelector("pre code");
+        if (!targetCodeBlock) return;
+        const codeContent = targetCodeBlock.innerText;
+        try {
+          await navigator.clipboard.writeText(codeContent);
+          button.textContent = "Copied!";
+          button.classList.add("copied");
+          setTimeout(() => {
+            button.textContent = "Copy";
+            button.classList.remove("copied");
+          }, 2000);
+        } catch (err) {
+          console.error("Failed to copy text contents:", err);
+          button.textContent = "Error";
+        }
+      });
+    });
+  });
+</script>
+
+<!-- UNIFIED STYLESHEET -->
+<style>
+  /* =============================================
+     ANTINNA BLOGGER UNIFIED DESIGN SYSTEM v3
+     All rules use !important to override Blogger themes
+  ============================================= */
+
+  html {
+    scroll-behavior: smooth !important;
+  }
+
+  /* 1. Core Container */
+  .antinna-blog-container {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, sans-serif !important;
+    color: #2d3748 !important;
+    line-height: 1.8 !important;
+    max-width: 860px !important;
+    margin: 0 auto !important;
+    padding: 20px !important;
+    -webkit-font-smoothing: antialiased !important;
+  }
+
+  /* 2. Typography */
+  .antinna-blog-container h2 {
+    color: #1a202c !important;
+    font-size: 1.7rem !important;
+    margin-top: 3rem !important;
+    margin-bottom: 1.25rem !important;
+    display: flex !important;
+    align-items: center !important;
+    border-bottom: 2px solid #edf2f7 !important;
+    padding-bottom: 0.5rem !important;
+    font-weight: 700 !important;
+    scroll-margin-top: 90px !important;
+  }
+  .antinna-blog-container h3 {
+    color: #2d3748 !important;
+    font-size: 1.35rem !important;
+    margin-top: 1.5rem !important;
+    margin-bottom: 0.75rem !important;
+    font-weight: 600 !important;
+  }
+  .antinna-blog-container p {
+    margin-bottom: 1.5rem !important;
+    font-size: 1.05rem !important;
+  }
+  .antinna-blog-container ul,
+  .antinna-blog-container ol {
+    margin-bottom: 1.5rem !important;
+    padding-left: 1.5rem !important;
+  }
+  .antinna-blog-container li {
+    margin-bottom: 0.75rem !important;
+    font-size: 1.05rem !important;
+  }
+  .antinna-blog-container strong {
+    color: #1a202c !important;
+  }
+  .antinna-blog-container a {
+    color: #3182ce !important;
+    text-decoration: none !important;
+    font-weight: 500 !important;
+    transition: color 0.2s ease !important;
+  }
+  .antinna-blog-container a:hover {
+    color: #2b6cb0 !important;
+    text-decoration: underline !important;
+  }
+
+  /* 3. Inline Code */
+  .antinna-blog-container code:not(pre code) {
+    background-color: #f7fafc !important;
+    color: #dd6b20 !important;
+    padding: 0.2rem 0.4rem !important;
+    border-radius: 4px !important;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo,
+      monospace !important;
+    font-size: 0.9em !important;
+    border: 1px solid #e2e8f0 !important;
+  }
+
+  /* 4. Dividers */
+  .antinna-divider {
+    border: 0 !important;
+    border-top: 2px solid #edf2f7 !important;
+    margin: 2.5rem 0 !important;
+  }
+
+  /* 5. Callout Boxes */
+  .antinna-callout {
+    padding: 1.5rem !important;
+    border-radius: 8px !important;
+    margin: 2rem 0 !important;
+    border-left: 5px solid !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03) !important;
+  }
+  .antinna-callout-success {
+    background-color: #f0fff4 !important;
+    border-color: #38a169 !important;
+  }
+  .antinna-callout-warning {
+    background-color: #fffaf0 !important;
+    border-color: #dd6b20 !important;
+  }
+  .antinna-callout-info {
+    background-color: #ebf8ff !important;
+    border-color: #3182ce !important;
+  }
+  .antinna-callout-title {
+    font-weight: 700 !important;
+    margin-bottom: 0.5rem !important;
+    font-size: 1.1rem !important;
+  }
+  .antinna-callout-success .antinna-callout-title {
+    color: #22543d !important;
+  }
+  .antinna-callout-warning .antinna-callout-title {
+    color: #7b341e !important;
+  }
+  .antinna-callout-info .antinna-callout-title {
+    color: #2b6cb0 !important;
+  }
+  .antinna-callout-body {
+    font-size: 1rem !important;
+    margin: 0 !important;
+  }
+  .antinna-callout-success .antinna-callout-body {
+    color: #276749 !important;
+    margin: 0 !important;
+  }
+  .antinna-callout-warning .antinna-callout-body {
+    color: #9c4221 !important;
+    margin: 0 !important;
+  }
+  .antinna-callout-info .antinna-callout-body {
+    color: #2a69ac !important;
+    margin: 0 !important;
+  }
+
+  /* 6. Table of Contents */
+  .antinna-toc {
+    background: #f7fafc !important;
+    padding: 1.5rem 2rem !important;
+    border-radius: 8px !important;
+    border: 1px solid #e2e8f0 !important;
+  }
+  .antinna-toc h3 {
+    margin-top: 0 !important;
+    font-size: 1.15rem !important;
+  }
+  .antinna-toc ul {
+    list-style-type: none !important;
+    padding-left: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  .antinna-toc li {
+    margin-bottom: 0.5rem !important;
+  }
+  .antinna-toc a {
+    color: #4a5568 !important;
+    cursor: pointer !important;
+    font-weight: 400 !important;
+  }
+  .antinna-toc a:hover {
+    color: #3182ce !important;
+  }
+
+  /* 7. Step Badges */
+  .antinna-step-badge {
+    background: #3182ce !important;
+    color: #fff !important;
+    padding: 0.3rem 0.8rem !important;
+    border-radius: 6px !important;
+    font-size: 0.85rem !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    margin-right: 1rem !important;
+    display: inline-block !important;
+    box-shadow: 0 2px 4px rgba(49, 130, 206, 0.3) !important;
+    white-space: nowrap !important;
+  }
+  .antinna-step-badge.danger {
+    background: #e53e3e !important;
+    box-shadow: 0 2px 4px rgba(229, 62, 62, 0.3) !important;
+  }
+  .antinna-step-badge.success {
+    background: #38a169 !important;
+    box-shadow: 0 2px 4px rgba(56, 161, 105, 0.3) !important;
+  }
+
+  /* 8. Mac-Style Code Windows */
+  .antinna-code-wrapper {
+    margin: 2rem 0 !important;
+    background: #1d1f21 !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15),
+      0 8px 10px -6px rgba(0, 0, 0, 0.08) !important;
+  }
+  .antinna-code-header {
+    background: #282a2e !important;
+    color: #a0aec0 !important;
+    padding: 0.75rem 1.25rem !important;
+    font-size: 0.85rem !important;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif !important;
+    display: flex !important;
+    align-items: center !important;
+    border-bottom: 1px solid #111 !important;
+  }
+  .antinna-mac-dots {
+    display: flex !important;
+    gap: 6px !important;
+    margin-right: 15px !important;
+  }
+  .antinna-mac-dots .dot {
+    width: 12px !important;
+    height: 12px !important;
+    border-radius: 50% !important;
+  }
+  .antinna-mac-dots .red {
+    background-color: #ff5f56 !important;
+  }
+  .antinna-mac-dots .yellow {
+    background-color: #ffbd2e !important;
+  }
+  .antinna-mac-dots .green {
+    background-color: #27c93f !important;
+  }
+  .antinna-code-title {
+    flex-grow: 1 !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.02em !important;
+  }
+  .antinna-copy-btn {
+    background-color: #3f3f3f !important;
+    border: 1px solid #555 !important;
+    color: #cbd5e1 !important;
+    padding: 4px 10px !important;
+    border-radius: 5px !important;
+    font-size: 0.72rem !important;
+    cursor: pointer !important;
+    margin-left: 14px !important;
+    font-weight: 600 !important;
+    font-family: inherit !important;
+    transition: all 0.15s ease-in-out !important;
+  }
+  .antinna-copy-btn:hover {
+    background-color: #4b5563 !important;
+    color: #f8fafc !important;
+    border-color: #6b7280 !important;
+  }
+  .antinna-copy-btn.copied {
+    background-color: #059669 !important;
+    border-color: #059669 !important;
+    color: #ffffff !important;
+  }
+
+  /* 9. Prism.js Overrides (forces transparent bg to match our dark window) */
+  .antinna-code-wrapper pre[class*="language-"] {
+    margin: 0 !important;
+    padding: 1.5rem !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    overflow-x: auto !important;
+  }
+  .antinna-code-wrapper code[class*="language-"] {
+    font-family: "SFMono-Regular", Consolas, Menlo, Monaco, monospace !important;
+    font-size: 0.9rem !important;
+    line-height: 1.6 !important;
+    background: none !important;
+    text-shadow: none !important;
+  }
+  /* Fallback for non-Prism code blocks */
+  .antinna-code-wrapper pre {
+    margin: 0 !important;
+    padding: 1.5rem !important;
+    overflow-x: auto !important;
+  }
+  .antinna-code-wrapper pre code {
+    font-family: "SFMono-Regular", Consolas, Menlo, Monaco, monospace !important;
+    font-size: 0.9rem !important;
+    color: #e4e4e4 !important;
+    line-height: 1.6 !important;
+    background: none !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+
+  /* 10. Inline Terminal Snippets */
+  .antinna-inline-terminal {
+    background-color: #0f172a !important;
+    color: #38bdf8 !important;
+    font-family: "Fira Code", "Cascadia Code", Consolas, monospace !important;
+    padding: 8px 14px !important;
+    border-radius: 6px !important;
+    font-size: 0.88rem !important;
+    display: block !important;
+    width: max-content !important;
+    max-width: 100% !important;
+    margin: 10px 0 !important;
+    border: 1px solid #1e293b !important;
+    overflow-x: auto !important;
+  }
+
+  /* 11. Data Tables */
+  .antinna-table-overflow {
+    overflow-x: auto !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 10px !important;
+    margin: 20px 0 !important;
+  }
+  .antinna-data-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    font-size: 0.88rem !important;
+    text-align: left !important;
+  }
+  .antinna-data-table th {
+    background: #f8fafc !important;
+    font-weight: 600 !important;
+    color: #1a202c !important;
+    padding: 14px 16px !important;
+    border-bottom: 2px solid #e2e8f0 !important;
+  }
+  .antinna-data-table td {
+    padding: 14px 16px !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    vertical-align: top !important;
+    color: #2d3748 !important;
+  }
+  .antinna-data-table tr:last-child td {
+    border-bottom: none !important;
+  }
+
+  /* 12. Mobile Responsive Breakpoints */
+  @media (max-width: 640px) {
+    .antinna-blog-container {
+      padding: 12px !important;
+    }
+    .antinna-blog-container h2 {
+      font-size: 1.35rem !important;
+    }
+    .antinna-code-title {
+      font-size: 0.75rem !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      max-width: 120px !important;
+    }
+    .antinna-mac-dots {
+      margin-right: 8px !important;
+    }
+    .antinna-toc {
+      padding: 1rem !important;
+    }
+    .antinna-inline-terminal {
+      width: 100% !important;
+    }
+  }
+</style>
