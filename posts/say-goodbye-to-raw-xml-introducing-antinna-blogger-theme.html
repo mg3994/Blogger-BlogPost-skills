@@ -1,14 +1,14 @@
 <!-- BANNER IMAGE -->
 <div class="separator" style="clear: both">
   <a
-    href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgj_placeholder-hero-banner.png"
+    href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgOTxqhAJU-5XR1zcSHVNTcBksdYangGDwzSDfLLjoU0WBxpZ-McL35AD6HoR3HYEpomaqr5BolGQWzUwgtZCenoN_of2fY62lyiWgttn69iY2FT1j391H3foTVsm4e6kd6QVZfBPPtn2Pp3Qfz8yUtYc3A3jQyhAtsG5xt1eO2f2lOvNX4KTrxcXhhFaVb/s1600/blogger-theme.png"
     style="display: block; padding: 1em 0; text-align: center"
     ><img
       alt="@antinna/blogger-theme: Say Goodbye to Designing Single XML Files for Blogger"
       border="0"
       data-original-height="500"
       data-original-width="1000"
-      src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgj_placeholder-hero-banner.png"
+      src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgOTxqhAJU-5XR1zcSHVNTcBksdYangGDwzSDfLLjoU0WBxpZ-McL35AD6HoR3HYEpomaqr5BolGQWzUwgtZCenoN_of2fY62lyiWgttn69iY2FT1j391H3foTVsm4e6kd6QVZfBPPtn2Pp3Qfz8yUtYc3A3jQyhAtsG5xt1eO2f2lOvNX4KTrxcXhhFaVb/s1600/blogger-theme.png"
   /></a>
 </div>
 
@@ -164,713 +164,37 @@
       <span class="antinna-code-title">📂 src/types/blogger-theme.d.ts</span>
       <button class="antinna-copy-btn">Copy</button>
     </div>
-    <pre><code class="language-typescript">import { Component } from '../core.js';
+    <pre><code class="language-typescript">import { Component } from &#x27;../core.js&#x27;;
 
-declare global {
-  namespace JSX {
-    interface Element extends Component {}
-    interface ElementClass {
-      props?: any;
-    }
-
-    interface ElementAttributesProperty {
-      props: {};
-    }
-    interface ElementChildrenAttribute {
-      children: {};
-    }
-
-    type Booleanish = boolean | "true" | "false";
-
-    // Standard Blogger enhancement wrapper that adds cond, children, and any expr: prefixed attribute to any type T
-    type BloggerAttributes&lt;T&gt; = T &amp; {
-      children?: any;
-      cond?: string;
-      [exprAttr: `expr:${string}`]: any;
-      [otherAttr: string]: any;
-    };
-
-    type DetailedHTMLProps&lt;E, T&gt; = BloggerAttributes&lt;E&gt;;
-
-    interface HTMLAttributes&lt;T = any&gt; {
-      id?: string;
-      class?: string;
-      className?: string;
-      style?: any;
-      title?: string;
-      name?: string;
-      type?: string;
-      value?: string | number;
-      placeholder?: string;
-      disabled?: boolean;
-      href?: string;
-      target?: string;
-      src?: string;
-      alt?: string;
-      width?: string | number;
-      height?: string | number;
-      async?: boolean | string;
-      defer?: boolean | string;
-      rel?: string;
-      media?: string;
-      method?: string;
-      action?: string;
-      rows?: number;
-      cols?: number;
-      checked?: boolean;
-      selected?: boolean;
-      [attributeName: string]: any;
-    }
-
-    interface AllHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      accept?: string;
-      acceptCharset?: string;
-      action?: string;
-      allowFullScreen?: boolean;
-      allowTransparency?: boolean;
-      alt?: string;
-      as?: string;
-      async?: boolean;
-      autoComplete?: string;
-      autoPlay?: boolean;
-      capture?: boolean | string;
-      cellPadding?: number | string;
-      cellSpacing?: number | string;
-      charSet?: string;
-      challenge?: string;
-      checked?: boolean;
-      cite?: string;
-      classID?: string;
-      cols?: number;
-      colSpan?: number;
-      controls?: boolean;
-      coords?: string;
-      crossOrigin?: string;
-      data?: string;
-      dateTime?: string;
-      default?: boolean;
-      defer?: boolean;
-      disabled?: boolean;
-      download?: any;
-      encType?: string;
-      form?: string;
-      formAction?: string;
-      formEncType?: string;
-      formMethod?: string;
-      formNoValidate?: boolean;
-      formTarget?: string;
-      frameBorder?: number | string;
-      headers?: string;
-      height?: number | string;
-      high?: number;
-      href?: string;
-      hrefLang?: string;
-      htmlFor?: string;
-      httpEquiv?: string;
-      integrity?: string;
-      keyParams?: string;
-      keyType?: string;
-      kind?: string;
-      label?: string;
-      list?: string;
-      loop?: boolean;
-      low?: number;
-      manifest?: string;
-      marginHeight?: number;
-      marginWidth?: number;
-      max?: number | string;
-      maxLength?: number;
-      media?: string;
-      mediaGroup?: string;
-      method?: string;
-      min?: number | string;
-      minLength?: number;
-      multiple?: boolean;
-      muted?: boolean;
-      name?: string;
-      noValidate?: boolean;
-      open?: boolean;
-      optimum?: number;
-      pattern?: string;
-      placeholder?: string;
-      playsInline?: boolean;
-      poster?: string;
-      preload?: string;
-      readOnly?: boolean;
-      required?: boolean;
-      reversed?: boolean;
-      rows?: number;
-      rowSpan?: number;
-      sandbox?: string;
-      scope?: string;
-      scoped?: boolean;
-      scrolling?: string;
-      seamless?: boolean;
-      selected?: boolean;
-      shape?: string;
-      size?: number;
-      sizes?: string;
-      span?: number;
-      src?: string;
-      srcDoc?: string;
-      srcLang?: string;
-      srcSet?: string;
-      start?: number;
-      step?: number | string;
-      summary?: string;
-      target?: string;
-      type?: string;
-      useMap?: string;
-      value?: string | number;
-      width?: number | string;
-      wmode?: string;
-      wrap?: string;
-    }
-
-    interface AnchorHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      download?: any;
-      href?: string;
-      hrefLang?: string;
-      media?: string;
-      ping?: string;
-      target?: string;
-      type?: string;
-      referrerPolicy?: string;
-    }
-
-    interface AudioHTMLAttributes&lt;T = any&gt; extends MediaHTMLAttributes&lt;T&gt; {}
-
-    interface AreaHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      alt?: string;
-      coords?: string;
-      download?: any;
-      href?: string;
-      hrefLang?: string;
-      media?: string;
-      referrerPolicy?: string;
-      shape?: string;
-      target?: string;
-    }
-
-    interface BaseHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      href?: string;
-      target?: string;
-    }
-
-    interface BlockquoteHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      cite?: string;
-    }
-
-    interface ButtonHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      disabled?: boolean;
-      form?: string;
-      formAction?: string;
-      formEncType?: string;
-      formMethod?: string;
-      formNoValidate?: boolean;
-      formTarget?: string;
-      name?: string;
-      type?: "submit" | "reset" | "button";
-      value?: string | number;
-    }
-
-    interface CanvasHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      height?: number | string;
-      width?: number | string;
-    }
-
-    interface ColHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      span?: number;
-      width?: number | string;
-    }
-
-    interface ColgroupHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      span?: number;
-    }
-
-    interface DataHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      value?: string | number;
-    }
-
-    interface DetailsHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      open?: boolean;
-      name?: string;
-    }
-
-    interface DelHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      cite?: string;
-      dateTime?: string;
-    }
-
-    interface DialogHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      open?: boolean;
-    }
-
-    interface EmbedHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      height?: number | string;
-      src?: string;
-      type?: string;
-      width?: number | string;
-    }
-
-    interface FieldsetHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      disabled?: boolean;
-      form?: string;
-      name?: string;
-    }
-
-    interface FormHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      acceptCharset?: string;
-      action?: string;
-      autoComplete?: string;
-      encType?: string;
-      method?: string;
-      name?: string;
-      noValidate?: boolean;
-      target?: string;
-    }
-
-    interface HtmlHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      manifest?: string;
-    }
-
-    interface IframeHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      allow?: string;
-      allowFullScreen?: boolean;
-      frameBorder?: number | string;
-      height?: number | string;
-      loading?: string;
-      name?: string;
-      referrerPolicy?: string;
-      sandbox?: string;
-      src?: string;
-      srcDoc?: string;
-      width?: number | string;
-    }
-
-    interface ImgHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      alt?: string;
-      crossOrigin?: string;
-      decoding?: string;
-      height?: number | string;
-      loading?: string;
-      src?: string;
-      srcSet?: string;
-      useMap?: string;
-      width?: number | string;
-    }
-
-    interface InsHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      cite?: string;
-      dateTime?: string;
-    }
-
-    interface InputHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      accept?: string;
-      alt?: string;
-      autoComplete?: string;
-      capture?: boolean | string;
-      checked?: boolean;
-      disabled?: boolean;
-      form?: string;
-      formAction?: string;
-      formEncType?: string;
-      formMethod?: string;
-      formNoValidate?: boolean;
-      formTarget?: string;
-      height?: number | string;
-      list?: string;
-      max?: number | string;
-      maxLength?: number;
-      min?: number | string;
-      minLength?: number;
-      multiple?: boolean;
-      name?: string;
-      pattern?: string;
-      placeholder?: string;
-      readOnly?: boolean;
-      required?: boolean;
-      size?: number;
-      src?: string;
-      step?: number | string;
-      type?: string;
-      value?: string | number;
-      width?: number | string;
-    }
-
-    interface LabelHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      form?: string;
-      htmlFor?: string;
-    }
-
-    interface LiHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      value?: string | number;
-    }
-
-    interface LinkHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      as?: string;
-      crossOrigin?: string;
-      href?: string;
-      hrefLang?: string;
-      integrity?: string;
-      media?: string;
-      sizes?: string;
-      type?: string;
-    }
-
-    interface MapHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      name?: string;
-    }
-
-    interface MenuHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      type?: string;
-    }
-
-    interface MediaHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      autoPlay?: boolean;
-      controls?: boolean;
-      loop?: boolean;
-      muted?: boolean;
-      preload?: string;
-      src?: string;
-    }
-
-    interface MetaHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      charSet?: string;
-      content?: string;
-      httpEquiv?: string;
-      media?: string;
-      name?: string;
-    }
-
-    interface MeterHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      form?: string;
-      high?: number;
-      low?: number;
-      max?: number | string;
-      min?: number | string;
-      optimum?: number;
-      value?: string | number;
-    }
-
-    interface QuoteHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      cite?: string;
-    }
-
-    interface ObjectHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      classID?: string;
-      data?: string;
-      form?: string;
-      height?: number | string;
-      name?: string;
-      type?: string;
-      useMap?: string;
-      width?: number | string;
-    }
-
-    interface OlHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      reversed?: boolean;
-      start?: number;
-      type?: "1" | "a" | "A" | "i" | "I";
-    }
-
-    interface OptgroupHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      disabled?: boolean;
-      label?: string;
-    }
-
-    interface OptionHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      disabled?: boolean;
-      label?: string;
-      selected?: boolean;
-      value?: string | number;
-    }
-
-    interface OutputHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      form?: string;
-      htmlFor?: string;
-      name?: string;
-    }
-
-    interface ParamHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      name?: string;
-      value?: string | number;
-    }
-
-    interface ProgressHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      max?: number | string;
-      value?: string | number;
-    }
-
-    interface SlotHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      name?: string;
-    }
-
-    interface ScriptHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      async?: boolean;
-      crossOrigin?: string;
-      defer?: boolean;
-      integrity?: string;
-      noModule?: boolean;
-      src?: string;
-      type?: string;
-    }
-
-    interface SelectHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      autoComplete?: string;
-      disabled?: boolean;
-      form?: string;
-      multiple?: boolean;
-      name?: string;
-      required?: boolean;
-      size?: number;
-      value?: string | number;
-    }
-
-    interface SourceHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      height?: number | string;
-      media?: string;
-      sizes?: string;
-      src?: string;
-      srcSet?: string;
-      type?: string;
-      width?: number | string;
-    }
-
-    interface StyleHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      media?: string;
-      scoped?: boolean;
-      type?: string;
-    }
-
-    interface TableHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      align?: "left" | "center" | "right";
-      border?: number;
-      cellPadding?: number | string;
-      cellSpacing?: number | string;
-      summary?: string;
-      width?: number | string;
-    }
-
-    interface TextareaHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      autoComplete?: string;
-      cols?: number;
-      disabled?: boolean;
-      form?: string;
-      maxLength?: number;
-      minLength?: number;
-      name?: string;
-      placeholder?: string;
-      readOnly?: boolean;
-      required?: boolean;
-      rows?: number;
-      value?: string | number;
-      wrap?: string;
-    }
-
-    interface TdHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      align?: "left" | "center" | "right" | "justify" | "char";
-      colSpan?: number;
-      headers?: string;
-      rowSpan?: number;
-      scope?: string;
-    }
-
-    interface ThHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      align?: "left" | "center" | "right" | "justify" | "char";
-      colSpan?: number;
-      headers?: string;
-      rowSpan?: number;
-      scope?: string;
-    }
-
-    interface TimeHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      dateTime?: string;
-    }
-
-    interface TrackHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      default?: boolean;
-      kind?: string;
-      label?: string;
-      src?: string;
-      srcLang?: string;
-    }
-
-    interface VideoHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      height?: number | string;
-      playsInline?: boolean;
-      poster?: string;
-      width?: number | string;
-    }
-
-    interface SVGAttributes&lt;T = any&gt; {
-      className?: string;
-      color?: string;
-      height?: number | string;
-      id?: string;
-      style?: any;
-      viewBox?: string;
-      [attributeName: string]: any;
-    }
-
-    interface IntrinsicElements {
-      // Standard HTML elements (fully wrapped in BloggerAttributes for expr: prefixes)
-      a: DetailedHTMLProps&lt;AnchorHTMLAttributes&lt;HTMLAnchorElement&gt;, HTMLAnchorElement&gt;;
-      abbr: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      address: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      area: DetailedHTMLProps&lt;AreaHTMLAttributes&lt;HTMLAreaElement&gt;, HTMLAreaElement&gt;;
-      article: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      aside: DetailedHTMLProps&lt;HTMLAttributes, HTMLElement&gt;;
-      audio: DetailedHTMLProps&lt;AudioHTMLAttributes&lt;HTMLAudioElement&gt;, HTMLAudioElement&gt;;
-      b: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      base: DetailedHTMLProps&lt;BaseHTMLAttributes&lt;HTMLBaseElement&gt;, HTMLBaseElement&gt;;
-      bdi: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      bdo: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      big: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      blockquote: DetailedHTMLProps&lt;BlockquoteHTMLAttributes&lt;HTMLQuoteElement&gt;, HTMLQuoteElement&gt;;
-      body: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLBodyElement&gt;, HTMLBodyElement&gt;;
-      br: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLBRElement&gt;, HTMLBRElement&gt;;
-      button: DetailedHTMLProps&lt;ButtonHTMLAttributes&lt;HTMLButtonElement&gt;, HTMLButtonElement&gt;;
-      canvas: DetailedHTMLProps&lt;CanvasHTMLAttributes&lt;HTMLCanvasElement&gt;, HTMLCanvasElement&gt;;
-      caption: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      center: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      cite: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      code: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      col: DetailedHTMLProps&lt;ColHTMLAttributes&lt;HTMLTableColElement&gt;, HTMLTableColElement&gt;;
-      colgroup: DetailedHTMLProps&lt;ColgroupHTMLAttributes&lt;HTMLTableColElement&gt;, HTMLTableColElement&gt;;
-      data: DetailedHTMLProps&lt;DataHTMLAttributes&lt;HTMLDataElement&gt;, HTMLDataElement&gt;;
-      datalist: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLDataListElement&gt;, HTMLDataListElement&gt;;
-      dd: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      del: DetailedHTMLProps&lt;DelHTMLAttributes&lt;HTMLModElement&gt;, HTMLModElement&gt;;
-      details: DetailedHTMLProps&lt;DetailsHTMLAttributes&lt;HTMLDetailsElement&gt;, HTMLDetailsElement&gt;;
-      dfn: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      dialog: DetailedHTMLProps&lt;DialogHTMLAttributes&lt;HTMLDialogElement&gt;, HTMLDialogElement&gt;;
-      div: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLDivElement&gt;, HTMLDivElement&gt;;
-      dl: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLDListElement&gt;, HTMLDListElement&gt;;
-      dt: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      em: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      embed: DetailedHTMLProps&lt;EmbedHTMLAttributes&lt;HTMLEmbedElement&gt;, HTMLEmbedElement&gt;;
-      fieldset: DetailedHTMLProps&lt;FieldsetHTMLAttributes&lt;HTMLFieldSetElement&gt;, HTMLFieldSetElement&gt;;
-      figcaption: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      figure: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      footer: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      form: DetailedHTMLProps&lt;FormHTMLAttributes&lt;HTMLFormElement&gt;, HTMLFormElement&gt;;
-      h1: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLHeadingElement&gt;, HTMLHeadingElement&gt;;
-      h2: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLHeadingElement&gt;, HTMLHeadingElement&gt;;
-      h3: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLHeadingElement&gt;, HTMLHeadingElement&gt;;
-      h4: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLHeadingElement&gt;, HTMLHeadingElement&gt;;
-      h5: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLHeadingElement&gt;, HTMLHeadingElement&gt;;
-      h6: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLHeadingElement&gt;, HTMLHeadingElement&gt;;
-      head: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLHeadElement&gt;, HTMLHeadElement&gt;;
-      header: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      hgroup: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      hr: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLHRElement&gt;, HTMLHRElement&gt;;
-      html: DetailedHTMLProps&lt;HtmlHTMLAttributes&lt;HTMLHtmlElement&gt;, HTMLHtmlElement&gt;;
-      i: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      iframe: DetailedHTMLProps&lt;IframeHTMLAttributes&lt;HTMLIFrameElement&gt;, HTMLIFrameElement&gt;;
-      img: DetailedHTMLProps&lt;ImgHTMLAttributes&lt;HTMLImageElement&gt;, HTMLImageElement&gt;;
-      input: DetailedHTMLProps&lt;InputHTMLAttributes&lt;HTMLInputElement&gt;, HTMLInputElement&gt;;
-      ins: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLModElement&gt;, HTMLModElement&gt;;
-      kbd: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      keygen: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      label: DetailedHTMLProps&lt;LabelHTMLAttributes&lt;HTMLLabelElement&gt;, HTMLLabelElement&gt;;
-      legend: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLLegendElement&gt;, HTMLLegendElement&gt;;
-      li: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLLIElement&gt;, HTMLLIElement&gt;;
-      link: DetailedHTMLProps&lt;LinkHTMLAttributes&lt;HTMLLinkElement&gt;, HTMLLinkElement&gt;;
-      main: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      map: DetailedHTMLProps&lt;MapHTMLAttributes&lt;HTMLMapElement&gt;, HTMLMapElement&gt;;
-      mark: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      menu: DetailedHTMLProps&lt;MenuHTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      menuitem: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      meta: DetailedHTMLProps&lt;MetaHTMLAttributes&lt;HTMLMetaElement&gt;, HTMLMetaElement&gt;;
-      meter: DetailedHTMLProps&lt;MeterHTMLAttributes&lt;HTMLMeterElement&gt;, HTMLMeterElement&gt;;
-      nav: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      noscript: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      object: DetailedHTMLProps&lt;ObjectHTMLAttributes&lt;HTMLObjectElement&gt;, HTMLObjectElement&gt;;
-      ol: DetailedHTMLProps&lt;OlHTMLAttributes&lt;HTMLOListElement&gt;, HTMLOListElement&gt;;
-      optgroup: DetailedHTMLProps&lt;OptgroupHTMLAttributes&lt;HTMLOptGroupElement&gt;, HTMLOptGroupElement&gt;;
-      option: DetailedHTMLProps&lt;OptionHTMLAttributes&lt;HTMLOptionElement&gt;, HTMLOptionElement&gt;;
-      output: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLOutputElement&gt;, HTMLOutputElement&gt;;
-      p: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLParagraphElement&gt;, HTMLParagraphElement&gt;;
-      param: DetailedHTMLProps&lt;ParamHTMLAttributes&lt;HTMLParamElement&gt;, HTMLParamElement&gt;;
-      picture: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      pre: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLPreElement&gt;, HTMLPreElement&gt;;
-      progress: DetailedHTMLProps&lt;ProgressHTMLAttributes&lt;HTMLProgressElement&gt;, HTMLProgressElement&gt;;
-      q: DetailedHTMLProps&lt;QuoteHTMLAttributes&lt;HTMLQuoteElement&gt;, HTMLQuoteElement&gt;;
-      rp: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      rt: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      ruby: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      s: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      samp: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      search: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      slot: DetailedHTMLProps&lt;SlotHTMLAttributes&lt;HTMLSlotElement&gt;, HTMLSlotElement&gt;;
-      script: DetailedHTMLProps&lt;ScriptHTMLAttributes &amp; { contentInCDATA?: boolean }, HTMLScriptElement&gt;;
-      section: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      select: DetailedHTMLProps&lt;SelectHTMLAttributes&lt;HTMLSelectElement&gt;, HTMLSelectElement&gt;;
-      small: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      source: DetailedHTMLProps&lt;SourceHTMLAttributes&lt;HTMLSourceElement&gt;, HTMLSourceElement&gt;;
-      span: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLSpanElement&gt;, HTMLSpanElement&gt;;
-      strong: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      style: DetailedHTMLProps&lt;StyleHTMLAttributes&lt;HTMLStyleElement&gt;, HTMLStyleElement&gt;;
-      sub: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      summary: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      sup: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      table: DetailedHTMLProps&lt;TableHTMLAttributes&lt;HTMLTableElement&gt;, HTMLTableElement&gt;;
-      template: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLTemplateElement&gt;, HTMLTemplateElement&gt;;
-      tbody: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLTableSectionElement&gt;, HTMLTableSectionElement&gt;;
-      td: DetailedHTMLProps&lt;TdHTMLAttributes&lt;HTMLTableDataCellElement&gt;, HTMLTableDataCellElement&gt;;
-      textarea: DetailedHTMLProps&lt;TextareaHTMLAttributes&lt;HTMLTextAreaElement&gt;, HTMLTextAreaElement&gt;;
-      tfoot: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLTableSectionElement&gt;, HTMLTableSectionElement&gt;;
-      th: DetailedHTMLProps&lt;ThHTMLAttributes&lt;HTMLTableHeaderCellElement&gt;, HTMLTableHeaderCellElement&gt;;
-      thead: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLTableSectionElement&gt;, HTMLTableSectionElement&gt;;
-      time: DetailedHTMLProps&lt;TimeHTMLAttributes&lt;HTMLTimeElement&gt;, HTMLTimeElement&gt;;
-      title: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLTitleElement&gt;, HTMLTitleElement&gt;;
-      tr: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLTableRowElement&gt;, HTMLTableRowElement&gt;;
-      track: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLTrackElement&gt;, HTMLTrackElement&gt;;
-      u: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      ul: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLUListElement&gt;, HTMLUListElement&gt;;
-      var: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      video: DetailedHTMLProps&lt;VideoHTMLAttributes&lt;HTMLVideoElement&gt;, HTMLVideoElement&gt;;
-      wbr: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-
-      // SVG
-      svg: BloggerAttributes&lt;SVGAttributes&lt;SVGSVGElement&gt;&gt;;
-
-      // Blogger native elements
-      'b:section': BloggerAttributes&lt;{ id: string; class?: string; maxwidgets?: number | string; showaddelement?: boolean | string; growth?: string; preferred?: boolean | string }&gt;;
-      'b:widget': BloggerAttributes&lt;{ id: string; type: string; title?: string; locked?: boolean | string; pageType?: string; mobile?: string; version?: number | string; visible?: boolean | string }&gt;;
-      'b:widget-settings': BloggerAttributes&lt;{}&gt;;
-      'b:widget-setting': BloggerAttributes&lt;{ name: string }&gt;;
-      'b:if': BloggerAttributes&lt;{ cond: string }&gt;;
-      'b:elseif': BloggerAttributes&lt;{ cond: string }&gt;;
-      'b:else': BloggerAttributes&lt;{}&gt;;
-      'b:loop': BloggerAttributes&lt;{ values: string; var: string; index?: string }&gt;;
-      'b:include': BloggerAttributes&lt;{ name: string; data?: string; cond?: string }&gt;;
-      'b:includable': BloggerAttributes&lt;{ id: string; var?: string }&gt;;
-      'b:attr': BloggerAttributes&lt;{ name: string; value: string; cond?: string }&gt;;
-      'b:class': BloggerAttributes&lt;{ name: string; cond: string }&gt;;
-      'b:tag': BloggerAttributes&lt;{ name?: string; cond?: string }&gt;;
-      'b:eval': BloggerAttributes&lt;{ expr: string }&gt;;
-      'b:with': BloggerAttributes&lt;{ var: string; value: string }&gt;;
-      'b:switch': BloggerAttributes&lt;{ var: string }&gt;;
-      'b:case': BloggerAttributes&lt;{ value: string }&gt;;
-      'b:default': BloggerAttributes&lt;{}&gt;;
-      'b:message': BloggerAttributes&lt;{ name: string }&gt;;
-      'b:comment': BloggerAttributes&lt;{}&gt;;
-      'b:template-skin': BloggerAttributes&lt;{}&gt;;
-      'b:template-script': BloggerAttributes&lt;{ name: string; version: string; async?: boolean | string }&gt;;
-      'b:param': BloggerAttributes&lt;{ value?: string }&gt;;
-      'b:defaultmarkup': BloggerAttributes&lt;{ type: string }&gt;;
-      'b:defaultmarkups': BloggerAttributes&lt;{}&gt;;
-
-      // Dynamic tags fallback
-      [elemName: string]: any;
-    }
-  }
-}
-
-// We also export local JSX namespace to support compilers that resolve JSX types locally (via jsxImportSource)
+// We export a local JSX namespace to support compilers that resolve JSX types locally (via jsxImportSource).
+// We intentionally avoid declaring a global JSX namespace to prevent conflicts with standard React JSX types
+// when React and blogger-theme are used together in the same workspace.
 export namespace JSX {
+  export type JSXElementConstructor&lt;P&gt; =
+    | ((props: P) =&gt; any)
+    | (new (props: P) =&gt; Component);
+
+  export interface ReactElement&lt;
+    P = any,
+    T extends string | JSXElementConstructor&lt;any&gt; = string | JSXElementConstructor&lt;any&gt;
+  &gt; {
+    type: T;
+    props: P;
+    key: any;
+  }
+
+  export type ElementType = string | JSXElementConstructor&lt;any&gt;;
+
+  export type ReactNode =
+    | ReactElement&lt;any, any&gt;
+    | Component
+    | string
+    | number
+    | boolean
+    | null
+    | undefined
+    | Iterable&lt;ReactNode&gt;;
+
   export interface Element extends Component {}
   export interface ElementClass {
     props?: any;
@@ -883,7 +207,7 @@ export namespace JSX {
     children: {};
   }
 
-  export type Booleanish = boolean | "true" | "false";
+  export type Booleanish = boolean | &quot;true&quot; | &quot;false&quot;;
 
   // Standard Blogger enhancement wrapper that adds cond, children, and any expr: prefixed attribute to any type T
   export type BloggerAttributes&lt;T&gt; = T &amp; {
@@ -1073,7 +397,7 @@ export namespace JSX {
     formNoValidate?: boolean;
     formTarget?: string;
     name?: string;
-    type?: "submit" | "reset" | "button";
+    type?: &quot;submit&quot; | &quot;reset&quot; | &quot;button&quot;;
     value?: string | number;
   }
 
@@ -1274,7 +598,7 @@ export namespace JSX {
   export interface OlHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
     reversed?: boolean;
     start?: number;
-    type?: "1" | "a" | "A" | "i" | "I";
+    type?: &quot;1&quot; | &quot;a&quot; | &quot;A&quot; | &quot;i&quot; | &quot;I&quot;;
   }
 
   export interface OptgroupHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
@@ -1347,7 +671,7 @@ export namespace JSX {
   }
 
   export interface TableHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    align?: "left" | "center" | "right";
+    align?: &quot;left&quot; | &quot;center&quot; | &quot;right&quot;;
     border?: number;
     cellPadding?: number | string;
     cellSpacing?: number | string;
@@ -1372,7 +696,7 @@ export namespace JSX {
   }
 
   export interface TdHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    align?: "left" | "center" | "right" | "justify" | "char";
+    align?: &quot;left&quot; | &quot;center&quot; | &quot;right&quot; | &quot;justify&quot; | &quot;char&quot;;
     colSpan?: number;
     headers?: string;
     rowSpan?: number;
@@ -1380,7 +704,7 @@ export namespace JSX {
   }
 
   export interface ThHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    align?: "left" | "center" | "right" | "justify" | "char";
+    align?: &quot;left&quot; | &quot;center&quot; | &quot;right&quot; | &quot;justify&quot; | &quot;char&quot;;
     colSpan?: number;
     headers?: string;
     rowSpan?: number;
@@ -1477,7 +801,7 @@ export namespace JSX {
     keygen: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
     label: DetailedHTMLProps&lt;LabelHTMLAttributes&lt;HTMLLabelElement&gt;, HTMLLabelElement&gt;;
     legend: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLLegendElement&gt;, HTMLLegendElement&gt;;
-    li: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLLIElement&gt;, HTMLLIElement&gt;;
+    li: DetailedHTMLProps&lt;LiHTMLAttributes&lt;HTMLLIElement&gt;, HTMLLIElement&gt;;
     link: DetailedHTMLProps&lt;LinkHTMLAttributes&lt;HTMLLinkElement&gt;, HTMLLinkElement&gt;;
     main: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
     map: DetailedHTMLProps&lt;MapHTMLAttributes&lt;HTMLMapElement&gt;, HTMLMapElement&gt;;
@@ -1539,37 +863,737 @@ export namespace JSX {
     svg: BloggerAttributes&lt;SVGAttributes&lt;SVGSVGElement&gt;&gt;;
 
     // Blogger native elements
-    'b:section': BloggerAttributes&lt;{ id: string; class?: string; maxwidgets?: number | string; showaddelement?: boolean | string; growth?: string; preferred?: boolean | string }&gt;;
-    'b:widget': BloggerAttributes&lt;{ id: string; type: string; title?: string; locked?: boolean | string; pageType?: string; mobile?: string; version?: number | string; visible?: boolean | string }&gt;;
-    'b:widget-settings': BloggerAttributes&lt;{}&gt;;
-    'b:widget-setting': BloggerAttributes&lt;{ name: string }&gt;;
-    'b:if': BloggerAttributes&lt;{ cond: string }&gt;;
-    'b:elseif': BloggerAttributes&lt;{ cond: string }&gt;;
-    'b:else': BloggerAttributes&lt;{}&gt;;
-    'b:loop': BloggerAttributes&lt;{ values: string; var: string; index?: string }&gt;;
-    'b:include': BloggerAttributes&lt;{ name: string; data?: string; cond?: string }&gt;;
-    'b:includable': BloggerAttributes&lt;{ id: string; var?: string }&gt;;
-    'b:attr': BloggerAttributes&lt;{ name: string; value: string; cond?: string }&gt;;
-    'b:class': BloggerAttributes&lt;{ name: string; cond: string }&gt;;
-    'b:tag': BloggerAttributes&lt;{ name?: string; cond?: string }&gt;;
-    'b:eval': BloggerAttributes&lt;{ expr: string }&gt;;
-    'b:with': BloggerAttributes&lt;{ var: string; value: string }&gt;;
-    'b:switch': BloggerAttributes&lt;{ var: string }&gt;;
-    'b:case': BloggerAttributes&lt;{ value: string }&gt;;
-    'b:default': BloggerAttributes&lt;{}&gt;;
-    'b:message': BloggerAttributes&lt;{ name: string }&gt;;
-    'b:comment': BloggerAttributes&lt;{}&gt;;
-    'b:template-skin': BloggerAttributes&lt;{}&gt;;
-    'b:template-script': BloggerAttributes&lt;{ name: string; version: string; async?: boolean | string }&gt;;
-    'b:param': BloggerAttributes&lt;{ value?: string }&gt;;
-    'b:defaultmarkup': BloggerAttributes&lt;{ type: string }&gt;;
-    'b:defaultmarkups': BloggerAttributes&lt;{}&gt;;
+    &#x27;b:section&#x27;: BloggerAttributes&lt;{ id: string; class?: string; maxwidgets?: number | string; showaddelement?: boolean | string; growth?: string; preferred?: boolean | string }&gt;;
+    &#x27;b:widget&#x27;: BloggerAttributes&lt;{ id: string; type: string; title?: string; locked?: boolean | string; pageType?: string; mobile?: string; version?: number | string; visible?: boolean | string }&gt;;
+    &#x27;b:widget-settings&#x27;: BloggerAttributes&lt;{}&gt;;
+    &#x27;b:widget-setting&#x27;: BloggerAttributes&lt;{ name: string }&gt;;
+    &#x27;b:if&#x27;: BloggerAttributes&lt;{ cond: string }&gt;;
+    &#x27;b:elseif&#x27;: BloggerAttributes&lt;{ cond: string }&gt;;
+    &#x27;b:else&#x27;: BloggerAttributes&lt;{}&gt;;
+    &#x27;b:loop&#x27;: BloggerAttributes&lt;{ values: string; var: string; index?: string }&gt;;
+    &#x27;b:include&#x27;: BloggerAttributes&lt;{ name: string; data?: string; cond?: string }&gt;;
+    &#x27;b:includable&#x27;: BloggerAttributes&lt;{ id: string; var?: string }&gt;;
+    &#x27;b:attr&#x27;: BloggerAttributes&lt;{ name: string; value: string; cond?: string }&gt;;
+    &#x27;b:class&#x27;: BloggerAttributes&lt;{ name: string; cond: string }&gt;;
+    &#x27;b:tag&#x27;: BloggerAttributes&lt;{ name?: string; cond?: string }&gt;;
+    &#x27;b:eval&#x27;: BloggerAttributes&lt;{ expr: string }&gt;;
+    &#x27;b:with&#x27;: BloggerAttributes&lt;{ var: string; value: string }&gt;;
+    &#x27;b:switch&#x27;: BloggerAttributes&lt;{ var: string }&gt;;
+    &#x27;b:case&#x27;: BloggerAttributes&lt;{ value: string }&gt;;
+    &#x27;b:default&#x27;: BloggerAttributes&lt;{}&gt;;
+    &#x27;b:message&#x27;: BloggerAttributes&lt;{ name: string }&gt;;
+    &#x27;b:comment&#x27;: BloggerAttributes&lt;{}&gt;;
+    &#x27;b:template-skin&#x27;: BloggerAttributes&lt;{}&gt;;
+    &#x27;b:template-script&#x27;: BloggerAttributes&lt;{ name: string; version: string; async?: boolean | string }&gt;;
+    &#x27;b:param&#x27;: BloggerAttributes&lt;{ value?: string }&gt;;
+    &#x27;b:defaultmarkup&#x27;: BloggerAttributes&lt;{ type: string }&gt;;
+    &#x27;b:defaultmarkups&#x27;: BloggerAttributes&lt;{}&gt;;
 
     // Dynamic tags fallback
     [elemName: string]: any;
   }
 }
-export {};</code></pre>
+export {};\n\ndeclare global {
+  namespace JSX {
+    interface Element extends Component {}
+    interface ElementClass {
+      props?: any;
+    }
+
+    interface ElementAttributesProperty {
+      props: {};
+    }
+    interface ElementChildrenAttribute {
+      children: {};
+    }
+
+    type Booleanish = boolean | &quot;true&quot; | &quot;false&quot;;
+
+    // Standard Blogger enhancement wrapper that adds cond, children, and any expr: prefixed attribute to any type T
+    type BloggerAttributes&lt;T&gt; = T &amp; {
+      children?: any;
+      cond?: string;
+      [exprAttr: `expr:${string}`]: any;
+      [otherAttr: string]: any;
+    };
+
+    type DetailedHTMLProps&lt;E, T&gt; = BloggerAttributes&lt;E&gt;;
+
+    interface HTMLAttributes&lt;T = any&gt; {
+      id?: string;
+      class?: string;
+      className?: string;
+      style?: any;
+      title?: string;
+      name?: string;
+      type?: string;
+      value?: string | number;
+      placeholder?: string;
+      disabled?: boolean;
+      href?: string;
+      target?: string;
+      src?: string;
+      alt?: string;
+      width?: string | number;
+      height?: string | number;
+      async?: boolean | string;
+      defer?: boolean | string;
+      rel?: string;
+      media?: string;
+      method?: string;
+      action?: string;
+      rows?: number;
+      cols?: number;
+      checked?: boolean;
+      selected?: boolean;
+      [attributeName: string]: any;
+    }
+
+    interface AllHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      accept?: string;
+      acceptCharset?: string;
+      action?: string;
+      allowFullScreen?: boolean;
+      allowTransparency?: boolean;
+      alt?: string;
+      as?: string;
+      async?: boolean;
+      autoComplete?: string;
+      autoPlay?: boolean;
+      capture?: boolean | string;
+      cellPadding?: number | string;
+      cellSpacing?: number | string;
+      charSet?: string;
+      challenge?: string;
+      checked?: boolean;
+      cite?: string;
+      classID?: string;
+      cols?: number;
+      colSpan?: number;
+      controls?: boolean;
+      coords?: string;
+      crossOrigin?: string;
+      data?: string;
+      dateTime?: string;
+      default?: boolean;
+      defer?: boolean;
+      disabled?: boolean;
+      download?: any;
+      encType?: string;
+      form?: string;
+      formAction?: string;
+      formEncType?: string;
+      formMethod?: string;
+      formNoValidate?: boolean;
+      formTarget?: string;
+      frameBorder?: number | string;
+      headers?: string;
+      height?: number | string;
+      high?: number;
+      href?: string;
+      hrefLang?: string;
+      htmlFor?: string;
+      httpEquiv?: string;
+      integrity?: string;
+      keyParams?: string;
+      keyType?: string;
+      kind?: string;
+      label?: string;
+      list?: string;
+      loop?: boolean;
+      low?: number;
+      manifest?: string;
+      marginHeight?: number;
+      marginWidth?: number;
+      max?: number | string;
+      maxLength?: number;
+      media?: string;
+      mediaGroup?: string;
+      method?: string;
+      min?: number | string;
+      minLength?: number;
+      multiple?: boolean;
+      muted?: boolean;
+      name?: string;
+      noValidate?: boolean;
+      open?: boolean;
+      optimum?: number;
+      pattern?: string;
+      placeholder?: string;
+      playsInline?: boolean;
+      poster?: string;
+      preload?: string;
+      readOnly?: boolean;
+      required?: boolean;
+      reversed?: boolean;
+      rows?: number;
+      rowSpan?: number;
+      sandbox?: string;
+      scope?: string;
+      scoped?: boolean;
+      scrolling?: string;
+      seamless?: boolean;
+      selected?: boolean;
+      shape?: string;
+      size?: number;
+      sizes?: string;
+      span?: number;
+      src?: string;
+      srcDoc?: string;
+      srcLang?: string;
+      srcSet?: string;
+      start?: number;
+      step?: number | string;
+      summary?: string;
+      target?: string;
+      type?: string;
+      useMap?: string;
+      value?: string | number;
+      width?: number | string;
+      wmode?: string;
+      wrap?: string;
+    }
+
+    interface AnchorHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      download?: any;
+      href?: string;
+      hrefLang?: string;
+      media?: string;
+      ping?: string;
+      target?: string;
+      type?: string;
+      referrerPolicy?: string;
+    }
+
+    interface AudioHTMLAttributes&lt;T = any&gt; extends MediaHTMLAttributes&lt;T&gt; {}
+
+    interface AreaHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      alt?: string;
+      coords?: string;
+      download?: any;
+      href?: string;
+      hrefLang?: string;
+      media?: string;
+      referrerPolicy?: string;
+      shape?: string;
+      target?: string;
+    }
+
+    interface BaseHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      href?: string;
+      target?: string;
+    }
+
+    interface BlockquoteHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      cite?: string;
+    }
+
+    interface ButtonHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      disabled?: boolean;
+      form?: string;
+      formAction?: string;
+      formEncType?: string;
+      formMethod?: string;
+      formNoValidate?: boolean;
+      formTarget?: string;
+      name?: string;
+      type?: &quot;submit&quot; | &quot;reset&quot; | &quot;button&quot;;
+      value?: string | number;
+    }
+
+    interface CanvasHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      height?: number | string;
+      width?: number | string;
+    }
+
+    interface ColHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      span?: number;
+      width?: number | string;
+    }
+
+    interface ColgroupHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      span?: number;
+    }
+
+    interface DataHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      value?: string | number;
+    }
+
+    interface DetailsHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      open?: boolean;
+      name?: string;
+    }
+
+    interface DelHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      cite?: string;
+      dateTime?: string;
+    }
+
+    interface DialogHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      open?: boolean;
+    }
+
+    interface EmbedHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      height?: number | string;
+      src?: string;
+      type?: string;
+      width?: number | string;
+    }
+
+    interface FieldsetHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      disabled?: boolean;
+      form?: string;
+      name?: string;
+    }
+
+    interface FormHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      acceptCharset?: string;
+      action?: string;
+      autoComplete?: string;
+      encType?: string;
+      method?: string;
+      name?: string;
+      noValidate?: boolean;
+      target?: string;
+    }
+
+    interface HtmlHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      manifest?: string;
+    }
+
+    interface IframeHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      allow?: string;
+      allowFullScreen?: boolean;
+      frameBorder?: number | string;
+      height?: number | string;
+      loading?: string;
+      name?: string;
+      referrerPolicy?: string;
+      sandbox?: string;
+      src?: string;
+      srcDoc?: string;
+      width?: number | string;
+    }
+
+    interface ImgHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      alt?: string;
+      crossOrigin?: string;
+      decoding?: string;
+      height?: number | string;
+      loading?: string;
+      src?: string;
+      srcSet?: string;
+      useMap?: string;
+      width?: number | string;
+    }
+
+    interface InsHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      cite?: string;
+      dateTime?: string;
+    }
+
+    interface InputHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      accept?: string;
+      alt?: string;
+      autoComplete?: string;
+      capture?: boolean | string;
+      checked?: boolean;
+      disabled?: boolean;
+      form?: string;
+      formAction?: string;
+      formEncType?: string;
+      formMethod?: string;
+      formNoValidate?: boolean;
+      formTarget?: string;
+      height?: number | string;
+      list?: string;
+      max?: number | string;
+      maxLength?: number;
+      min?: number | string;
+      minLength?: number;
+      multiple?: boolean;
+      name?: string;
+      pattern?: string;
+      placeholder?: string;
+      readOnly?: boolean;
+      required?: boolean;
+      size?: number;
+      src?: string;
+      step?: number | string;
+      type?: string;
+      value?: string | number;
+      width?: number | string;
+    }
+
+    interface LabelHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      form?: string;
+      htmlFor?: string;
+    }
+
+    interface LiHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      value?: string | number;
+    }
+
+    interface LinkHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      as?: string;
+      crossOrigin?: string;
+      href?: string;
+      hrefLang?: string;
+      integrity?: string;
+      media?: string;
+      sizes?: string;
+      type?: string;
+    }
+
+    interface MapHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      name?: string;
+    }
+
+    interface MenuHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      type?: string;
+    }
+
+    interface MediaHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      autoPlay?: boolean;
+      controls?: boolean;
+      loop?: boolean;
+      muted?: boolean;
+      preload?: string;
+      src?: string;
+    }
+
+    interface MetaHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      charSet?: string;
+      content?: string;
+      httpEquiv?: string;
+      media?: string;
+      name?: string;
+    }
+
+    interface MeterHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      form?: string;
+      high?: number;
+      low?: number;
+      max?: number | string;
+      min?: number | string;
+      optimum?: number;
+      value?: string | number;
+    }
+
+    interface QuoteHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      cite?: string;
+    }
+
+    interface ObjectHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      classID?: string;
+      data?: string;
+      form?: string;
+      height?: number | string;
+      name?: string;
+      type?: string;
+      useMap?: string;
+      width?: number | string;
+    }
+
+    interface OlHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      reversed?: boolean;
+      start?: number;
+      type?: &quot;1&quot; | &quot;a&quot; | &quot;A&quot; | &quot;i&quot; | &quot;I&quot;;
+    }
+
+    interface OptgroupHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      disabled?: boolean;
+      label?: string;
+    }
+
+    interface OptionHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      disabled?: boolean;
+      label?: string;
+      selected?: boolean;
+      value?: string | number;
+    }
+
+    interface OutputHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      form?: string;
+      htmlFor?: string;
+      name?: string;
+    }
+
+    interface ParamHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      name?: string;
+      value?: string | number;
+    }
+
+    interface ProgressHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      max?: number | string;
+      value?: string | number;
+    }
+
+    interface SlotHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      name?: string;
+    }
+
+    interface ScriptHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      async?: boolean;
+      crossOrigin?: string;
+      defer?: boolean;
+      integrity?: string;
+      noModule?: boolean;
+      src?: string;
+      type?: string;
+    }
+
+    interface SelectHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      autoComplete?: string;
+      disabled?: boolean;
+      form?: string;
+      multiple?: boolean;
+      name?: string;
+      required?: boolean;
+      size?: number;
+      value?: string | number;
+    }
+
+    interface SourceHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      height?: number | string;
+      media?: string;
+      sizes?: string;
+      src?: string;
+      srcSet?: string;
+      type?: string;
+      width?: number | string;
+    }
+
+    interface StyleHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      media?: string;
+      scoped?: boolean;
+      type?: string;
+    }
+
+    interface TableHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      align?: &quot;left&quot; | &quot;center&quot; | &quot;right&quot;;
+      border?: number;
+      cellPadding?: number | string;
+      cellSpacing?: number | string;
+      summary?: string;
+      width?: number | string;
+    }
+
+    interface TextareaHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      autoComplete?: string;
+      cols?: number;
+      disabled?: boolean;
+      form?: string;
+      maxLength?: number;
+      minLength?: number;
+      name?: string;
+      placeholder?: string;
+      readOnly?: boolean;
+      required?: boolean;
+      rows?: number;
+      value?: string | number;
+      wrap?: string;
+    }
+
+    interface TdHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      align?: &quot;left&quot; | &quot;center&quot; | &quot;right&quot; | &quot;justify&quot; | &quot;char&quot;;
+      colSpan?: number;
+      headers?: string;
+      rowSpan?: number;
+      scope?: string;
+    }
+
+    interface ThHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      align?: &quot;left&quot; | &quot;center&quot; | &quot;right&quot; | &quot;justify&quot; | &quot;char&quot;;
+      colSpan?: number;
+      headers?: string;
+      rowSpan?: number;
+      scope?: string;
+    }
+
+    interface TimeHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      dateTime?: string;
+    }
+
+    interface TrackHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      default?: boolean;
+      kind?: string;
+      label?: string;
+      src?: string;
+      srcLang?: string;
+    }
+
+    interface VideoHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
+      height?: number | string;
+      playsInline?: boolean;
+      poster?: string;
+      width?: number | string;
+    }
+
+    interface SVGAttributes&lt;T = any&gt; {
+      className?: string;
+      color?: string;
+      height?: number | string;
+      id?: string;
+      style?: any;
+      viewBox?: string;
+      [attributeName: string]: any;
+    }
+
+    interface IntrinsicElements {
+      a: DetailedHTMLProps&lt;AnchorHTMLAttributes&lt;HTMLAnchorElement&gt;, HTMLAnchorElement&gt;;
+      abbr: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      address: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      area: DetailedHTMLProps&lt;AreaHTMLAttributes&lt;HTMLAreaElement&gt;, HTMLAreaElement&gt;;
+      article: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      aside: DetailedHTMLProps&lt;HTMLAttributes, HTMLElement&gt;;
+      audio: DetailedHTMLProps&lt;AudioHTMLAttributes&lt;HTMLAudioElement&gt;, HTMLAudioElement&gt;;
+      b: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      base: DetailedHTMLProps&lt;BaseHTMLAttributes&lt;HTMLBaseElement&gt;, HTMLBaseElement&gt;;
+      bdi: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      bdo: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      big: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      blockquote: DetailedHTMLProps&lt;BlockquoteHTMLAttributes&lt;HTMLQuoteElement&gt;, HTMLQuoteElement&gt;;
+      body: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLBodyElement&gt;, HTMLBodyElement&gt;;
+      br: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLBRElement&gt;, HTMLBRElement&gt;;
+      button: DetailedHTMLProps&lt;ButtonHTMLAttributes&lt;HTMLButtonElement&gt;, HTMLButtonElement&gt;;
+      canvas: DetailedHTMLProps&lt;CanvasHTMLAttributes&lt;HTMLCanvasElement&gt;, HTMLCanvasElement&gt;;
+      caption: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      center: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      cite: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      code: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      col: DetailedHTMLProps&lt;ColHTMLAttributes&lt;HTMLTableColElement&gt;, HTMLTableColElement&gt;;
+      colgroup: DetailedHTMLProps&lt;ColgroupHTMLAttributes&lt;HTMLTableColElement&gt;, HTMLTableColElement&gt;;
+      data: DetailedHTMLProps&lt;DataHTMLAttributes&lt;HTMLDataElement&gt;, HTMLDataElement&gt;;
+      datalist: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLDataListElement&gt;, HTMLDataListElement&gt;;
+      dd: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      del: DetailedHTMLProps&lt;DelHTMLAttributes&lt;HTMLModElement&gt;, HTMLModElement&gt;;
+      details: DetailedHTMLProps&lt;DetailsHTMLAttributes&lt;HTMLDetailsElement&gt;, HTMLDetailsElement&gt;;
+      dfn: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      dialog: DetailedHTMLProps&lt;DialogHTMLAttributes&lt;HTMLDialogElement&gt;, HTMLDialogElement&gt;;
+      div: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLDivElement&gt;, HTMLDivElement&gt;;
+      dl: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLDListElement&gt;, HTMLDListElement&gt;;
+      dt: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      em: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      embed: DetailedHTMLProps&lt;EmbedHTMLAttributes&lt;HTMLEmbedElement&gt;, HTMLEmbedElement&gt;;
+      fieldset: DetailedHTMLProps&lt;FieldsetHTMLAttributes&lt;HTMLFieldSetElement&gt;, HTMLFieldSetElement&gt;;
+      figcaption: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      figure: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      footer: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      form: DetailedHTMLProps&lt;FormHTMLAttributes&lt;HTMLFormElement&gt;, HTMLFormElement&gt;;
+      h1: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLHeadingElement&gt;, HTMLHeadingElement&gt;;
+      h2: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLHeadingElement&gt;, HTMLHeadingElement&gt;;
+      h3: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLHeadingElement&gt;, HTMLHeadingElement&gt;;
+      h4: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLHeadingElement&gt;, HTMLHeadingElement&gt;;
+      h5: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLHeadingElement&gt;, HTMLHeadingElement&gt;;
+      h6: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLHeadingElement&gt;, HTMLHeadingElement&gt;;
+      head: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLHeadElement&gt;, HTMLHeadElement&gt;;
+      header: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      hgroup: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      hr: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLHRElement&gt;, HTMLHRElement&gt;;
+      html: DetailedHTMLProps&lt;HtmlHTMLAttributes&lt;HTMLHtmlElement&gt;, HTMLHtmlElement&gt;;
+      i: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      iframe: DetailedHTMLProps&lt;IframeHTMLAttributes&lt;HTMLIFrameElement&gt;, HTMLIFrameElement&gt;;
+      img: DetailedHTMLProps&lt;ImgHTMLAttributes&lt;HTMLImageElement&gt;, HTMLImageElement&gt;;
+      input: DetailedHTMLProps&lt;InputHTMLAttributes&lt;HTMLInputElement&gt;, HTMLInputElement&gt;;
+      ins: DetailedHTMLProps&lt;InsHTMLAttributes&lt;HTMLModElement&gt;, HTMLModElement&gt;;
+      kbd: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      keygen: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      label: DetailedHTMLProps&lt;LabelHTMLAttributes&lt;HTMLLabelElement&gt;, HTMLLabelElement&gt;;
+      legend: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLLegendElement&gt;, HTMLLegendElement&gt;;
+      li: DetailedHTMLProps&lt;LiHTMLAttributes&lt;HTMLLIElement&gt;, HTMLLIElement&gt;;
+      link: DetailedHTMLProps&lt;LinkHTMLAttributes&lt;HTMLLinkElement&gt;, HTMLLinkElement&gt;;
+      main: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      map: DetailedHTMLProps&lt;MapHTMLAttributes&lt;HTMLMapElement&gt;, HTMLMapElement&gt;;
+      mark: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      menu: DetailedHTMLProps&lt;MenuHTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      menuitem: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      meta: DetailedHTMLProps&lt;MetaHTMLAttributes&lt;HTMLMetaElement&gt;, HTMLMetaElement&gt;;
+      meter: DetailedHTMLProps&lt;MeterHTMLAttributes&lt;HTMLMeterElement&gt;, HTMLMeterElement&gt;;
+      nav: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      noscript: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      object: DetailedHTMLProps&lt;ObjectHTMLAttributes&lt;HTMLObjectElement&gt;, HTMLObjectElement&gt;;
+      ol: DetailedHTMLProps&lt;OlHTMLAttributes&lt;HTMLOListElement&gt;, HTMLOListElement&gt;;
+      optgroup: DetailedHTMLProps&lt;OptgroupHTMLAttributes&lt;HTMLOptGroupElement&gt;, HTMLOptGroupElement&gt;;
+      option: DetailedHTMLProps&lt;OptionHTMLAttributes&lt;HTMLOptionElement&gt;, HTMLOptionElement&gt;;
+      output: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLOutputElement&gt;, HTMLOutputElement&gt;;
+      p: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLParagraphElement&gt;, HTMLParagraphElement&gt;;
+      param: DetailedHTMLProps&lt;ParamHTMLAttributes&lt;HTMLParamElement&gt;, HTMLParamElement&gt;;
+      picture: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      pre: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLPreElement&gt;, HTMLPreElement&gt;;
+      progress: DetailedHTMLProps&lt;ProgressHTMLAttributes&lt;HTMLProgressElement&gt;, HTMLProgressElement&gt;;
+      q: DetailedHTMLProps&lt;QuoteHTMLAttributes&lt;HTMLQuoteElement&gt;, HTMLQuoteElement&gt;;
+      rp: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      rt: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      ruby: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      s: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      samp: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      search: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      slot: DetailedHTMLProps&lt;SlotHTMLAttributes&lt;HTMLSlotElement&gt;, HTMLSlotElement&gt;;
+      script: DetailedHTMLProps&lt;ScriptHTMLAttributes &amp; { contentInCDATA?: boolean }, HTMLScriptElement&gt;;
+      section: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      select: DetailedHTMLProps&lt;SelectHTMLAttributes&lt;HTMLSelectElement&gt;, HTMLSelectElement&gt;;
+      small: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      source: DetailedHTMLProps&lt;SourceHTMLAttributes&lt;HTMLSourceElement&gt;, HTMLSourceElement&gt;;
+      span: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLSpanElement&gt;, HTMLSpanElement&gt;;
+      strong: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      style: DetailedHTMLProps&lt;StyleHTMLAttributes&lt;HTMLStyleElement&gt;, HTMLStyleElement&gt;;
+      sub: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      summary: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      sup: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      table: DetailedHTMLProps&lt;TableHTMLAttributes&lt;HTMLTableElement&gt;, HTMLTableElement&gt;;
+      template: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLTemplateElement&gt;, HTMLTemplateElement&gt;;
+      tbody: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLTableSectionElement&gt;, HTMLTableSectionElement&gt;;
+      td: DetailedHTMLProps&lt;TdHTMLAttributes&lt;HTMLTableDataCellElement&gt;, HTMLTableDataCellElement&gt;;
+      textarea: DetailedHTMLProps&lt;TextareaHTMLAttributes&lt;HTMLTextAreaElement&gt;, HTMLTextAreaElement&gt;;
+      tfoot: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLTableSectionElement&gt;, HTMLTableSectionElement&gt;;
+      th: DetailedHTMLProps&lt;ThHTMLAttributes&lt;HTMLTableHeaderCellElement&gt;, HTMLTableHeaderCellElement&gt;;
+      thead: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLTableSectionElement&gt;, HTMLTableSectionElement&gt;;
+      time: DetailedHTMLProps&lt;TimeHTMLAttributes&lt;HTMLTimeElement&gt;, HTMLTimeElement&gt;;
+      title: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLTitleElement&gt;, HTMLTitleElement&gt;;
+      tr: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLTableRowElement&gt;, HTMLTableRowElement&gt;;
+      track: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLTrackElement&gt;, HTMLTrackElement&gt;;
+      u: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      ul: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLUListElement&gt;, HTMLUListElement&gt;;
+      var: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+      video: DetailedHTMLProps&lt;VideoHTMLAttributes&lt;HTMLVideoElement&gt;, HTMLVideoElement&gt;;
+      wbr: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
+
+      // SVG
+      svg: BloggerAttributes&lt;SVGAttributes&lt;SVGSVGElement&gt;&gt;;
+
+      // Blogger native elements
+      &#x27;b:section&#x27;: BloggerAttributes&lt;{ id: string; class?: string; maxwidgets?: number | string; showaddelement?: boolean | string; growth?: string; preferred?: boolean | string }&gt;;
+      &#x27;b:widget&#x27;: BloggerAttributes&lt;{ id: string; type: string; title?: string; locked?: boolean | string; pageType?: string; mobile?: string; version?: number | string; visible?: boolean | string }&gt;;
+      &#x27;b:widget-settings&#x27;: BloggerAttributes&lt;{}&gt;;
+      &#x27;b:widget-setting&#x27;: BloggerAttributes&lt;{ name: string }&gt;;
+      &#x27;b:if&#x27;: BloggerAttributes&lt;{ cond: string }&gt;;
+      &#x27;b:elseif&#x27;: BloggerAttributes&lt;{ cond: string }&gt;;
+      &#x27;b:else&#x27;: BloggerAttributes&lt;{}&gt;;
+      &#x27;b:loop&#x27;: BloggerAttributes&lt;{ values: string; var: string; index?: string }&gt;;
+      &#x27;b:include&#x27;: BloggerAttributes&lt;{ name: string; data?: string; cond?: string }&gt;;
+      &#x27;b:includable&#x27;: BloggerAttributes&lt;{ id: string; var?: string }&gt;;
+      &#x27;b:attr&#x27;: BloggerAttributes&lt;{ name: string; value: string; cond?: string }&gt;;
+      &#x27;b:class&#x27;: BloggerAttributes&lt;{ name: string; cond: string }&gt;;
+      &#x27;b:tag&#x27;: BloggerAttributes&lt;{ name?: string; cond?: string }&gt;;
+      &#x27;b:eval&#x27;: BloggerAttributes&lt;{ expr: string }&gt;;
+      &#x27;b:with&#x27;: BloggerAttributes&lt;{ var: string; value: string }&gt;;
+      &#x27;b:switch&#x27;: BloggerAttributes&lt;{ var: string }&gt;;
+      &#x27;b:case&#x27;: BloggerAttributes&lt;{ value: string }&gt;;
+      &#x27;b:default&#x27;: BloggerAttributes&lt;{}&gt;;
+      &#x27;b:message&#x27;: BloggerAttributes&lt;{ name: string }&gt;;
+      &#x27;b:comment&#x27;: BloggerAttributes&lt;{}&gt;;
+      &#x27;b:template-skin&#x27;: BloggerAttributes&lt;{}&gt;;
+      &#x27;b:template-script&#x27;: BloggerAttributes&lt;{ name: string; version: string; async?: boolean | string }&gt;;
+      &#x27;b:param&#x27;: BloggerAttributes&lt;{ value?: string }&gt;;
+      &#x27;b:defaultmarkup&#x27;: BloggerAttributes&lt;{ type: string }&gt;;
+      &#x27;b:defaultmarkups&#x27;: BloggerAttributes&lt;{}&gt;;
+
+      // Dynamic tags fallback
+      [elemName: string]: any;
+    }
+  }
+}</code></pre>
   </div>
 
   <hr class="antinna-divider" />
@@ -1588,37 +1612,37 @@ export {};</code></pre>
       <span class="antinna-code-title">📂 src/components/BlogHeader.tsx</span>
       <button class="antinna-copy-btn">Copy</button>
     </div>
-    <pre><code class="language-tsx">import { BSection, BWidget, BIf, BEval } from "@antinna/blogger-theme";
+    <pre><code class="language-tsx">import { BSection, BWidget, BIf, BEval } from &quot;@antinna/blogger-theme&quot;;
 
-export const BlogHeader = () => (
-  <header
-    class="header-container"
-    style="background-color: #fff; border-bottom: 1px solid #ddd;"
-  >
-    <BSection
-      id="main-header"
-      className="main-header-sec"
+export const BlogHeader = () =&gt; (
+  &lt;header
+    class=&quot;header-container&quot;
+    style=&quot;background-color: #fff; border-bottom: 1px solid #ddd;&quot;
+  &gt;
+    &lt;BSection
+      id=&quot;main-header&quot;
+      className=&quot;main-header-sec&quot;
       maxwidgets={1}
       showaddelement={true}
-    >
-      <BWidget
-        id="Header1"
-        type="Header"
-        title="My React Blog Header"
+    &gt;
+      &lt;BWidget
+        id=&quot;Header1&quot;
+        type=&quot;Header&quot;
+        title=&quot;My React Blog Header&quot;
         locked={true}
-      />
-    </BSection>
+      /&gt;
+    &lt;/BSection&gt;
 
     {/* Example of b:if, b:attr, and expression mapping inside TSX layouts */}
-    <BIf cond="data:view.isHomepage">
-      <div class="homepage-banner" cond="data:view.isHomepage">
-        <h1>
-          <BEval expr="data:blog.title.escaped" />
-        </h1>
-        <p>A cutting-edge blog layout engineered entirely in TypeScript.</p>
-      </div>
-    </BIf>
-  </header>
+    &lt;BIf cond=&quot;data:view.isHomepage&quot;&gt;
+      &lt;div class=&quot;homepage-banner&quot; cond=&quot;data:view.isHomepage&quot;&gt;
+        &lt;h1&gt;
+          &lt;BEval expr=&quot;data:blog.title.escaped&quot; /&gt;
+        &lt;/h1&gt;
+        &lt;p&gt;A cutting-edge blog layout engineered entirely in TypeScript.&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/BIf&gt;
+  &lt;/header&gt;
 );</code></pre>
   </div>
 
@@ -1638,8 +1662,8 @@ export const BlogHeader = () => (
       <span class="antinna-code-title">📂 src/main.tsx</span>
       <button class="antinna-copy-btn">Copy</button>
     </div>
-    <pre><code class="language-tsx">import * as fs from "fs";
-import * as path from "path";
+    <pre><code class="language-tsx">import * as fs from &quot;fs&quot;;
+import * as path from &quot;path&quot;;
 import {
   BloggerTheme,
   BSection,
@@ -1655,50 +1679,50 @@ import {
   Expr,
   Data,
   BEval,
-} from "@antinna/blogger-theme";
-import { BlogHeader } from "./components/BlogHeader.js";
+} from &quot;@antinna/blogger-theme&quot;;
+import { BlogHeader } from &quot;./components/BlogHeader.js&quot;;
 
-const BlogLayout = () => (
-  <div class="wrapper-pane">
-    <BlogHeader />
+const BlogLayout = () =&gt; (
+  &lt;div class=&quot;wrapper-pane&quot;&gt;
+    &lt;BlogHeader /&gt;
 
-    <main class="content-area">
+    &lt;main class=&quot;content-area&quot;&gt;
       {/* Example of Blogger custom inclusion/parameters using TSX */}
-      <BSection
-        id="main-content"
-        className="main-content-sec"
+      &lt;BSection
+        id=&quot;main-content&quot;
+        className=&quot;main-content-sec&quot;
         maxwidgets={1}
         showaddelement={true}
-      />
+      /&gt;
       {/* 1. This is where our React application will mount! */}
-      <div id="react-root"></div>
+      &lt;div id=&quot;react-root&quot;&gt;&lt;/div&gt;
 
       {/* 2. Embedded on-demand script compilation of React App using BClientScript! */}
       {/* Under the hood, this compiles React, React-DOM, and our App source files,
           bundling them into a single, minified, self-invoking IIFE block. */}
-      <BClientScript scriptPath="./src/client/index.tsx" mode="cdata" />
-    </main>
-  </div>
+      &lt;BClientScript scriptPath=&quot;./src/client/index.tsx&quot; mode=&quot;cdata&quot; /&gt;
+    &lt;/main&gt;
+  &lt;/div&gt;
 );
 
 function buildTheme() {
   const theme = new BloggerTheme({
     attributes: {
-      "b:responsive": "true",
-      "b:defaultwidgetversion": "2",
-      "b:layoutsversion": "3",
+      &quot;b:responsive&quot;: &quot;true&quot;,
+      &quot;b:defaultwidgetversion&quot;: &quot;2&quot;,
+      &quot;b:layoutsversion&quot;: &quot;3&quot;,
     },
     head: [
-      <Title>React Blogger Theme Example</Title>,
-      <BSkin css="body { background-color: #f3f4f6; margin: 0; font-family: sans-serif; }" />,
+      &lt;Title&gt;React Blogger Theme Example&lt;/Title&gt;,
+      &lt;BSkin css=&quot;body { background-color: #f3f4f6; margin: 0; font-family: sans-serif; }&quot; /&gt;,
     ],
-    body: [<BlogLayout />],
+    body: [&lt;BlogLayout /&gt;],
   });
 
   const xml = theme.generate();
 
-  const outputPath = path.resolve("dist/theme.xml");
-  fs.writeFileSync(outputPath, xml, "utf8");
+  const outputPath = path.resolve(&quot;dist/theme.xml&quot;);
+  fs.writeFileSync(outputPath, xml, &quot;utf8&quot;);
 
   console.log(`\n🎉 Success! Blogger XML theme generated at: ${outputPath}`);
 }
@@ -1722,14 +1746,14 @@ buildTheme();</code></pre>
       <span class="antinna-code-title">📂 src/client/index.tsx</span>
       <button class="antinna-copy-btn">Copy</button>
     </div>
-    <pre><code class="language-tsx">import React from 'react';
-import { createRoot } from 'react-dom/client';
-import App from './App.jsx';
+    <pre><code class="language-tsx">import React from &#x27;react&#x27;;
+import { createRoot } from &#x27;react-dom/client&#x27;;
+import App from &#x27;./App.jsx&#x27;;
 
-const container = document.getElementById('react-root');
+const container = document.getElementById(&#x27;react-root&#x27;);
 if (container) {
   const root = createRoot(container);
-  root.render(<App />);
+  root.render(&lt;App /&gt;);
 }</code></pre>
   </div>
 
@@ -1743,50 +1767,50 @@ if (container) {
       <span class="antinna-code-title">📂 src/client/App.jsx</span>
       <button class="antinna-copy-btn">Copy</button>
     </div>
-    <pre><code class="language-tsx">import React, { useState } from 'react';
+    <pre><code class="language-tsx">import React, { useState } from &#x27;react&#x27;;
 
 export default function App() {
   const [likes, setLikes] = useState(0);
 
   return (
-    <div style={{
-      fontFamily: 'system-ui, sans-serif',
-      padding: '20px',
-      border: '1px solid #ddd',
-      borderRadius: '8px',
-      maxWidth: '400px',
-      margin: '20px auto',
-      boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-      backgroundColor: '#ffffff'
-    }}>
-      <h2 style={{ color: '#ff5a5f', marginTop: 0 }}>⚛️ React in Blogger!</h2>
-      <p style={{ color: '#555', lineHeight: '1.5' }}>
-        This application was written in React, compiled to a self-invoking IIFE via <strong>@antinna/blogger-theme</strong> and esbuild, and embedded dynamically into the theme XML.
-      </p>
+    &lt;div style={{
+      fontFamily: &#x27;system-ui, sans-serif&#x27;,
+      padding: &#x27;20px&#x27;,
+      border: &#x27;1px solid #ddd&#x27;,
+      borderRadius: &#x27;8px&#x27;,
+      maxWidth: &#x27;400px&#x27;,
+      margin: &#x27;20px auto&#x27;,
+      boxShadow: &#x27;0 4px 6px rgba(0,0,0,0.1)&#x27;,
+      backgroundColor: &#x27;#ffffff&#x27;
+    }}&gt;
+      &lt;h2 style={{ color: &#x27;#ff5a5f&#x27;, marginTop: 0 }}&gt;⚛️ React in Blogger!&lt;/h2&gt;
+      &lt;p style={{ color: &#x27;#555&#x27;, lineHeight: &#x27;1.5&#x27; }}&gt;
+        This application was written in React, compiled to a self-invoking IIFE via &lt;strong&gt;@antinna/blogger-theme&lt;/strong&gt; and esbuild, and embedded dynamically into the theme XML.
+      &lt;/p&gt;
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '20px' }}>
-        <button
-          onClick={() => setLikes(likes + 1)}
+      &lt;div style={{ display: &#x27;flex&#x27;, alignItems: &#x27;center&#x27;, gap: &#x27;10px&#x27;, marginTop: &#x27;20px&#x27; }}&gt;
+        &lt;button
+          onClick={() =&gt; setLikes(likes + 1)}
           style={{
-            backgroundColor: '#ff5a5f',
-            color: 'white',
-            border: 'none',
-            padding: '10px 16px',
-            borderRadius: '4px',
-            cursor: 'pointer',
-            fontWeight: 'bold',
-            transition: 'opacity 0.2s'
+            backgroundColor: &#x27;#ff5a5f&#x27;,
+            color: &#x27;white&#x27;,
+            border: &#x27;none&#x27;,
+            padding: &#x27;10px 16px&#x27;,
+            borderRadius: &#x27;4px&#x27;,
+            cursor: &#x27;pointer&#x27;,
+            fontWeight: &#x27;bold&#x27;,
+            transition: &#x27;opacity 0.2s&#x27;
           }}
-          onMouseOver={(e) => (e.currentTarget.style.opacity = '0.9')}
-          onMouseOut={(e) => (e.currentTarget.style.opacity = '1')}
-        >
+          onMouseOver={(e) =&gt; (e.currentTarget.style.opacity = &#x27;0.9&#x27;)}
+          onMouseOut={(e) =&gt; (e.currentTarget.style.opacity = &#x27;1&#x27;)}
+        &gt;
           ❤️ Like React App
-        </button>
-        <span style={{ fontWeight: 'bold', fontSize: '16px', color: '#333' }}>
-          {likes} {likes === 1 ? 'like' : 'likes'}
-        </span>
-      </div>
-    </div>
+        &lt;/button&gt;
+        &lt;span style={{ fontWeight: &#x27;bold&#x27;, fontSize: &#x27;16px&#x27;, color: &#x27;#333&#x27; }}&gt;
+          {likes} {likes === 1 ? &#x27;like&#x27; : &#x27;likes&#x27;}
+        &lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
   );
 }</code></pre>
   </div>
@@ -1901,6 +1925,7 @@ export default function App() {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-tsx.min.js"></script>
 
 <!-- INTERACTIVE SCRIPTS: SMOOTH TOC SCROLL + COPY BUTTONS -->
