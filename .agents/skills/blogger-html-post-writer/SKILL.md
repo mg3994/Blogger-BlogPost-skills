@@ -2,35 +2,69 @@
 name: blogger-html-post-writer
 description: >
   Generates complete, production-ready Blogger HTML posts using a unified
-  design template. Use when the user asks to write, draft, or create a blog
-  post, article, or tutorial for Blogger. Outputs a self-contained HTML block
-  (no <html>/<body> wrappers) with content, optional code blocks with copy
-  buttons, a Table of Contents, callout boxes, step badges, inline terminals,
-  data tables, syntax highlighting via Prism.js, and all CSS bundled at the
-  bottom inside a <style> tag. Always use the antinna-blog-container design
-  system unless the user explicitly requests an alternate style.
+  design template aligned with Google Search Essentials. Use when the user asks
+  to write, draft, or create a blog post, article, or tutorial for Blogger.
+  Outputs a self-contained HTML block (no <html>/<body> wrappers) with content,
+  optional code blocks with copy buttons, a Table of Contents, callout boxes,
+  step badges, inline terminals, data tables, syntax highlighting via Prism.js,
+  and all CSS bundled at the bottom inside a <style> tag. Always use the
+  antinna-blog-container design system, and adhere strictly to Google Search
+  Essentials guidelines (helpfulness, E-E-A-T, semantic headers, descriptive links,
+  image alt text, and anti-spam protocols).
 ---
 
 # Blogger HTML Post Writer Skill
 
 ## Overview
 
-This skill generates **complete, self-contained Blogger post HTML** — the kind you paste directly into Blogger's HTML editor. The output is a single block of HTML that includes:
+This skill generates **complete, self-contained Blogger post HTML** — the kind you paste directly into Blogger's HTML editor. The output is a single block of HTML optimized to conform strictly with **Google Search Essentials (formerly Google Webmaster Guidelines)**.
 
-1. **Hero banner image** (Blogger CDN `<div class="separator">` pattern)
-2. **Lead paragraph** (a brief, compelling intro)
-3. **Optional badges** (npm, GitHub, etc.)
+The generated output is structured as follows:
+1. **Hero banner image** (Blogger CDN `<div class="separator">` pattern with descriptive SEO alt text)
+2. **Lead paragraph** (a brief, compelling, helpful intro demonstrating expertise)
+3. **Optional badges** (npm, GitHub, etc., for open-source verification)
 4. **Callout boxes** (success / warning / info variants)
-5. **Table of Contents (TOC)** with smooth-scroll anchors
-6. **Sectioned content** with `<h2>` headings, step badges, `<hr>` dividers
-7. **Mac-style code windows** with Prism.js syntax highlighting + Copy button
+5. **Table of Contents (TOC)** with smooth-scroll semantic anchors
+6. **Sectioned content** with logical `<h2>` and `<h3>` heading hierarchies (no skipping levels)
+7. **Mac-style code windows** with Prism.js syntax highlighting + Copy button (fully HTML-escaped)
 8. **Inline terminal snippets**, ordered / unordered lists, data tables
 9. **Closing scripts** (Prism.js loader + copy-button JS)
 10. **All CSS** bundled inside a `<style>` block at the very end
 
 ---
 
-## CRITICAL RULES
+## CRITICAL GOOGLE SEARCH ESSENTIALS RULES
+
+To guarantee that all generated content is highly eligible for crawling, indexing, and ranking in Google Search, you MUST enforce the following guidelines:
+
+### 1. High-Quality, Helpful, People-First Content (E-E-A-T)
+- **Experience & Expertise:** Write in an authoritative, technical, and precise voice. Do not write generic or shallow articles. Back explanations with deep architectural insights, design patterns, and platform-specific edge cases.
+- **Completeness:** Code examples must be fully functional and complete. Do not truncate essential files with `// ...` placeholder comments unless absolutely redundant. Give readers self-contained solutions.
+- **Originality:** Avoid repeating content verbatim or generating thin pages. Provide original comparative analyses, visual diagrams (tables), and real-world troubleshooting steps.
+
+### 2. Descriptive Hyperlinks (Anchor Text)
+- **Descriptive Anchors:** Never use generic or low-value link phrases such as "click here", "link", "source", "website", or the raw URL itself.
+- **Contextual Anchors:** Use descriptive anchor text that explains exactly what the destination page contains.
+  - *Bad:* `Check out the code <a href="...">here</a>.`
+  - *Good:* `Explore the custom styles implementation on the <a href="..." target="_blank">react-i18n vanilla branch</a>.`
+
+### 3. Accessible & Contextual Images
+- **Descriptive Alt Attributes:** Every image must contain a highly descriptive, contextual `alt` attribute that explains the image content to search crawlers and screen readers. Do not leave the `alt` tag empty or generic.
+  - *Bad:* `alt="Banner"` or `alt="image"`
+  - *Good:* `alt="Complete React zero-dependency localization dashboard displaying English, Hindi, and RTL Arabic bidi translations"`
+- **Responsive Sizing:** Ensure image elements contain explicit width and height metadata attributes and are fully responsive via CSS.
+
+### 4. Semantic Header Hierarchies
+- **Sequential Headings:** Maintain a clean, logical heading hierarchy. Use `<h2>` for main sections, `<h3>` for subsections, and `<h4>` for granular definitions. Never skip heading levels (e.g. going from `<h2>` directly to `<h4>`).
+- **Indexable Headings:** Every heading should have an explicit, unique, and descriptive `id` attribute matching the Table of Contents anchor links.
+
+### 5. Spam Prevention & Visibility
+- **No Hidden Content:** All text and code must be completely visible and readable. Never use microscopic fonts, colors that blend with the background, or hidden CSS styles.
+- **No Keyword Stuffing:** Use technical terms and code keyword definitions naturally in context. Do not stuff titles, headers, or metadata block fields with redundant variations of keywords.
+
+---
+
+## TECHNICAL CODING & STRUCTURE RULES
 
 - **NEVER** output `<html>`, `<head>`, or `<body>` tags. Blogger posts are HTML fragments.
 - **ALWAYS** put the `<style>` block at the **very end** of the output, after all content and scripts.
@@ -55,7 +89,7 @@ Use the following structure for every post. Fill in the placeholders.
     href="FULL_IMAGE_URL"
     style="display: block; padding: 1em 0; text-align: center"
     ><img
-      alt="POST_TITLE Banner"
+      alt="DESCRIPTIVE_SEO_CONTEXT_EXPLAINING_IMAGE_CONTENT"
       border="0"
       data-original-height="HEIGHT"
       data-original-width="WIDTH"
@@ -586,14 +620,14 @@ Use the following structure for every post. Fill in the placeholders.
 ```html
 <div class="separator" style="clear: both">
   <a href="FULL_URL" style="display: block; padding: 1em 0; text-align: center">
-    <img alt="ALT_TEXT" border="0" data-original-height="H" data-original-width="W" src="THUMBNAIL_URL" />
+    <img alt="DESCRIPTIVE_SEO_CONTEXT_EXPLAINING_IMAGE_CONTENT" border="0" data-original-height="H" data-original-width="W" src="THUMBNAIL_URL" />
   </a>
 </div>
 ```
 
 ### Lead Paragraph
 ```html
-<p>LEAD_TEXT (compelling 2-3 sentence intro that hooks the reader)</p>
+<p>LEAD_TEXT (compelling 2-3 sentence intro that hooks the reader and demonstrates real expertise)</p>
 ```
 
 ### Callout Variants
