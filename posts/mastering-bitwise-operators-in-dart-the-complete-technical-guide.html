@@ -1,0 +1,940 @@
+<!-- BANNER IMAGE -->
+<div class="separator" style="clear: both">
+  <a
+    href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgj_placeholder-hero-banner.png"
+    style="display: block; padding: 1em 0; text-align: center"
+    ><img
+      alt="Mastering Bitwise Operators in Dart: The Complete Technical Guide"
+      border="0"
+      data-original-height="500"
+      data-original-width="1000"
+      src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgj_placeholder-hero-banner.png"
+  /></a>
+</div>
+
+<!-- MAIN CONTENT CONTAINER -->
+<div class="antinna-blog-container">
+
+  <!-- LEAD PARAGRAPH -->
+  <p>In modern application development, efficiency and resource optimization are paramount. While high-level abstractions dominate day-to-day coding, there are times when developers must operate at the lowest levels of hardware and data representation. Whether you are developing performance-critical Flutter games, writing custom serialization protocols, manipulating binary image/video streams, or managing fine-grained permission flags, mastering bitwise operators in Dart is an essential skill. This in-depth technical guide explains the entire spectrum of bitwise operations supported by Dart's compiler, backed by clean examples, visual comparisons, and real-world implementation patterns.</p>
+
+  <!-- CALLOUT BOX INFO -->
+  <div class="antinna-callout antinna-callout-info">
+    <div class="antinna-callout-title">ℹ️ Dart Integers Under the Hood</div>
+    <p class="antinna-callout-body">In Dart, integers (the <code>int</code> class) are represented as 64-bit signed two's complement integers when running on native platforms (like Flutter mobile apps, desktop binaries, or server-side Dart VM). However, when compiling to JavaScript (Flutter Web), integers are mapped to JS Numbers (64-bit double-precision floats), where bitwise operations are performed on 32-bit signed integers. Keep this architectural difference in mind when writing multi-platform software!</p>
+  </div>
+
+  <hr class="antinna-divider" />
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="antinna-toc">
+    <h3>📖 Quick Navigation</h3>
+    <ul>
+      <li><a href="#section-1">1. Understanding Binary Representation and Bitwise Logical Tables</a></li>
+      <li><a href="#section-2">2. Bitwise AND (&amp;): Filtering Specific Bits</a></li>
+      <li><a href="#section-3">3. Bitwise OR (|): Combining Flags and Settings</a></li>
+      <li><a href="#section-4">4. Bitwise XOR (^): Toggling and Symmetric Encryption</a></li>
+      <li><a href="#section-5">5. Bitwise NOT (~): Bitwise Inversion and Two's Complement</a></li>
+      <li><a href="#section-6">6. Left Shift (&lt;&lt;) and Sign-Propagating Right Shift (&gt;&gt;)</a></li>
+      <li><a href="#section-7">7. Unsigned Right Shift (&gt;&gt;&gt;): Dart's Triple-Shift Operator</a></li>
+      <li><a href="#section-8">8. Real-World Case Study: Fine-Grained Permissions with Bitmasks</a></li>
+      <li><a href="#section-9">9. Real-World Case Study: Extracting ARGB Color Channels from Hex Values</a></li>
+      <li><a href="#section-10">10. Summary and Performance Cheat Sheet</a></li>
+    </ul>
+  </div>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 1 -->
+  <h2 id="section-1">
+    <span class="antinna-step-badge">Step 1</span> Understanding Binary Representation and Bitwise Logical Tables
+  </h2>
+  <p>Bitwise operators work directly on the individual bits (0s and 1s) representing a number. Rather than performing traditional arithmetic operations like addition or multiplication, bitwise operations evaluate and manipulate data at the binary level. Before looking at Dart code examples, let's review how individual input bits are evaluated by logical bitwise operators:</p>
+
+  <div class="antinna-table-overflow">
+    <table class="antinna-data-table">
+      <thead>
+        <tr>
+          <th>Bit A</th>
+          <th>Bit B</th>
+          <th>A &amp; B (AND)</th>
+          <th>A | B (OR)</th>
+          <th>A ^ B (XOR)</th>
+          <th>~A (NOT)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>0</code></td>
+          <td><code>0</code></td>
+          <td><code>0</code></td>
+          <td><code>0</code></td>
+          <td><code>0</code></td>
+          <td><code>1</code></td>
+        </tr>
+        <tr>
+          <td><code>0</code></td>
+          <td><code>1</code></td>
+          <td><code>0</code></td>
+          <td><code>1</code></td>
+          <td><code>1</code></td>
+          <td><code>1</code></td>
+        </tr>
+        <tr>
+          <td><code>1</code></td>
+          <td><code>0</code></td>
+          <td><code>0</code></td>
+          <td><code>1</code></td>
+          <td><code>1</code></td>
+          <td><code>0</code></td>
+        </tr>
+        <tr>
+          <td><code>1</code></td>
+          <td><code>1</code></td>
+          <td><code>1</code></td>
+          <td><code>1</code></td>
+          <td><code>0</code></td>
+          <td><code>0</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 2 -->
+  <h2 id="section-2">
+    <span class="antinna-step-badge">Step 2</span> Bitwise AND (&amp;): Filtering Specific Bits
+  </h2>
+  <p>The bitwise AND operator (<code>&amp;</code>) compares each bit of the first operand to the corresponding bit of the second operand. If both bits are <code>1</code>, the resulting bit is set to <code>1</code>. Otherwise, the resulting bit is set to <code>0</code>. This is incredibly useful for filtering, masking, or checking if specific bits are active.</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 bitwise_and.dart</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-dart">void main() {
+  // Binary representation:
+  // a: 12 = 0000 1100
+  // b: 10 = 0000 1010
+  final int a = 12;
+  final int b = 10;
+
+  // Perform bitwise AND
+  // Match bits:
+  //   0000 1100  (12)
+  // &amp; 0000 1010  (10)
+  // -----------
+  //   0000 1000  (8)
+  final int result = a &amp; b;
+
+  print('Bitwise AND of $a and $b is: $result'); // Output: 8
+}</code></pre>
+  </div>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 3 -->
+  <h2 id="section-3">
+    <span class="antinna-step-badge">Step 3</span> Bitwise OR (|): Combining Flags and Settings
+  </h2>
+  <p>The bitwise OR operator (<code>|</code>) compares each bit of its first operand to the corresponding bit of its second operand. If either or both of the compared bits are <code>1</code>, the resulting bit is set to <code>1</code>. This operator is primarily used to combine configuration flags, settings, or multiple parameters into a single variable.</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 bitwise_or.dart</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-dart">void main() {
+  // Binary representation:
+  // a: 12 = 0000 1100
+  // b: 10 = 0000 1010
+  final int a = 12;
+  final int b = 10;
+
+  // Perform bitwise OR
+  // Match bits:
+  //   0000 1100  (12)
+  // | 0000 1010  (10)
+  // -----------
+  //   0000 1110  (14)
+  final int result = a | b;
+
+  print('Bitwise OR of $a and $b is: $result'); // Output: 14
+}</code></pre>
+  </div>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 4 -->
+  <h2 id="section-4">
+    <span class="antinna-step-badge">Step 4</span> Bitwise XOR (^): Toggling and Symmetric Encryption
+  </h2>
+  <p>The bitwise XOR (Exclusive OR) operator (<code>^</code>) compares corresponding bits of two operands. The resulting bit is set to <code>1</code> if the compared bits are different, and <code>0</code> if they are identical. In addition to performance optimization, XOR is famously used in lightweight symmetric cryptography (XOR cipher) and toggling specific state parameters.</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 bitwise_xor.dart</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-dart">void main() {
+  // Binary representation:
+  // a: 12 = 0000 1100
+  // b: 10 = 0000 1010
+  final int a = 12;
+  final int b = 10;
+
+  // Perform bitwise XOR
+  // Match bits:
+  //   0000 1100  (12)
+  // ^ 0000 1010  (10)
+  // -----------
+  //   0000 0110  (6)
+  final int result = a ^ b;
+
+  print('Bitwise XOR of $a and $b is: $result'); // Output: 6
+}</code></pre>
+  </div>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 5 -->
+  <h2 id="section-5">
+    <span class="antinna-step-badge">Step 5</span> Bitwise NOT (~): Bitwise Inversion and Two's Complement
+  </h2>
+  <p>The bitwise NOT operator (<code>~</code>) is a unary operator, meaning it takes only a single operand. It inverts every single bit in the value—turning 1s into 0s and 0s into 1s. In Dart, because integers are signed numbers using two's complement format, inverting a positive integer <code>X</code> yields the negative integer <code>-(X + 1)</code>.</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 bitwise_not.dart</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-dart">void main() {
+  // Binary representation:
+  // a: 12 = 0000 ... 0000 1100 (64-bit integer)
+  final int a = 12;
+
+  // Perform bitwise NOT
+  // Match bits (shows inversion of signed two's complement):
+  // ~ 0000 1100  (12)
+  // -----------
+  //   1111 ... 0011  (-13)
+  final int result = ~a;
+
+  print('Bitwise NOT of $a is: $result'); // Output: -13
+}</code></pre>
+  </div>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 6 -->
+  <h2 id="section-6">
+    <span class="antinna-step-badge">Step 6</span> Left Shift (&lt;&lt;) and Sign-Propagating Right Shift (&gt;&gt;)
+  </h2>
+  <p>Bitwise shift operators move the binary digits of a number left or right by a specified number of positions, which can serve as an incredibly high-performance alternative to multiplying or dividing by powers of two.</p>
+
+  <h3>Left Shift (&lt;&lt;): High-Speed Multiplication</h3>
+  <p>Shifts bits to the left, introducing 0s from the right side. Shifting a number left by <code>N</code> bits is equivalent to multiplying the number by <code>2^N</code>.</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 left_shift.dart</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-dart">void main() {
+  // Binary representation:
+  // a: 5 = 0000 0101
+  final int a = 5;
+
+  // Shift left by 2 positions
+  //   0000 0101 (5) &lt;&lt; 2
+  //   ---------
+  //   0001 0100 (20)
+  final int result = a &lt;&lt; 2;
+
+  print('$a shifted left by 2 is: $result'); // Output: 20 (Equivalent to 5 * 2^2)
+}</code></pre>
+  </div>
+
+  <h3>Sign-Propagating Right Shift (&gt;&gt;): High-Speed Division</h3>
+  <p>Shifts bits to the right, discarding bits shifted off the right end. This operator propagates the sign bit from the left—meaning positive numbers stay positive (shifted in 0s), and negative numbers stay negative (shifted in 1s). Shifting right by <code>N</code> bits is equivalent to dividing by <code>2^N</code> (rounded down).</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 right_shift.dart</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-dart">void main() {
+  // Binary representation:
+  // a: 20 = 0001 0100
+  final int a = 20;
+
+  // Shift right by 2 positions
+  //   0001 0100 (20) &gt;&gt; 2
+  //   ---------
+  //   0000 0101 (5)
+  final int result = a &gt;&gt; 2;
+
+  print('$a shifted right by 2 is: $result'); // Output: 5 (Equivalent to 20 / 2^2)
+}</code></pre>
+  </div>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 7 -->
+  <h2 id="section-7">
+    <span class="antinna-step-badge">Step 7</span> Unsigned Right Shift (&gt;&gt;&gt;): Dart's Triple-Shift Operator
+  </h2>
+  <p>Introduced in Dart 2.14, the unsigned right shift (or triple-shift) operator (<code>&gt;&gt;&gt;</code>) shifts bits to the right, but unlike the sign-propagating shift, it **always introduces 0s from the left** regardless of whether the original number was positive or negative. This is extremely important when executing cryptographic bitwise operations, hash generation, and general low-level bytes processing.</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 unsigned_right_shift.dart</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-dart">void main() {
+  // Negative integer representation has the leading bit set to 1.
+  final int value = -100;
+
+  // Unsigned right shift always introduces zero bits at the left
+  final int result = value &gt;&gt;&gt; 2;
+
+  print('Signed right shift (&gt;&gt;) of -100 by 2 is: ${value &gt;&gt; 2}');   // Output: -25
+  print('Unsigned right shift (&gt;&gt;&gt;) of -100 by 2 is: $result');     // Output: 4611686018427387879 (massive positive number in 64-bit!)
+}</code></pre>
+  </div>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 8 -->
+  <h2 id="section-8">
+    <span class="antinna-step-badge">Step 8</span> Real-World Case Study: Fine-Grained Permissions with Bitmasks
+  </h2>
+  <p>In high-scale backends, database efficiency is crucial. Instead of storing 10 boolean columns for individual user permissions (such as read, write, execute, delete), you can pack all these states into a single, high-performance, 8-bit integer field. By utilizing bitmasks, we can evaluate permissions instantly with microscopic memory usage.</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 permission_system.dart</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-dart">// Define permission flags as binary positions
+class Permissions {
+  static const int none    = 0;       // 0000 0000
+  static const int read    = 1 &lt;&lt; 0;  // 0000 0001 (1)
+  static const int write   = 1 &lt;&lt; 1;  // 0000 0010 (2)
+  static const int execute = 1 &lt;&lt; 2;  // 0000 0100 (4)
+  static const int delete  = 1 &lt;&lt; 3;  // 0000 1000 (8)
+}
+
+void main() {
+  // Assign read and write permissions to a guest user using OR (|)
+  int userPermissions = Permissions.read | Permissions.write; // Result: 0000 0011 (3)
+  print('Initial User permissions: $userPermissions');
+
+  // 1. Check if user has write permissions using AND (&amp;)
+  final bool canWrite = (userPermissions &amp; Permissions.write) != 0;
+  print('Can user write? $canWrite'); // Output: true
+
+  // 2. Check if user has execute permissions
+  final bool canExecute = (userPermissions &amp; Permissions.execute) != 0;
+  print('Can user execute? $canExecute'); // Output: false
+
+  // 3. Grant execute permission using OR (|)
+  userPermissions |= Permissions.execute; // Result: 0000 0111 (7)
+  print('Permissions after granting execute: $userPermissions');
+  print('Can user execute now? ${(userPermissions &amp; Permissions.execute) != 0}'); // Output: true
+
+  // 4. Revoke write permission using AND NOT (~ and &amp;)
+  userPermissions &amp;= ~Permissions.write; // Inverts write (1111 1101) &amp; userPermissions (0000 0111) = 0000 0101 (5)
+  print('Permissions after revoking write: $userPermissions');
+  print('Can user write now? ${(userPermissions &amp; Permissions.write) != 0}'); // Output: false
+
+  // 5. Toggle delete permission using XOR (^)
+  userPermissions ^= Permissions.delete; // Toggles delete ON (0000 1101 - 13)
+  print('Permissions after toggling delete ON: $userPermissions');
+  userPermissions ^= Permissions.delete; // Toggles delete OFF (0000 0101 - 5)
+  print('Permissions after toggling delete OFF: $userPermissions');
+}</code></pre>
+  </div>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 9 -->
+  <h2 id="section-9">
+    <span class="antinna-step-badge">Step 9</span> Real-World Case Study: Extracting ARGB Color Channels from Hex Values
+  </h2>
+  <p>In Flutter, colors are typically represented as 32-bit integers in the ARGB format (Alpha, Red, Green, Blue). Each channel is represented by 8 bits (0 to 255). We can use bitwise shifting and mask filters to extract these channels instantly with maximum rendering speed.</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 color_extraction.dart</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-dart">class ARGBColor {
+  final int alpha;
+  final int red;
+  final int green;
+  final int blue;
+
+  ARGBColor({
+    required this.alpha,
+    required this.red,
+    required this.green,
+    required this.blue,
+  });
+
+  // Factory constructor that extracts individual channels from a single 32-bit int hex value
+  factory ARGBColor.fromHex(int hexValue) {
+    // hexValue represents: 0xFF3F8C22
+    // F_F: Alpha channel (Bits 24-31)
+    // 3_F: Red channel (Bits 16-23)
+    // 8_C: Green channel (Bits 8-15)
+    // 2_2: Blue channel (Bits 0-7)
+
+    // Shift channels right to place them at the lowest byte position, then filter with 0xFF mask
+    final int a = (hexValue &gt;&gt; 24) &amp; 0xFF;
+    final int r = (hexValue &gt;&gt; 16) &amp; 0xFF;
+    final int g = (hexValue &gt;&gt; 8) &amp; 0xFF;
+    final int b = hexValue &amp; 0xFF; // Lowest byte doesn't require shifting
+
+    return ARGBColor(alpha: a, red: r, green: g, blue: b);
+  }
+
+  @override
+  String toString() {
+    return 'ARGBColor(Alpha: $alpha, Red: $red, Green: $green, Blue: $blue)';
+  }
+}
+
+void main() {
+  // A beautiful deep green hex color with transparency: 0x803F8C22
+  final int myHexColor = 0x803F8C22;
+
+  final ARGBColor color = ARGBColor.fromHex(myHexColor);
+  print('Extracted Color Channels:');
+  print(color);
+  // Output: ARGBColor(Alpha: 128, Red: 63, Green: 140, Blue: 34)
+}</code></pre>
+  </div>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 10 -->
+  <h2 id="section-10">
+    <span class="antinna-step-badge">Step 10</span> Summary and Performance Cheat Sheet
+  </h2>
+  <p>To keep your bitwise operations optimized and maintain robust data representation across web and native Dart deployments, adhere to this operational cheat sheet:</p>
+
+  <div class="antinna-table-overflow">
+    <table class="antinna-data-table">
+      <thead>
+        <tr>
+          <th>Operation</th>
+          <th>Operator</th>
+          <th>Typical Use Case</th>
+          <th>Arithmetic Equivalent</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>AND</strong></td>
+          <td><code>&amp;</code></td>
+          <td>Checking permissions, filtering/masking bytes</td>
+          <td>Modular logic validation</td>
+        </tr>
+        <tr>
+          <td><strong>OR</strong></td>
+          <td><code>|</code></td>
+          <td>Aggregating configuration flags, setting features</td>
+          <td>Additive configurations</td>
+        </tr>
+        <tr>
+          <td><strong>XOR</strong></td>
+          <td><code>^</code></td>
+          <td>State toggling, checksum generation, fast swaps</td>
+          <td>Difference detection</td>
+        </tr>
+        <tr>
+          <td><strong>NOT</strong></td>
+          <td><code>~</code></td>
+          <td>Bitwise inversion, producing complements</td>
+          <td><code>-(value + 1)</code></td>
+        </tr>
+        <tr>
+          <td><strong>Left Shift</strong></td>
+          <td><code>&lt;&lt;</code></td>
+          <td>Multiplication, defining powers of two indices</td>
+          <td><code>value * 2^N</code></td>
+        </tr>
+        <tr>
+          <td><strong>Right Shift</strong></td>
+          <td><code>&gt;&gt;</code></td>
+          <td>Division, extracting sub-byte segments</td>
+          <td><code>value / 2^N</code> (integer division)</td>
+        </tr>
+        <tr>
+          <td><strong>Unsigned Right Shift</strong></td>
+          <td><code>&gt;&gt;&gt;</code></td>
+          <td>Cryptographic hashing, zero-filled logical shifts</td>
+          <td>Platform-independent division</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CALLOUT WARNING -->
+  <div class="antinna-callout antinna-callout-warning">
+    <div class="antinna-callout-title">⚠️ Warning: Multi-Platform Overflow Limits</div>
+    <p class="antinna-callout-body">Be extremely careful when executing bitwise operations on values exceeding 32 bits on Dart Web targets. Because JS compiles bitwise operands into 32-bit signed integers, anything exceeding 32 bits will trigger silent sign bit overflows, leading to mismatched values compared to the Dart VM native execution! Run unit tests targeting chrome or node if your application supports web builds.</p>
+  </div>
+
+  <hr class="antinna-divider" />
+
+  <!-- CLOSING SECTION -->
+  <h3>📄 Contributions &amp; Feedback</h3>
+  <p>Manipulating bytes and binary bits is an elegant and highly rewarding development style. Do you use bitmasking in your Flutter architectures or server-side Dart setups? Leave a comment or share your experience below!</p>
+
+</div>
+<!-- END .antinna-blog-container -->
+
+<!-- PRISM.JS SYNTAX HIGHLIGHTING -->
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+  rel="stylesheet"
+/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-dart.min.js"></script>
+
+<!-- INTERACTIVE SCRIPTS: SMOOTH TOC SCROLL + COPY BUTTONS -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // 1. Smooth Scrolling for Table of Contents
+    const tocLinks = document.querySelectorAll(".antinna-toc a");
+    tocLinks.forEach((link) => {
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute("href").substring(1);
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+    });
+
+    // 2. Copy Button Functionality
+    const copyButtons = document.querySelectorAll(".antinna-copy-btn");
+    copyButtons.forEach((button) => {
+      button.addEventListener("click", async () => {
+        const container = button.closest(".antinna-code-wrapper");
+        if (!container) return;
+        const targetCodeBlock = container.querySelector("pre code");
+        if (!targetCodeBlock) return;
+        const codeContent = targetCodeBlock.innerText;
+        try {
+          await navigator.clipboard.writeText(codeContent);
+          button.textContent = "Copied!";
+          button.classList.add("copied");
+          setTimeout(() => {
+            button.textContent = "Copy";
+            button.classList.remove("copied");
+          }, 2000);
+        } catch (err) {
+          console.error("Failed to copy text contents:", err);
+          button.textContent = "Error";
+        }
+      });
+    });
+  });
+</script>
+
+<!-- UNIFIED STYLESHEET -->
+<style>
+  /* =============================================
+     ANTINNA BLOGGER UNIFIED DESIGN SYSTEM v3
+     All rules use !important to override Blogger themes
+  ============================================= */
+
+  html {
+    scroll-behavior: smooth !important;
+  }
+
+  /* 1. Core Container */
+  .antinna-blog-container {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, sans-serif !important;
+    color: #2d3748 !important;
+    line-height: 1.8 !important;
+    max-width: 860px !important;
+    margin: 0 auto !important;
+    padding: 20px !important;
+    -webkit-font-smoothing: antialiased !important;
+  }
+
+  /* 2. Typography */
+  .antinna-blog-container h2 {
+    color: #1a202c !important;
+    font-size: 1.7rem !important;
+    margin-top: 3rem !important;
+    margin-bottom: 1.25rem !important;
+    display: flex !important;
+    align-items: center !important;
+    border-bottom: 2px solid #edf2f7 !important;
+    padding-bottom: 0.5rem !important;
+    font-weight: 700 !important;
+    scroll-margin-top: 90px !important;
+  }
+  .antinna-blog-container h3 {
+    color: #2d3748 !important;
+    font-size: 1.35rem !important;
+    margin-top: 1.5rem !important;
+    margin-bottom: 0.75rem !important;
+    font-weight: 600 !important;
+  }
+  .antinna-blog-container p {
+    margin-bottom: 1.5rem !important;
+    font-size: 1.05rem !important;
+  }
+  .antinna-blog-container ul,
+  .antinna-blog-container ol {
+    margin-bottom: 1.5rem !important;
+    padding-left: 1.5rem !important;
+  }
+  .antinna-blog-container li {
+    margin-bottom: 0.75rem !important;
+    font-size: 1.05rem !important;
+  }
+  .antinna-blog-container strong {
+    color: #1a202c !important;
+  }
+  .antinna-blog-container a {
+    color: #3182ce !important;
+    text-decoration: none !important;
+    font-weight: 500 !important;
+    transition: color 0.2s ease !important;
+  }
+  .antinna-blog-container a:hover {
+    color: #2b6cb0 !important;
+    text-decoration: underline !important;
+  }
+
+  /* 3. Inline Code */
+  .antinna-blog-container code:not(pre code) {
+    background-color: #f7fafc !important;
+    color: #dd6b20 !important;
+    padding: 0.2rem 0.4rem !important;
+    border-radius: 4px !important;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo,
+      monospace !important;
+    font-size: 0.9em !important;
+    border: 1px solid #e2e8f0 !important;
+  }
+
+  /* 4. Dividers */
+  .antinna-divider {
+    border: 0 !important;
+    border-top: 2px solid #edf2f7 !important;
+    margin: 2.5rem 0 !important;
+  }
+
+  /* 5. Callout Boxes */
+  .antinna-callout {
+    padding: 1.5rem !important;
+    border-radius: 8px !important;
+    margin: 2rem 0 !important;
+    border-left: 5px solid !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03) !important;
+  }
+  .antinna-callout-success {
+    background-color: #f0fff4 !important;
+    border-color: #38a169 !important;
+  }
+  .antinna-callout-warning {
+    background-color: #fffaf0 !important;
+    border-color: #dd6b20 !important;
+  }
+  .antinna-callout-info {
+    background-color: #ebf8ff !important;
+    border-color: #3182ce !important;
+  }
+  .antinna-callout-title {
+    font-weight: 700 !important;
+    margin-bottom: 0.5rem !important;
+    font-size: 1.1rem !important;
+  }
+  .antinna-callout-success .antinna-callout-title {
+    color: #22543d !important;
+  }
+  .antinna-callout-warning .antinna-callout-title {
+    color: #7b341e !important;
+  }
+  .antinna-callout-info .antinna-callout-title {
+    color: #2b6cb0 !important;
+  }
+  .antinna-callout-body {
+    font-size: 1rem !important;
+    margin: 0 !important;
+  }
+  .antinna-callout-success .antinna-callout-body {
+    color: #276749 !important;
+    margin: 0 !important;
+  }
+  .antinna-callout-warning .antinna-callout-body {
+    color: #9c4221 !important;
+    margin: 0 !important;
+  }
+  .antinna-callout-info .antinna-callout-body {
+    color: #2a69ac !important;
+    margin: 0 !important;
+  }
+
+  /* 6. Table of Contents */
+  .antinna-toc {
+    background: #f7fafc !important;
+    padding: 1.5rem 2rem !important;
+    border-radius: 8px !important;
+    border: 1px solid #e2e8f0 !important;
+  }
+  .antinna-toc h3 {
+    margin-top: 0 !important;
+    font-size: 1.15rem !important;
+  }
+  .antinna-toc ul {
+    list-style-type: none !important;
+    padding-left: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  .antinna-toc li {
+    margin-bottom: 0.5rem !important;
+  }
+  .antinna-toc a {
+    color: #4a5568 !important;
+    cursor: pointer !important;
+    font-weight: 400 !important;
+  }
+  .antinna-toc a:hover {
+    color: #3182ce !important;
+  }
+
+  /* 7. Step Badges */
+  .antinna-step-badge {
+    background: #3182ce !important;
+    color: #fff !important;
+    padding: 0.3rem 0.8rem !important;
+    border-radius: 6px !important;
+    font-size: 0.85rem !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    margin-right: 1rem !important;
+    display: inline-block !important;
+    box-shadow: 0 2px 4px rgba(49, 130, 206, 0.3) !important;
+    white-space: nowrap !important;
+  }
+  .antinna-step-badge.danger {
+    background: #e53e3e !important;
+    box-shadow: 0 2px 4px rgba(229, 62, 62, 0.3) !important;
+  }
+  .antinna-step-badge.success {
+    background: #38a169 !important;
+    box-shadow: 0 2px 4px rgba(56, 161, 105, 0.3) !important;
+  }
+
+  /* 8. Mac-Style Code Windows */
+  .antinna-code-wrapper {
+    margin: 2rem 0 !important;
+    background: #1d1f21 !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15),
+      0 8px 10px -6px rgba(0, 0, 0, 0.08) !important;
+  }
+  .antinna-code-header {
+    background: #282a2e !important;
+    color: #a0aec0 !important;
+    padding: 0.75rem 1.25rem !important;
+    font-size: 0.85rem !important;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif !important;
+    display: flex !important;
+    align-items: center !important;
+    border-bottom: 1px solid #111 !important;
+  }
+  .antinna-mac-dots {
+    display: flex !important;
+    gap: 6px !important;
+    margin-right: 15px !important;
+  }
+  .antinna-mac-dots .dot {
+    width: 12px !important;
+    height: 12px !important;
+    border-radius: 50% !important;
+  }
+  .antinna-mac-dots .red {
+    background-color: #ff5f56 !important;
+  }
+  .antinna-mac-dots .yellow {
+    background-color: #ffbd2e !important;
+  }
+  .antinna-mac-dots .green {
+    background-color: #27c93f !important;
+  }
+  .antinna-code-title {
+    flex-grow: 1 !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.02em !important;
+  }
+  .antinna-copy-btn {
+    background-color: #3f3f3f !important;
+    border: 1px solid #555 !important;
+    color: #cbd5e1 !important;
+    padding: 4px 10px !important;
+    border-radius: 5px !important;
+    font-size: 0.72rem !important;
+    cursor: pointer !important;
+    margin-left: 14px !important;
+    font-weight: 600 !important;
+    font-family: inherit !important;
+    transition: all 0.15s ease-in-out !important;
+  }
+  .antinna-copy-btn:hover {
+    background-color: #4b5563 !important;
+    color: #f8fafc !important;
+    border-color: #6b7280 !important;
+  }
+  .antinna-copy-btn.copied {
+    background-color: #059669 !important;
+    border-color: #059669 !important;
+    color: #ffffff !important;
+  }
+
+  /* 9. Prism.js Overrides (forces transparent bg to match our dark window) */
+  .antinna-code-wrapper pre[class*="language-"] {
+    margin: 0 !important;
+    padding: 1.5rem !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    overflow-x: auto !important;
+  }
+  .antinna-code-wrapper code[class*="language-"] {
+    font-family: "SFMono-Regular", Consolas, Menlo, Monaco, monospace !important;
+    font-size: 0.9rem !important;
+    line-height: 1.6 !important;
+    background: none !important;
+    text-shadow: none !important;
+  }
+  /* Fallback for non-Prism code blocks */
+  .antinna-code-wrapper pre {
+    margin: 0 !important;
+    padding: 1.5rem !important;
+    overflow-x: auto !important;
+  }
+  .antinna-code-wrapper pre code {
+    font-family: "SFMono-Regular", Consolas, Menlo, Monaco, monospace !important;
+    font-size: 0.9rem !important;
+    color: #e4e4e4 !important;
+    line-height: 1.6 !important;
+    background: none !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+
+  /* 10. Inline Terminal Snippets */
+  .antinna-inline-terminal {
+    background-color: #0f172a !important;
+    color: #38bdf8 !important;
+    font-family: "Fira Code", "Cascadia Code", Consolas, monospace !important;
+    padding: 8px 14px !important;
+    border-radius: 6px !important;
+    font-size: 0.88rem !important;
+    display: block !important;
+    width: max-content !important;
+    max-width: 100% !important;
+    margin: 10px 0 !important;
+    border: 1px solid #1e293b !important;
+    overflow-x: auto !important;
+  }
+
+  /* 11. Data Tables */
+  .antinna-table-overflow {
+    overflow-x: auto !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 10px !important;
+    margin: 20px 0 !important;
+  }
+  .antinna-data-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    font-size: 0.88rem !important;
+    text-align: left !important;
+  }
+  .antinna-data-table th {
+    background: #f8fafc !important;
+    font-weight: 600 !important;
+    color: #1a202c !important;
+    padding: 14px 16px !important;
+    border-bottom: 2px solid #e2e8f0 !important;
+  }
+  .antinna-data-table td {
+    padding: 14px 16px !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    vertical-align: top !important;
+    color: #2d3748 !important;
+  }
+  .antinna-data-table tr:last-child td {
+    border-bottom: none !important;
+  }
+
+  /* 12. Mobile Responsive Breakpoints */
+  @media (max-width: 640px) {
+    .antinna-blog-container {
+      padding: 12px !important;
+    }
+    .antinna-blog-container h2 {
+      font-size: 1.35rem !important;
+    }
+    .antinna-code-title {
+      font-size: 0.75rem !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      max-width: 120px !important;
+    }
+    .antinna-mac-dots {
+      margin-right: 8px !important;
+    }
+    .antinna-toc {
+      padding: 1rem !important;
+    }
+    .antinna-inline-terminal {
+      width: 100% !important;
+    }
+  }
+</style>

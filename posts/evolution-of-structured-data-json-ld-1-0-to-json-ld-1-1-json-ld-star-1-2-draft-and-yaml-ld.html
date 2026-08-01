@@ -1,0 +1,1442 @@
+<!-- BANNER IMAGE -->
+<div class="separator" style="clear: both">
+  <a
+    href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgj_placeholder-hero-banner.png"
+    style="display: block; padding: 1em 0; text-align: center"
+    ><img
+      alt="The Evolution of Structured Data: JSON-LD 1.0 to JSON-LD 1.1, JSON-LD-Star (1.2 Draft), and YAML-LD"
+      border="0"
+      data-original-height="500"
+      data-original-width="1000"
+      src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgj_placeholder-hero-banner.png"
+  /></a>
+</div>
+
+<!-- MAIN CONTENT CONTAINER -->
+<div class="antinna-blog-container">
+
+  <!-- LEAD PARAGRAPH -->
+  <p>Structured data has evolved from a niche concept in semantic engineering to a fundamental pillar of modern technical search engine optimization (SEO) and artificial intelligence (AI) search engines. Among the standard serializations for Linked Data, JSON-LD (JavaScript Object Notation for Linked Data) stands as the absolute gold standard for communicating rich metadata to search engines like Google, Yahoo, and Bing. This comprehensive guide walks you through the complete evolution of structured data, starting with the core foundations of JSON-LD 1.0, advancing to the powerful enterprise features of JSON-LD 1.1, exploring the cutting-edge RDF-star proposals for JSON-LD 1.2 (JSON-LD-star), and finally examining the brand-new YAML-LD specification designed to make semantic syntax more readable than ever before.</p>
+
+  <!-- CALLOUT BOX INFO -->
+  <div class="antinna-callout antinna-callout-info">
+    <div class="antinna-callout-title">ℹ️ Google AdSense &amp; Rich Results Notice</div>
+    <p class="antinna-callout-body">Implementing fully-validated and error-free JSON-LD schema is one of the most effective ways to achieve rich snippets on Google Search, which dramatically boosts click-through rates. Additionally, publishing highly informative, structured technical content about specialized topics improves your site's E-E-A-T (Experience, Expertise, Authoritativeness, and Trustworthiness), paving a smoother path to Google AdSense program approval.</p>
+  </div>
+
+  <hr class="antinna-divider" />
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="antinna-toc">
+    <h3>📖 Quick Navigation</h3>
+    <ul>
+      <li><a href="#section-1">1. JSON-LD 1.0 Foundations: Node &amp; Vocabulary Keywords</a></li>
+      <li><a href="#section-2">2. Deep Dive: Enterprise Namespaces in @context</a></li>
+      <li><a href="#section-3">3. Deep Dive: Relative URI Resolution with @base and @id</a></li>
+      <li><a href="#section-4">4. JSON-LD 1.0: Value Objects, Text Keywords, &amp; Collections</a></li>
+      <li><a href="#section-5">5. JSON-LD 1.1: Advanced Structure &amp; Graph Layout Keywords</a></li>
+      <li><a href="#section-6">6. JSON-LD 1.1: Collections, Maps, and Advanced Container Directives</a></li>
+      <li><a href="#section-7">7. Practical Masterclass: Multi-Container Implementations &amp; Schema-Compliant Mappings</a></li>
+      <li><a href="#section-8">8. JSON-LD 1.1: Enterprise Context Control &amp; Protection</a></li>
+      <li><a href="#section-9">9. Deep Dive: Flipping Directions with @reverse</a></li>
+      <li><a href="#section-10">10. Deep Dive: Bundling Standalone Nodes with @included</a></li>
+      <li><a href="#section-11">11. Deep Dive: Local Lookup and UI Metadata with @index</a></li>
+      <li><a href="#section-12">12. Deep Dive: Simplifying Verbosity with @container</a></li>
+      <li><a href="#section-13">13. Deep Dive: Safeguarding Schemas with @protected and @propagate</a></li>
+      <li><a href="#section-14">14. JSON-LD 1.2 (JSON-LD-star) Draft: Annotating Arcs &amp; Triple Reification</a></li>
+      <li><a href="#section-15">15. YAML-LD 1.0: Semantic Metadata with Elegant YAML Syntax</a></li>
+      <li><a href="#section-16">16. Keyword Comparison Reference Table</a></li>
+      <li><a href="#section-17">17. Summary &amp; Best Practices</a></li>
+    </ul>
+  </div>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 1 -->
+  <h2 id="section-1">
+    <span class="antinna-step-badge">Step 1</span> JSON-LD 1.0 Foundations: Node &amp; Vocabulary Keywords
+  </h2>
+  <p>The original JSON-LD 1.0 standard introduced a bridge between developer-friendly JSON format and the W3C's Resource Description Framework (RDF) model. By mapping traditional keys to internationalized web identifiers, it allowed systems to understand precisely what a term refers to, regardless of context. The core building blocks of any JSON-LD document are its node and vocabulary keywords.</p>
+
+  <h3>The Role of @context</h3>
+  <p>The <code>@context</code> keyword defines the mapping between simple local string keys (or terms) and full Internationalized Resource Identifiers (IRIs / URIs). It tells JSON-LD processors where to look to resolve property meanings.</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 context-example.json</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-json">{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Alice"
+}</code></pre>
+  </div>
+
+  <h3>Uniquely Identifying Nodes with @id</h3>
+  <p>The <code>@id</code> keyword assigns a unique global identifier (IRI or URI) to a node object. This is equivalent to setting a primary key or a subject URI in RDF. It prevents the duplication of entity representations across different documents.</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 node-identity.json</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-json">{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://example.com/about#company",
+  "name": "Tech Corp"
+}</code></pre>
+  </div>
+
+  <h3>Defining Node Classes with @type</h3>
+  <p>The <code>@type</code> keyword defines the class or type of the object node, or explicitly sets the XML Schema datatype for typed literal values.</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 node-type.json</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-json">{
+  "@context": "https://schema.org",
+  "@type": "Book",
+  "datePublished": {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2026-01-15"
+  }
+}</code></pre>
+  </div>
+
+  <h3>The Default Prefix with @vocab</h3>
+  <p>The <code>@vocab</code> keyword defines a default base vocabulary URL for all terms declared inside the JSON document. This eliminates the need to map every individual key inside a custom <code>@context</code> block.</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 default-vocabulary.json</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-json">{
+  "@context": {
+    "@vocab": "https://schema.org/"
+  },
+  "@type": "Person",
+  "name": "Alice"
+}</code></pre>
+  </div>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 2 -->
+  <h2 id="section-2">
+    <span class="antinna-step-badge">Step 2</span> Deep Dive: Enterprise Namespaces in @context
+  </h2>
+  <p>In massive corporate and semantic graph deployments, it is rare to rely on a single vocabulary like <code>Schema.org</code>. Enterprises connect a multitude of distinct taxonomies together—combining financial ontologies (FIBO), metadata cores (Dublin Core), social networks (FOAF), data catalogs (DCAT), and country representations (LCC). Instead of defining long-winded absolute URIs for every property, we establish a robust dictionary of short prefix namespaces directly inside the <code>@context</code> block.</p>
+
+  <p>Here is an enterprise-ready namespace mapping dictionary configured within JSON-LD. This allows developers to prefix any term with its namespace shorthand (e.g., <code>dct:created</code>, <code>foaf:name</code>, or <code>fibo-fnd-org-org:Organization</code>):</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 enterprise-namespaces.json</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-json">{
+  "@context": {
+    "bibo": "http://purl.org/ontology/bibo/",
+    "brick": "https://brickschema.org/schema/Brick#",
+    "cmns-cls": "https://www.omg.org/spec/Commons/Classifiers/",
+    "cmns-col": "https://www.omg.org/spec/Commons/Collections/",
+    "cmns-dt": "https://www.omg.org/spec/Commons/DatesAndTimes/",
+    "cmns-ge": "https://www.omg.org/spec/Commons/GeopoliticalEntities/",
+    "cmns-id": "https://www.omg.org/spec/Commons/Identifiers/",
+    "cmns-loc": "https://www.omg.org/spec/Commons/Locations/",
+    "cmns-q": "https://www.omg.org/spec/Commons/Quantities/",
+    "cmns-txt": "https://www.omg.org/spec/Commons/Text/",
+    "csvw": "http://www.w3.org/ns/csvw#",
+    "dc": "http://purl.org/dc/elements/1.1/",
+    "dcam": "http://purl.org/dc/dcam/",
+    "dcat": "http://www.w3.org/ns/dcat#",
+    "dct": "http://purl.org/dc/terms/",
+    "dctype": "http://purl.org/dc/dcmitype/",
+    "doap": "http://usefulinc.com/ns/doap#",
+    "eli": "http://data.europa.eu/eli/ontology#",
+    "fibo-be-corp-corp": "https://spec.edmcouncil.org/fibo/ontology/BE/Corporations/Corporations/",
+    "fibo-be-ge-ge": "https://spec.edmcouncil.org/fibo/ontology/BE/GovernmentEntities/GovernmentEntities/",
+    "fibo-be-le-cb": "https://spec.edmcouncil.org/fibo/ontology/BE/LegalEntities/CorporateBodies/",
+    "fibo-be-le-lp": "https://spec.edmcouncil.org/fibo/ontology/BE/LegalEntities/LegalPersons/",
+    "fibo-be-nfp-nfp": "https://spec.edmcouncil.org/fibo/ontology/BE/NotForProfitOrganizations/NotForProfitOrganizations/",
+    "fibo-be-oac-cctl": "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateControl/",
+    "fibo-fbc-dae-dbt": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/",
+    "fibo-fbc-pas-fpas": "https://spec.edmcouncil.org/fibo/ontology/FBC/ProductsAndServices/FinancialProductsAndServices/",
+    "fibo-fnd-acc-cur": "https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/CurrencyAmount/",
+    "fibo-fnd-agr-ctr": "https://spec.edmcouncil.org/fibo/ontology/FND/Agreements/Contracts/",
+    "fibo-fnd-arr-doc": "https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Documents/",
+    "fibo-fnd-arr-lif": "https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Lifecycles/",
+    "fibo-fnd-dt-oc": "https://spec.edmcouncil.org/fibo/ontology/FND/DatesAndTimes/Occurrences/",
+    "fibo-fnd-org-org": "https://spec.edmcouncil.org/fibo/ontology/FND/Organizations/Organizations/",
+    "fibo-fnd-pas-pas": "https://spec.edmcouncil.org/fibo/ontology/FND/ProductsAndServices/ProductsAndServices/",
+    "fibo-fnd-plc-adr": "https://spec.edmcouncil.org/fibo/ontology/FND/Places/Addresses/",
+    "fibo-fnd-plc-fac": "https://spec.edmcouncil.org/fibo/ontology/FND/Places/Facilities/",
+    "fibo-fnd-plc-loc": "https://spec.edmcouncil.org/fibo/ontology/FND/Places/Locations/",
+    "fibo-fnd-pty-pty": "https://spec.edmcouncil.org/fibo/ontology/FND/Parties/Parties/",
+    "fibo-fnd-rel-rel": "https://spec.edmcouncil.org/fibo/ontology/FND/Relations/Relations/",
+    "fibo-pay-ps-ps": "https://spec.edmcouncil.org/fibo/ontology/PAY/PaymentServices/PaymentServices/",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "geo": "http://www.opengis.net/ont/geosparql#",
+    "gleif-L1": "https://www.gleif.org/ontology/L1/",
+    "gs1": "https://ref.gs1.org/voc/",
+    "hydra": "http://www.w3.org/ns/hydra/core#",
+    "lcc-3166-1": "https://www.omg.org/spec/LCC/Countries/ISO3166-1-CountryCodes/",
+    "lcc-4217": "https://www.omg.org/spec/LCC/Countries/ISO4217-CurrencyCodes/",
+    "lcc-cr": "https://www.omg.org/spec/LCC/Countries/CountryRepresentation/",
+    "lcc-lr": "https://www.omg.org/spec/LCC/Languages/LanguageRepresentation/",
+    "lrmoo": "http://iflastandards.info/ns/lrm/lrmoo/",
+    "mo": "http://purl.org/ontology/mo/",
+    "odrl": "http://www.w3.org/ns/odrl/2/",
+    "og": "http://ogp.me/ns#",
+    "org": "http://www.w3.org/ns/org#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "prof": "http://www.w3.org/ns/dx/prof/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "qb": "http://purl.org/linked-data/cube#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "sarif": "http://sarif.info/",
+    "schema": "https://schema.org/",
+    "sh": "http://www.w3.org/ns/shacl#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "snomed": "http://purl.bioontology.org/ontology/SNOMEDCT/",
+    "sosa": "http://www.w3.org/ns/sosa/",
+    "ssn": "http://www.w3.org/ns/ssn/",
+    "time": "http://www.w3.org/2006/time#",
+    "unece": "http://unece.org/vocab#",
+    "vann": "http://purl.org/vocab/vann/",
+    "vcard": "http://www.w3.org/2006/vcard/ns#",
+    "void": "http://rdfs.org/ns/void#",
+    "wgs": "https://www.w3.org/2003/01/geo/wgs84_pos#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
+  },
+  "@id": "https://example.com/data/company-node",
+  "@type": "fibo-be-corp-corp:Corporation",
+  "dct:title": "Global Tech Entity",
+  "foaf:homepage": {
+    "@id": "https://example.com"
+  }
+}</code></pre>
+  </div>
+
+  <p>Using namespaces inside <code>@context</code> allows cross-organizational ontologies to coexist harmoniously in a single document. Instead of repeating <code>https://spec.edmcouncil.org/fibo/ontology/BE/Corporations/Corporations/</code> for every class definition, semantic applications can use simple CURIEs (Compact URIs) like <code>fibo-be-corp-corp:Corporation</code>, significantly reducing overall bundle size.</p>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 3 -->
+  <h2 id="section-3">
+    <span class="antinna-step-badge">Step 3</span> Deep Dive: Relative URI Resolution with @base and @id
+  </h2>
+  <p>One of the most powerful and misunderstood features in JSON-LD is the interaction between <code>@base</code> and <code>@id</code>. It provides syntactic compression for local entity paths.</p>
+
+  <h3>How Relative URI Resolution Works</h3>
+  <p>In standard web documents, relative links are resolved against the document's host URL. Inside a JSON-LD parser, the <code>@base</code> keyword sets a designated base URI explicitly for resolving all relative paths within the document—specifically targeting the values inside the <code>@id</code> keyword.</p>
+
+  <p>This means that if you have a base declared as <code>https://example.com/products/</code>, and a relative identifier declared as <code>"widget-101"</code>, the parser automatically concatenates them to form an absolute semantic path: <code>https://example.com/products/widget-101</code>.</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 base-resolution.json</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-json">{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "@base": "https://example.com/products/"
+  },
+  "@type": "Product",
+  "@id": "widget-101",
+  "name": "Heavy Duty Widget",
+  "category": {
+    "@id": "industrial-tools"
+  }
+}</code></pre>
+  </div>
+
+  <p>In the above example, let's trace how the JSON-LD processor computes the identifiers:</p>
+  <ul>
+    <li>The entity class resolves to the absolute schema URL: <code>https://schema.org/Product</code> (due to <code>@vocab</code>).</li>
+    <li>The main object <code>@id</code> computes directly to: <code>https://example.com/products/widget-101</code> (due to <code>@base</code> + relative <code>widget-101</code>).</li>
+    <li>The sub-entity <code>category</code>'s <code>@id</code> computes directly to: <code>https://example.com/products/industrial-tools</code> (due to <code>@base</code> + relative <code>industrial-tools</code>).</li>
+  </ul>
+
+  <!-- CALLOUT SUCCESS -->
+  <div class="antinna-callout antinna-callout-success">
+    <div class="antinna-callout-title">💡 Why This Matters for Portability</div>
+    <p class="antinna-callout-body">Using relative identifiers mapped to an explicit <code>@base</code> means your structured data documents are completely portable! If your domain changes from <code>example.com</code> to <code>enterprise.com</code>, you only need to change the single <code>@base</code> parameter in the context block, rather than refactoring thousands of individual absolute <code>@id</code> values scattered throughout your graph database.</p>
+  </div>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 4 -->
+  <h2 id="section-4">
+    <span class="antinna-step-badge">Step 4</span> JSON-LD 1.0: Value Objects, Text Keywords, &amp; Collections
+  </h2>
+  <p>When dealing with semantic data, simple string values are not always sufficient. Frequently, you need to append supplementary details, such as localized languages, specific datatypes, or strict ordering constraints.</p>
+
+  <h3>Representing Raw Values with @value</h3>
+  <p>The <code>@value</code> keyword specifies the raw literal payload inside a Value Object. This is utilized when you need to attach metadata (like a language code or datatype) to a primitive value rather than a complex object structure.</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 value-metadata.json</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": {
+    "@value": "Hello World",
+    "@language": "en"
+  }
+}</code></pre>
+  </div>
+
+  <h3>Defining Languages with @language &amp; @direction</h3>
+  <p>The <code>@language</code> tag expects a standard BCP 47 language code (such as <code>en</code>, <code>fr</code>, or <code>hi</code>) to specify the human language of a string. JSON-LD 1.1 added <code>@direction</code>, allowing you to explicitly specify the written reading direction (<code>ltr</code> for Left-to-Right, or <code>rtl</code> for Right-to-Left) to handle diverse global scripts elegantly.</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 internationalized-text.json</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "description": {
+    "@value": "مرحبا بك",
+    "@language": "ar",
+    "@direction": "rtl"
+  }
+}</code></pre>
+  </div>
+
+  <h3>Ordered Lists with @list vs. @set</h3>
+  <p>By default, native JSON arrays are mapped to RDF as unordered sets. The <code>@list</code> keyword is required when the sequence or sequence order of elements is critical and must be strictly preserved. Conversely, <code>@set</code> guarantees that values are represented as an unordered mathematical set, preventing single scalar promotions during parsing cycles.</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 lists-and-sets.json</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-json">{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "steps": {
+    "@list": [
+      "Turn off water supply",
+      "Unscrew pipe fitting",
+      "Replace washer"
+    ]
+  }
+}</code></pre>
+  </div>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 5 -->
+  <h2 id="section-5">
+    <span class="antinna-step-badge">Step 5</span> JSON-LD 1.1: Advanced Structure &amp; Graph Layout Keywords
+  </h2>
+  <p>While JSON-LD 1.0 excelled at simple hierarchical document mappings, developers ran into complex document structural limitations when managing non-linear object hierarchies, deep nested variables, and unlinked top-level nodes. JSON-LD 1.1 resolved these developer experience limitations by introducing dedicated graph layout keywords.</p>
+
+  <h3>Un-nesting with @graph</h3>
+  <p>The <code>@graph</code> keyword aggregates multiple sibling node objects in a flat, un-nested array wrapper under a single master payload context. This is incredibly useful for defining independent WebPage, Organization, and LocalBusiness nodes in a single file without nesting them awkwardly inside each other.</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 graph-compilation.json</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://example.com/#alice",
+      "name": "Alice"
+    },
+    {
+      "@type": "Person",
+      "@id": "https://example.com/#bob",
+      "name": "Bob"
+    }
+  ]
+}</code></pre>
+  </div>
+
+  <h3>Inverse Relationships with @reverse</h3>
+  <p>Sometimes relationships must point backwards in an object tree. Instead of redefining or hacking a parent model, the <code>@reverse</code> keyword exposes inverse links (e.g., describing a child's parent-link, or an employee's organization-link from inside the employee node).</p>
+
+  <h3>Structuring Data without Creating Nodes using @nest</h3>
+  <p>The <code>@nest</code> keyword allows you to group local properties together into nested visual sub-objects for better human readability, without creating a semantic intermediate node in the underlying RDF graph database model.</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 nested-grouping.json</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-json">{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Antinna Plumbing",
+  "@nest": {
+    "telephone": "+1-555-0199",
+    "email": "info@example.com"
+  }
+}</code></pre>
+  </div>
+
+  <h3>Bundling Standalone Entities with @included</h3>
+  <p>To include auxiliary top-level nodes in a payload without using <code>@graph</code> or establishing an artificial nested child link, <code>@included</code> lets you register orphan nodes under the context of an existing primary entity.</p>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 6 -->
+  <h2 id="section-6">
+    <span class="antinna-step-badge">Step 6</span> JSON-LD 1.1: Collections, Maps, and Advanced Container Directives
+  </h2>
+  <p>Standard JSON-LD parsing treats custom dictionaries and multi-language structures in a highly verbose manner. JSON-LD 1.1 introduces powerful <code>@container</code> mappings to streamline syntactic developer workflow.</p>
+
+  <h3>Understanding @container</h3>
+  <p>The <code>@container</code> keyword is placed inside the <code>@context</code> of a property mapping definition to tell the processor how JSON structured formats (such as native maps, language keys, or index-keys) translate directly into semantic graph objects.</p>
+
+  <p>Available container configurations include:</p>
+  <ul>
+    <li><code>@language</code>: Automatically maps dictionary object keys directly to linguistic values.</li>
+    <li><code>@index</code>: Maps local object keys to indexed metadata without polluting the schema data.</li>
+    <li><code>@id</code> &amp; <code>@type</code>: Map keys directly to identifiers or semantic classes respectively.</li>
+    <li><code>@list</code> &amp; <code>@set</code>: Enforce arrays to treat values as strict lists or sets automatically.</li>
+  </ul>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 clean-language-maps.json</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-json">{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "name": {
+      "@container": "@language"
+    }
+  },
+  "@type": "LocalBusiness",
+  "name": {
+    "en": "Antinna Plumbing",
+    "hi": "एंटिन्ना प्लंबिंग"
+  }
+}</code></pre>
+  </div>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 7 -->
+  <h2 id="section-7">
+    <span class="antinna-step-badge">Step 7</span> Practical Masterclass: Multi-Container Implementations &amp; Schema-Compliant Mappings
+  </h2>
+  <p>Let's look at an advanced, comprehensive, real-world example combining multiple modern JSON-LD 1.1 concepts into a single production schema. To ensure strict syntactic and semantic validity with Schema.org standards, we define the master entity as a <code>Blog</code> rather than a <code>LocalBusiness</code>. A <code>Blog</code> seamlessly supports properties like <code>author</code>, <code>keywords</code>, <code>pages</code> (as publication pages), and <code>mainEntity</code> (referencing articles). By adjusting this type, our schema passes strict RDF and Schema.org validation perfectly!</p>
+
+  <p>This code demonstrates complex multi-container arrays (like <code>["@set", "@language"]</code>), multi-language value maps, custom type indexes, relational web pages, context scoping boundaries with <code>@propagate</code>, and secure integration patterns.</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 advanced-blog-validation.json</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-json">{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "name": {
+      "@container": "@language"
+    },
+    "author": {
+      "@container": "@type"
+    },
+    "pages": {
+      "@container": "@id"
+    },
+    "keywords": {
+      "@container": ["@set", "@language"]
+    }
+  },
+  "@type": "Blog",
+  "@id": "https://antinna.com/#business",
+  "name": {
+    "en": "Antinna Plumbing &amp; Services Portal",
+    "hi": "एंटिन्ना प्लंबिंग एवं सर्विसेज पोर्टल",
+    "fr": "Antinna Plomberie et Services Portail"
+  },
+  "keywords": {
+    "en": ["plumbing", "pipe repair", "drain cleaning"],
+    "hi": ["प्लंबिंग", "पाइप मरम्मत", "नाली सफाई"],
+    "fr": ["plomberie", "réparation de tuyaux", "débouchage"]
+  },
+  "author": {
+    "Person": {
+      "@id": "https://antinna.com/#founder",
+      "name": {
+        "en": "Manish",
+        "hi": "मनीष",
+        "fr": "Manish"
+      }
+    }
+  },
+  "pages": {
+    "https://antinna.com/services": {
+      "name": {
+        "en": "Services &amp; Booking",
+        "hi": "सेवाएं और बुकिंग",
+        "fr": "Services et Réservation"
+      }
+    },
+    "https://antinna.com/contact": {
+      "name": {
+        "en": "Contact Support",
+        "hi": "संपर्क सहायता",
+        "fr": "Support de Contact"
+      }
+    }
+  },
+  "mainEntity": {
+    "@context": {
+      "@propagate": false,
+      "title": "https://schema.org/headline"
+    },
+    "@type": "Article",
+    "title": "How to Fix Emergency Pipe Leaks",
+    "description": "Quick solutions for household plumbing issues before a plumber arrives."
+  }
+}</code></pre>
+  </div>
+
+  <h3>Breaking Down the Advanced Mechanics &amp; Schema Validity</h3>
+  <p>This master block illustrates several crucial real-world technical implementations:</p>
+  <ul>
+    <li>
+      <strong>Schema.org Property-to-Type Rules</strong>: In Schema.org specifications, properties like <code>author</code> or <code>keywords</code> are defined strictly for <code>CreativeWork</code> and its subtypes (such as <code>Blog</code>, <code>Article</code>, or <code>Book</code>), but are invalid directly on a <code>LocalBusiness</code>. Correctly shifting the entity to <code>Blog</code> makes our schema 100% compliant and semantic.
+    </li>
+    <li>
+      <strong>Multi-Attribute Set Language Mappings</strong>: The <code>keywords</code> property defines <code>"@container": ["@set", "@language"]</code>. This enforces that the values are treated both as localized arrays mapped by BCP-47 language codes and as mathematically strict RDF sets. This prevents multi-item tags from collapsing or becoming unordered lists.
+    </li>
+    <li>
+      <strong>Type-Scoping Node Containers</strong>: The <code>author</code> mapping has <code>"@container": "@type"</code>. This allows the JSON keys themselves (e.g. <code>"Person"</code>) to denote the semantic <code>@type</code> of the inner block!
+    </li>
+    <li>
+      <strong>Key-to-URI Mapping Containers</strong>: The <code>pages</code> mapping applies <code>"@container": "@id"</code>. This maps the local keys directly to subject <code>@id</code> identifiers (such as <code>https://antinna.com/services</code>), making custom portal indexes exceptionally clean.
+    </li>
+    <li>
+      <strong>Security &amp; System Integration</strong>: The unique identifier <code>"@id": "https://antinna.com/#founder"</code> can double as an enterprise backend token or Firebase UID. By setting structural claims (such as administrative or owner tags) in your database matching this semantic ID, you can implement robust field-level validation where only authorized users or administrators can view private profile objects.
+    </li>
+    <li>
+      <strong>Business-Owned Blogging Relationships</strong>: The outer entity represents a <code>Blog</code> publication portal which features and owns an emergency plumbing guide via the <code>mainEntity</code> connection. This models precise content authority, showing search engines that the article is backed by real-world subject matter experts (highly favored under Google E-E-A-T rules).
+    </li>
+    <li>
+      <strong>Scoped Overrides via @propagate</strong>: Inside the <code>mainEntity</code> block, a specialized <code>@context</code> redefines the key <code>title</code> to map directly to <code>https://schema.org/headline</code>. By declaring <code>"@propagate": false</code>, this rule is strictly locked to the <code>Article</code> node itself, preventing this override from leaking into any further child nodes.
+    </li>
+  </ul>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 8 -->
+  <h2 id="section-8">
+    <span class="antinna-step-badge">Step 8</span> JSON-LD 1.1: Enterprise Context Control &amp; Protection
+  </h2>
+  <p>In highly collaborative corporate environments, schemas and contexts are often managed by multi-disciplinary software teams or third-party SDK packages. In such scenarios, nested sub-objects run the dangerous risk of accidentally overriding root level context vocabulary. JSON-LD 1.1 added key context control features to defend against schema overrides.</p>
+
+  <h3>External Modular Contexts with @import</h3>
+  <p>The <code>@import</code> directive fetches an external context file and merges its property definitions directly into an inline <code>@context</code> block, simplifying schema reusability across platforms.</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 modular-import.json</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-json">{
+  "@context": {
+    "@import": "https://example.com/contexts/custom-base.jsonld",
+    "specialField": "https://schema.org/identifier"
+  }
+}</code></pre>
+  </div>
+
+  <h3>Locking Contexts with @protected</h3>
+  <p>The <code>@protected</code> keyword acts as a <code>const</code> or <code>final</code> declaration for your defined schema terms. Once a term is defined as protected, any attempt to overwrite or re-map that term inside nested child scoped contexts will trigger a fatal JSON-LD parser failure.</p>
+
+  <h3>Limiting Context Bleed with @propagate</h3>
+  <p>By default, contexts declared inside specific embedded nodes (type-scoped contexts) bleed down automatically through all nested children. Setting <code>"@propagate": false</code> ensures context rules stay strict and isolated strictly to the immediate object scope where they are declared.</p>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 9 -->
+  <h2 id="section-9">
+    <span class="antinna-step-badge">Step 9</span> Deep Dive: Flipping Directions with @reverse
+  </h2>
+  <p>RDF Knowledge graphs are strictly directional schemas built on the (Subject → Property → Object) model. For instance, in Schema.org, an <code>Organization</code> has an <code>employee</code> property which points to a <code>Person</code>. However, what if your local JSON payload is organized around a <code>Person</code> (e.g. Alice's bio profile), and you want to declare that Acme Corp employs her? Standard Schema.org doesn't officially define an inverse <code>employer</code> property on <code>Person</code>.</p>
+  <p>This is where <code>@reverse</code> works its magic. It tells graph processors that the relationship direction is reversed behind the scenes, allowing you to represent the exact semantic relation without violating schema definitions.</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 reverse-relation.json</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-json">{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Alice",
+  "@reverse": {
+    "employee": {
+      "@type": "Organization",
+      "name": "Acme Corp"
+    }
+  }
+}</code></pre>
+  </div>
+
+  <!-- CALLOUT SUCCESS -->
+  <div class="antinna-callout antinna-callout-success">
+    <div class="antinna-callout-title">✅ Graphic Interpretation</div>
+    <p class="antinna-callout-body">Behind the scenes, semantic processors record: <strong>[Acme Corp] → employee → [Alice]</strong>, even though the visual root of your JSON document remains centered around Alice! This is incredibly clean and prevents data fragmentation.</p>
+  </div>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 10 -->
+  <h2 id="section-10">
+    <span class="antinna-step-badge">Step 10</span> Deep Dive: Bundling Standalone Nodes with @included
+  </h2>
+  <p>Normally, including standalone nodes that aren't nested directly under a child property requires wrapping your whole payload inside a flat <code>@graph</code> array structure. If you want to keep your JSON organized around a primary object (such as an <code>Article</code>) but still package separate auxiliary nodes (like an independent <code>Person</code> author profile or <code>Organization</code> publisher), standard nesting breaks. The <code>@included</code> keyword allows you to seamlessly bundle secondary nodes inside your primary object's payload:</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 included-nodes.json</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Mastering JSON-LD",
+  "@included": [
+    {
+      "@type": "Person",
+      "@id": "https://example.com/authors/jane",
+      "name": "Jane Doe"
+    }
+  ]
+}</code></pre>
+  </div>
+  <p>The JSON-LD processor parses this, extracts Jane Doe from the array, and lists her as a standalone, top-level node in the document graph alongside the article, rather than trying to force her to be an inline sub-attribute of the article node.</p>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 11 -->
+  <h2 id="section-11">
+    <span class="antinna-step-badge">Step 11</span> Deep Dive: Local Lookup and UI Metadata with @index
+  </h2>
+  <p>Your local UI code or backend architecture frequently needs temporary identifier keys to manage application state (e.g., active tabs, sorting orders, or content draft versions). If you place these custom keys directly into semantic JSON-LD structures, search engine crawlers will get confused and report validation errors. The <code>@index</code> keyword solves this issue by attaching a local tracking key that graph processors store as metadata, but completely exclude from the parsed RDF triple graph.</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 ui-index.json</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "articleBody": {
+    "@value": "This is a draft preview...",
+    "@index": "draft-tab-v2"
+  }
+}</code></pre>
+  </div>
+  <p>Your local JavaScript code can query <code>articleBody['@index']</code> to manage your frontend state machine, while Google's crawler evaluates the clean <code>@value</code> string and gracefully ignores the index metadata.</p>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 12 -->
+  <h2 id="section-12">
+    <span class="antinna-step-badge">Step 12</span> Deep Dive: Simplifying Verbosity with @container
+  </h2>
+  <p>Let's look at how verbose multi-language structures look in standard JSON-LD 1.0:</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 verbose-multilang.json</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-json">{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": [
+    {
+      "@language": "en",
+      "@value": "Antinna Plumbing"
+    },
+    {
+      "@language": "hi",
+      "@value": "एंटिन्ना प्लंबिंग"
+    }
+  ]
+}</code></pre>
+  </div>
+
+  <p>By declaring <code>"@container": "@language"</code> inside your <code>@context</code> block, you unlock a highly compact and developer-friendly JSON representation:</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 streamlined-multilang.json</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-json">{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "name": {
+      "@container": "@language"
+    }
+  },
+  "@type": "LocalBusiness",
+  "name": {
+    "en": "Antinna Plumbing",
+    "hi": "एंटिन्ना प्लंबिंग"
+  }
+}</code></pre>
+  </div>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 13 -->
+  <h2 id="section-13">
+    <span class="antinna-step-badge">Step 13</span> Deep Dive: Safeguarding Schemas with @protected and @propagate
+  </h2>
+  <p>Let's look at how <code>@protected</code> stops third-party libraries or internal nesting layers from accidentally remapping important ID structures:</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 protected-error.json</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-json">{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "id": {
+      "@id": "https://schema.org/identifier",
+      "@protected": true
+    }
+  },
+  "@type": "Product",
+  "id": "SKU-12345",
+  "review": {
+    "@context": {
+      "id": "http://purl.org/dc/terms/identifier"
+    }
+  }
+}</code></pre>
+  </div>
+
+  <!-- CALLOUT WARNING -->
+  <div class="antinna-callout antinna-callout-warning">
+    <div class="antinna-callout-title">⚠️ Parser Error Triggered</div>
+    <p class="antinna-callout-body">The nested <code>review</code> block attempts to redefine the term <code>id</code>. Because the root context has declared <code>id</code> as <code>@protected: true</code>, the JSON-LD 1.1 parser will instantly halt and throw a fatal compilation error, protecting your master data schema from corruption.</p>
+  </div>
+
+  <p>Similarly, the <code>@propagate</code> keyword regulates context bleeding. Setting <code>"@propagate": false</code> confines your specialized mappings to the scope of the node in which they are defined, preventing leakage into further child nodes.</p>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 14 -->
+  <h2 id="section-14">
+    <span class="antinna-step-badge">Step 14</span> JSON-LD 1.2 (JSON-LD-star) Draft: Annotating Arcs &amp; Triple Reification
+  </h2>
+  <p>The next major leap in Linked Data semantics comes from the W3C's <strong>JSON-LD-star (JSON-LD-star/RDF-star)</strong> draft proposal. Historically, in semantic graphs, properties link a subject to an object. But what if you want to annotate the property link itself? For instance, how do you express that "Bob knows Alice" is <em>only 80% certain</em>, or was <em>reported by Alice herself</em>?</p>
+  <p>JSON-LD-star addresses this challenge by introducing three experimental keywords: <code>@annotation</code>, <code>@reifies</code>, and <code>@triple</code>. These allow developers to annotate semantic relationships directly.</p>
+
+  <h3>Annotating Relations with @annotation</h3>
+  <p>Using <code>@annotation</code>, we can attach attributes directly to property paths. Let's see how we can state that Bob knows Alice with a custom level of certainty:</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 json-ld-star-annotation.json</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-json">{
+  "@context": {
+    "@vocab": "http://example.org/",
+    "knows": {
+      "@id": "http://example.org/knows",
+      "@type": "@id"
+    }
+  },
+  "@id": "bob",
+  "knows": {
+    "@id": "alice",
+    "@annotation": {
+      "accordingTo": "alice",
+      "certainty": 0.8
+    }
+  }
+}</code></pre>
+  </div>
+
+  <h3>Annotating Multiple Triples with @reifies</h3>
+  <p>When you want to describe one or more triples collectively, the <code>@reifies</code> keyword can bundle the target triple metadata under a single identifier node:</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 json-ld-star-reifies.json</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-json">{
+  "@context": {
+    "@vocab": "http://example.org/",
+    "age": {
+      "@id": "http://example.org/age",
+      "@type": "http://www.w3.org/2001/XMLSchema#integer"
+    }
+  },
+  "@id": "reifier-node",
+  "@reifies": {
+    "@id": "bob",
+    "age": 42
+  },
+  "certainty": 0.8
+}</code></pre>
+  </div>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 15 -->
+  <h2 id="section-15">
+    <span class="antinna-step-badge">Step 15</span> YAML-LD 1.0: Semantic Metadata with Elegant YAML Syntax
+  </h2>
+  <p>While JSON is incredibly popular, many developers find its syntax verbose, prone to trailing comma syntax errors, and lacking built-in support for code comments. To address these developers, the W3C published the <strong>YAML-LD 1.0 Working Draft</strong>.</p>
+  <p>YAML-LD maps YAML syntax concepts directly onto the JSON-LD standard. Since YAML is a natural superset of JSON, any valid JSON-LD file is technically valid YAML-LD. However, YAML-LD allows you to use clean indentation, write inline comments to explain your schema structure, and omit messy curly braces and quotation marks entirely!</p>
+
+  <div class="antinna-code-wrapper">
+    <div class="antinna-code-header">
+      <div class="antinna-mac-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <span class="antinna-code-title">📂 yaml-ld-example.yaml</span>
+      <button class="antinna-copy-btn">Copy</button>
+    </div>
+    <pre><code class="language-yaml"># Elegant YAML-LD 1.0 representation
+"@context": "https://schema.org"
+"@type": "LocalBusiness"
+"name": "Antinna Plumbing"
+"telephone": "+1-555-0199"
+# Inline metadata comments are fully supported!
+"address":
+  "@type": "PostalAddress"
+  "streetAddress": "123 Semantic Way"
+  "addressLocality": "San Francisco"
+  "addressRegion": "CA"</code></pre>
+  </div>
+
+  <p>During deployment, compilers expand this YAML-LD block into standard JSON-LD, giving you the best of both worlds: high-speed, readable developer formatting and complete compatibility with existing search engine parsers.</p>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 16 -->
+  <h2 id="section-16">
+    <span class="antinna-step-badge">Step 16</span> Keyword Comparison Reference Table
+  </h2>
+  <p>To help you quickly identify when and where to use these key structured data components, we've compiled a comprehensive compatibility and usage reference table:</p>
+
+  <div class="antinna-table-overflow">
+    <table class="antinna-data-table">
+      <thead>
+        <tr>
+          <th>Keyword</th>
+          <th>Introduced In</th>
+          <th>Primary Purpose</th>
+          <th>Mental Model / Analogy</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>@context</code></td>
+          <td>JSON-LD 1.0</td>
+          <td>Defines key mappings to full IRIs</td>
+          <td>The bilingual translation dictionary</td>
+        </tr>
+        <tr>
+          <td><code>@id</code></td>
+          <td>JSON-LD 1.0</td>
+          <td>Assigns a unique identifier to a node</td>
+          <td>The database Primary Key</td>
+        </tr>
+        <tr>
+          <td><code>@type</code></td>
+          <td>JSON-LD 1.0</td>
+          <td>Defines class or literal datatype</td>
+          <td>The OOP Class designation</td>
+        </tr>
+        <tr>
+          <td><code>@vocab</code></td>
+          <td>JSON-LD 1.0</td>
+          <td>Sets default namespace base URL</td>
+          <td>The global namespace declaration</td>
+        </tr>
+        <tr>
+          <td><code>@base</code></td>
+          <td>JSON-LD 1.0</td>
+          <td>Resolves relative IRIs inside @id</td>
+          <td>Root context directory resolver</td>
+        </tr>
+        <tr>
+          <td><code>@reverse</code></td>
+          <td>JSON-LD 1.1</td>
+          <td>Expresses inverse relationship links</td>
+          <td>"Subject owns me" instead of "I own Subject"</td>
+        </tr>
+        <tr>
+          <td><code>@included</code></td>
+          <td>JSON-LD 1.1</td>
+          <td>Bundles auxiliary top-level nodes</td>
+          <td>The unlinked sidecar payload</td>
+        </tr>
+        <tr>
+          <td><code>@index</code></td>
+          <td>JSON-LD 1.1</td>
+          <td>Attaches local non-semantic string keys</td>
+          <td>Sticky notes for frontend JS logic</td>
+        </tr>
+        <tr>
+          <td><code>@protected</code></td>
+          <td>JSON-LD 1.1</td>
+          <td>Prevents redefinition of context terms</td>
+          <td>The <code>const</code> or <code>final</code> read-only variable</td>
+        </tr>
+        <tr>
+          <td><code>@propagate</code></td>
+          <td>JSON-LD 1.1</td>
+          <td>Confines type-scoped contexts</td>
+          <td>Local scoping variables</td>
+        </tr>
+        <tr>
+          <td><code>@annotation</code></td>
+          <td>JSON-LD 1.2 (Draft)</td>
+          <td>Annotates properties and arcs directly</td>
+          <td>Metadata stamped directly on a connection line</td>
+        </tr>
+        <tr>
+          <td><code>@reifies</code></td>
+          <td>JSON-LD 1.2 (Draft)</td>
+          <td>Reifies and annotates multiple triples</td>
+          <td>Grouped semantic assertions</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 17 -->
+  <h2 id="section-17">
+    <span class="antinna-step-badge">Step 17</span> Summary &amp; Best Practices
+  </h2>
+  <p>To ensure your structured data maps parse seamlessly for both SEO crawlers and semantic graph engines, adhere strictly to these proven production guidelines:</p>
+  <ol>
+    <li><strong>Keep Contexts Clean</strong>: Declare your primary vocabularies at the root level using <code>@vocab</code> and restrict scoping overrides to keep data clean and readable.</li>
+    <li><strong>Protect Essential Schema Terms</strong>: In enterprise configurations or modular libraries, secure your primary identifiers with <code>@protected: true</code> to block silent overwrites.</li>
+    <li><strong>Always Validate</strong>: Run your finished JSON-LD outputs through the official Schema.org validator and Google's Rich Results Test tool before deploying to production.</li>
+    <li><strong>Embrace New Standards</strong>: When designing internal analytics pipelines or handling rich entity annotations, evaluate JSON-LD-star and YAML-LD to simplify your codebase.</li>
+  </ol>
+
+  <p>By leveraging these advanced JSON-LD capabilities, you will build data-rich web architectures that are perfectly optimized for search engines, LLMs, and semantic graph processors alike.</p>
+
+  <hr class="antinna-divider" />
+
+  <!-- CLOSING SECTION -->
+  <h3>📄 License &amp; Contributions</h3>
+  <p>This technical guide is published under the open-source MIT License. Have questions about implementing advanced schema on your platform? Feel free to leave a comment or share your experience below!</p>
+
+</div>
+<!-- END .antinna-blog-container -->
+
+<!-- PRISM.JS SYNTAX HIGHLIGHTING -->
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+  rel="stylesheet"
+/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>
+
+<!-- INTERACTIVE SCRIPTS: SMOOTH TOC SCROLL + COPY BUTTONS -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // 1. Smooth Scrolling for Table of Contents
+    const tocLinks = document.querySelectorAll(".antinna-toc a");
+    tocLinks.forEach((link) => {
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute("href").substring(1);
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+    });
+
+    // 2. Copy Button Functionality
+    const copyButtons = document.querySelectorAll(".antinna-copy-btn");
+    copyButtons.forEach((button) => {
+      button.addEventListener("click", async () => {
+        const container = button.closest(".antinna-code-wrapper");
+        if (!container) return;
+        const targetCodeBlock = container.querySelector("pre code");
+        if (!targetCodeBlock) return;
+        const codeContent = targetCodeBlock.innerText;
+        try {
+          await navigator.clipboard.writeText(codeContent);
+          button.textContent = "Copied!";
+          button.classList.add("copied");
+          setTimeout(() => {
+            button.textContent = "Copy";
+            button.classList.remove("copied");
+          }, 2000);
+        } catch (err) {
+          console.error("Failed to copy text contents:", err);
+          button.textContent = "Error";
+        }
+      });
+    });
+  });
+</script>
+
+<!-- UNIFIED STYLESHEET -->
+<style>
+  /* =============================================
+     ANTINNA BLOGGER UNIFIED DESIGN SYSTEM v3
+     All rules use !important to override Blogger themes
+  ============================================= */
+
+  html {
+    scroll-behavior: smooth !important;
+  }
+
+  /* 1. Core Container */
+  .antinna-blog-container {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, sans-serif !important;
+    color: #2d3748 !important;
+    line-height: 1.8 !important;
+    max-width: 860px !important;
+    margin: 0 auto !important;
+    padding: 20px !important;
+    -webkit-font-smoothing: antialiased !important;
+  }
+
+  /* 2. Typography */
+  .antinna-blog-container h2 {
+    color: #1a202c !important;
+    font-size: 1.7rem !important;
+    margin-top: 3rem !important;
+    margin-bottom: 1.25rem !important;
+    display: flex !important;
+    align-items: center !important;
+    border-bottom: 2px solid #edf2f7 !important;
+    padding-bottom: 0.5rem !important;
+    font-weight: 700 !important;
+    scroll-margin-top: 90px !important;
+  }
+  .antinna-blog-container h3 {
+    color: #2d3748 !important;
+    font-size: 1.35rem !important;
+    margin-top: 1.5rem !important;
+    margin-bottom: 0.75rem !important;
+    font-weight: 600 !important;
+  }
+  .antinna-blog-container p {
+    margin-bottom: 1.5rem !important;
+    font-size: 1.05rem !important;
+  }
+  .antinna-blog-container ul,
+  .antinna-blog-container ol {
+    margin-bottom: 1.5rem !important;
+    padding-left: 1.5rem !important;
+  }
+  .antinna-blog-container li {
+    margin-bottom: 0.75rem !important;
+    font-size: 1.05rem !important;
+  }
+  .antinna-blog-container strong {
+    color: #1a202c !important;
+  }
+  .antinna-blog-container a {
+    color: #3182ce !important;
+    text-decoration: none !important;
+    font-weight: 500 !important;
+    transition: color 0.2s ease !important;
+  }
+  .antinna-blog-container a:hover {
+    color: #2b6cb0 !important;
+    text-decoration: underline !important;
+  }
+
+  /* 3. Inline Code */
+  .antinna-blog-container code:not(pre code) {
+    background-color: #f7fafc !important;
+    color: #dd6b20 !important;
+    padding: 0.2rem 0.4rem !important;
+    border-radius: 4px !important;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo,
+      monospace !important;
+    font-size: 0.9em !important;
+    border: 1px solid #e2e8f0 !important;
+  }
+
+  /* 4. Dividers */
+  .antinna-divider {
+    border: 0 !important;
+    border-top: 2px solid #edf2f7 !important;
+    margin: 2.5rem 0 !important;
+  }
+
+  /* 5. Callout Boxes */
+  .antinna-callout {
+    padding: 1.5rem !important;
+    border-radius: 8px !important;
+    margin: 2rem 0 !important;
+    border-left: 5px solid !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03) !important;
+  }
+  .antinna-callout-success {
+    background-color: #f0fff4 !important;
+    border-color: #38a169 !important;
+  }
+  .antinna-callout-warning {
+    background-color: #fffaf0 !important;
+    border-color: #dd6b20 !important;
+  }
+  .antinna-callout-info {
+    background-color: #ebf8ff !important;
+    border-color: #3182ce !important;
+  }
+  .antinna-callout-title {
+    font-weight: 700 !important;
+    margin-bottom: 0.5rem !important;
+    font-size: 1.1rem !important;
+  }
+  .antinna-callout-success .antinna-callout-title {
+    color: #22543d !important;
+  }
+  .antinna-callout-warning .antinna-callout-title {
+    color: #7b341e !important;
+  }
+  .antinna-callout-info .antinna-callout-title {
+    color: #2b6cb0 !important;
+  }
+  .antinna-callout-body {
+    font-size: 1rem !important;
+    margin: 0 !important;
+  }
+  .antinna-callout-success .antinna-callout-body {
+    color: #276749 !important;
+    margin: 0 !important;
+  }
+  .antinna-callout-warning .antinna-callout-body {
+    color: #9c4221 !important;
+    margin: 0 !important;
+  }
+  .antinna-callout-info .antinna-callout-body {
+    color: #2a69ac !important;
+    margin: 0 !important;
+  }
+
+  /* 6. Table of Contents */
+  .antinna-toc {
+    background: #f7fafc !important;
+    padding: 1.5rem 2rem !important;
+    border-radius: 8px !important;
+    border: 1px solid #e2e8f0 !important;
+  }
+  .antinna-toc h3 {
+    margin-top: 0 !important;
+    font-size: 1.15rem !important;
+  }
+  .antinna-toc ul {
+    list-style-type: none !important;
+    padding-left: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  .antinna-toc li {
+    margin-bottom: 0.5rem !important;
+  }
+  .antinna-toc a {
+    color: #4a5568 !important;
+    cursor: pointer !important;
+    font-weight: 400 !important;
+  }
+  .antinna-toc a:hover {
+    color: #3182ce !important;
+  }
+
+  /* 7. Step Badges */
+  .antinna-step-badge {
+    background: #3182ce !important;
+    color: #fff !important;
+    padding: 0.3rem 0.8rem !important;
+    border-radius: 6px !important;
+    font-size: 0.85rem !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    margin-right: 1rem !important;
+    display: inline-block !important;
+    box-shadow: 0 2px 4px rgba(49, 130, 206, 0.3) !important;
+    white-space: nowrap !important;
+  }
+  .antinna-step-badge.danger {
+    background: #e53e3e !important;
+    box-shadow: 0 2px 4px rgba(229, 62, 62, 0.3) !important;
+  }
+  .antinna-step-badge.success {
+    background: #38a169 !important;
+    box-shadow: 0 2px 4px rgba(56, 161, 105, 0.3) !important;
+  }
+
+  /* 8. Mac-Style Code Windows */
+  .antinna-code-wrapper {
+    margin: 2rem 0 !important;
+    background: #1d1f21 !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15),
+      0 8px 10px -6px rgba(0, 0, 0, 0.08) !important;
+  }
+  .antinna-code-header {
+    background: #282a2e !important;
+    color: #a0aec0 !important;
+    padding: 0.75rem 1.25rem !important;
+    font-size: 0.85rem !important;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif !important;
+    display: flex !important;
+    align-items: center !important;
+    border-bottom: 1px solid #111 !important;
+  }
+  .antinna-mac-dots {
+    display: flex !important;
+    gap: 6px !important;
+    margin-right: 15px !important;
+  }
+  .antinna-mac-dots .dot {
+    width: 12px !important;
+    height: 12px !important;
+    border-radius: 50% !important;
+  }
+  .antinna-mac-dots .red {
+    background-color: #ff5f56 !important;
+  }
+  .antinna-mac-dots .yellow {
+    background-color: #ffbd2e !important;
+  }
+  .antinna-mac-dots .green {
+    background-color: #27c93f !important;
+  }
+  .antinna-code-title {
+    flex-grow: 1 !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.02em !important;
+  }
+  .antinna-copy-btn {
+    background-color: #3f3f3f !important;
+    border: 1px solid #555 !important;
+    color: #cbd5e1 !important;
+    padding: 4px 10px !important;
+    border-radius: 5px !important;
+    font-size: 0.72rem !important;
+    cursor: pointer !important;
+    margin-left: 14px !important;
+    font-weight: 600 !important;
+    font-family: inherit !important;
+    transition: all 0.15s ease-in-out !important;
+  }
+  .antinna-copy-btn:hover {
+    background-color: #4b5563 !important;
+    color: #f8fafc !important;
+    border-color: #6b7280 !important;
+  }
+  .antinna-copy-btn.copied {
+    background-color: #059669 !important;
+    border-color: #059669 !important;
+    color: #ffffff !important;
+  }
+
+  /* 9. Prism.js Overrides (forces transparent bg to match our dark window) */
+  .antinna-code-wrapper pre[class*="language-"] {
+    margin: 0 !important;
+    padding: 1.5rem !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    overflow-x: auto !important;
+  }
+  .antinna-code-wrapper code[class*="language-"] {
+    font-family: "SFMono-Regular", Consolas, Menlo, Monaco, monospace !important;
+    font-size: 0.9rem !important;
+    line-height: 1.6 !important;
+    background: none !important;
+    text-shadow: none !important;
+  }
+  /* Fallback for non-Prism code blocks */
+  .antinna-code-wrapper pre {
+    margin: 0 !important;
+    padding: 1.5rem !important;
+    overflow-x: auto !important;
+  }
+  .antinna-code-wrapper pre code {
+    font-family: "SFMono-Regular", Consolas, Menlo, Monaco, monospace !important;
+    font-size: 0.9rem !important;
+    color: #e4e4e4 !important;
+    line-height: 1.6 !important;
+    background: none !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+
+  /* 10. Inline Terminal Snippets */
+  .antinna-inline-terminal {
+    background-color: #0f172a !important;
+    color: #38bdf8 !important;
+    font-family: "Fira Code", "Cascadia Code", Consolas, monospace !important;
+    padding: 8px 14px !important;
+    border-radius: 6px !important;
+    font-size: 0.88rem !important;
+    display: block !important;
+    width: max-content !important;
+    max-width: 100% !important;
+    margin: 10px 0 !important;
+    border: 1px solid #1e293b !important;
+    overflow-x: auto !important;
+  }
+
+  /* 11. Data Tables */
+  .antinna-table-overflow {
+    overflow-x: auto !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 10px !important;
+    margin: 20px 0 !important;
+  }
+  .antinna-data-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    font-size: 0.88rem !important;
+    text-align: left !important;
+  }
+  .antinna-data-table th {
+    background: #f8fafc !important;
+    font-weight: 600 !important;
+    color: #1a202c !important;
+    padding: 14px 16px !important;
+    border-bottom: 2px solid #e2e8f0 !important;
+  }
+  .antinna-data-table td {
+    padding: 14px 16px !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    vertical-align: top !important;
+    color: #2d3748 !important;
+  }
+  .antinna-data-table tr:last-child td {
+    border-bottom: none !important;
+  }
+
+  /* 12. Mobile Responsive Breakpoints */
+  @media (max-width: 640px) {
+    .antinna-blog-container {
+      padding: 12px !important;
+    }
+    .antinna-blog-container h2 {
+      font-size: 1.35rem !important;
+    }
+    .antinna-code-title {
+      font-size: 0.75rem !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      max-width: 120px !important;
+    }
+    .antinna-mac-dots {
+      margin-right: 8px !important;
+    }
+    .antinna-toc {
+      padding: 1rem !important;
+    }
+    .antinna-inline-terminal {
+      width: 100% !important;
+    }
+  }
+</style>
