@@ -12,26 +12,16 @@
   /></a>
 </div>
 
-<!-- NPM BADGES -->
-<div style="display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap">
-  <a href="https://www.npmjs.com/package/@antinna/blogger-theme" target="_blank">
-    <img src="https://img.shields.io/npm/v/@antinna/blogger-theme.svg?style=flat-square" alt="npm version" />
-  </a>
-  <a href="https://www.npmjs.com/package/@antinna/blogger-theme" target="_blank">
-    <img src="https://img.shields.io/npm/l/@antinna/blogger-theme.svg?style=flat-square" alt="license" />
-  </a>
-</div>
-
 <!-- MAIN CONTENT CONTAINER -->
 <div class="antinna-blog-container">
 
   <!-- LEAD PARAGRAPH -->
-  <p>Are you tired of designing one single, massive, and unmanageable XML file for your Google Blogger templates? Anyone who has ever tried to build a custom Blogger theme from scratch knows the absolute nightmare of editing thousands of lines of raw, inline styles, messy XML widget syntax, and archaic layouts in a single file. There is no code modularity, no component-based structure, and almost zero modern tooling support. Thankfully, the development experience has taken a massive leap forward. Introducing <strong><code>@antinna/blogger-theme</code></strong>—a revolutionary TypeScript and ESNext library designed to compile clean, modular TSX/JSX component structures into fully optimized, production-ready Blogger XML files automatically!</p>
+  <p>For more than a decade, creating or customizing a Blogger theme has been a frustrating experience. Developers have had to manually write and edit massive, monolithic XML files that combine HTML, CSS, native template loops, conditional tags, and inline scripts in a single unmanageable file. What if you could build modern, production-ready Blogger layouts using clean, modular React components, typed with TypeScript, styled with Tailwind CSS, and compiled automatically with hot-reloading? Introducing <code>@antinna/blogger-theme</code>—an innovative, type-safe development framework that changes Blogger development forever by compiling React and JSX directly into native Blogger-compliant XML templates.</p>
 
-  <!-- CALLOUT BOX INFO -->
-  <div class="antinna-callout antinna-callout-info">
-    <div class="antinna-callout-title">ℹ️ A Modern Approach to Legacy Blogging</div>
-    <p class="antinna-callout-body">Google's Blogger platform remains one of the most reliable and highly cost-effective engines for SEO and Google AdSense monetization due to its free hosting and zero operational maintenance. By compiling modern JSX components into the required Blogger XML format using <code>@antinna/blogger-theme</code>, you get the performance and developer experience of a modern static site generator (like Astro or React) combined with the robust, zero-cost scaling of Google's global server infrastructure!</p>
+  <!-- CALLOUT BOX SUCCESS -->
+  <div class="antinna-callout antinna-callout-success">
+    <div class="antinna-callout-title">🚀 No More Outdated Type Definitions!</div>
+    <p class="antinna-callout-body">The latest version of <code>@antinna/blogger-theme</code> has undergone major enhancements. It now fully supports native typings out of the box. You no longer need to write complex local <code>.d.ts</code> files to declare Blogger namespaces. The framework directly exports typed layout components (like <code>BSection</code>, <code>BWidget</code>, <code>BLoop</code>, <code>BIf</code>, and <code>BClientScript</code>) that typecheck perfectly with TypeScript automatically!</p>
   </div>
 
   <hr class="antinna-divider" />
@@ -40,18 +30,15 @@
   <div class="antinna-toc">
     <h3>📖 Quick Navigation</h3>
     <ul>
-      <li><a href="#section-1">1. The Blogger Theme Pain Point: The Monolithic XML Nightmare</a></li>
-      <li><a href="#section-2">2. What is @antinna/blogger-theme?</a></li>
-      <li><a href="#section-3">3. Step-by-Step Guide: Quick Installation and Local Setup</a></li>
-      <li><a href="#section-4">4. Step-by-Step Guide: Configuring tsconfig.json for TSX</a></li>
-      <li><a href="#section-5">5. Step-by-Step Guide: Configuring React-Compatible JSX Global Typings (blogger-theme.d.ts)</a></li>
-      <li><a href="#section-6">6. Step-by-Step Guide: Defining Layout Components in TSX</a></li>
-      <li><a href="#section-7">7. Step-by-Step Guide: Generating the Blogger Theme XML (main.tsx)</a></li>
-      <li><a href="#section-8">8. Step-by-Step Guide: Bootstrapping a Modern React App (index.tsx &amp; App.jsx)</a></li>
-      <li><a href="#section-9">9. Advanced Feature: On-Demand Client Script Bundling with multiple compilation modes</a></li>
-      <li><a href="#section-10">10. Step-by-Step Guide: Compiling Your Theme via CLI and fallbacks</a></li>
-      <li><a href="#section-11">11. Best Practices for Developing High-Performance Blogger Themes</a></li>
-      <li><a href="#section-12">12. Summary and Next Steps</a></li>
+      <li><a href="#section-1">1. The Problem with Legacy Blogger XML Files</a></li>
+      <li><a href="#section-2">2. Introducing @antinna/blogger-theme: Core Concepts</a></li>
+      <li><a href="#section-3">3. Understanding the JSX Compiler and Core Exports</a></li>
+      <li><a href="#section-4">4. Step-by-Step Theme Building with TypeScript</a></li>
+      <li><a href="#section-5">5. Integrating an Embedded React App with BClientScript</a></li>
+      <li><a href="#section-6">6. Styling with Tailwind CSS and Building the Pipeline</a></li>
+      <li><a href="#section-7">7. Quickstart Template Repository and Installation</a></li>
+      <li><a href="#section-8">8. Benefits of this Modern Approach</a></li>
+      <li><a href="#section-9">9. Conclusion &amp; Next Steps</a></li>
     </ul>
   </div>
 
@@ -59,1611 +46,99 @@
 
   <!-- SECTION 1 -->
   <h2 id="section-1">
-    <span class="antinna-step-badge">Step 1</span> The Blogger Theme Pain Point: The Monolithic XML Nightmare
+    <span class="antinna-step-badge">Step 1</span> The Problem with Legacy Blogger XML Files
   </h2>
-  <p>Standard modern web workflows are built on modularity. We write scoped CSS, independent HTML partials, and isolated TypeScript modules. Yet, when designing a template for Google Blogger, you are forced to throw these modern engineering practices out the window.</p>
-  <p>Blogger requires a single, monolithic <code>.xml</code> template file, which typically contains:</p>
+  <p>Traditional Blogger layouts are structured inside a single, complex XML document. This monolithic approach forces you to combine server-side layout logic, page configurations, global styles, and client scripts into one file. Development quickly becomes difficult because:</p>
   <ul>
-    <li>The entire master HTML backbone structure.</li>
-    <li>Messy inline CSS overrides wrapped inside critical <code>&lt;b:skin&gt;</code> or <code>&lt;b:template-skin&gt;</code> tags.</li>
-    <li>Outdated and verbose layout widget markup (such as <code>&lt;b:widget&gt;</code>, <code>&lt;b:section&gt;</code>, <code>&lt;b:if&gt;</code>, and <code>&lt;b:loop&gt;</code>).</li>
-    <li>Sparsely placed script files that block page rendering and slow down site load speeds.</li>
+    <li><strong>No Module Separation:</strong> You cannot break your header, sidebar, post layout, or comments section into clean, reusable files.</li>
+    <li><strong>No Type-Safety or Autocomplete:</strong> Editors have no understanding of Blogger's proprietary template attributes, resulting in frequent syntax issues and typos.</li>
+    <li><strong>Fragile Script Injections:</strong> Adding custom client JavaScript requires either confusing CDATA blocks or writing unreadable, HTML-escaped character strings.</li>
   </ul>
-  <p>Trying to collaborate in teams, use Git version control, or perform modular refactoring inside a 10,000-line XML monolith is practically impossible. It leads to silent parsing errors, broken templates, and immense developer fatigue.</p>
 
   <hr class="antinna-divider" />
 
   <!-- SECTION 2 -->
   <h2 id="section-2">
-    <span class="antinna-step-badge">Step 2</span> What is @antinna/blogger-theme?
+    <span class="antinna-step-badge">Step 2</span> Introducing @antinna/blogger-theme: Core Concepts
   </h2>
-  <p>The <code>@antinna/blogger-theme</code> package bridges this gap by acting as a modern compiler. Inspired by the Dart library <code>blogger_theme</code>, this library enables writing highly modular, extensible Blogger themes using TypeScript and TSX/JSX. You write clean, declarative component layout files, structured CSS classes, and modular client-side JavaScript. When compiled, the compiler processes your TSX trees, automatically resolves namespaces, wraps CSS inside appropriate skins, compiles client-side scripts via <code>esbuild</code>, and outputs a single, fully compliant Blogger XML file ready for upload.</p>
-
-  <!-- CALLOUT SUCCESS -->
-  <div class="antinna-callout antinna-callout-success">
-    <div class="antinna-callout-title">✅ Major Benefits of Compiler-Driven Themes</div>
-    <p class="antinna-callout-body">By adopting <code>@antinna/blogger-theme</code>, you gain: full Git trackability of small modular files, high-speed automated asset compilation (including on-demand TypeScript/JavaScript bundling), XML-safe entity rendering, reusable partial widgets, and clean codebases that score perfect 100/100 marks on Google Lighthouse Core Web Vitals!</p>
-  </div>
+  <p>The <code>@antinna/blogger-theme</code> framework completely changes how you build Blogger themes. It compiles modern, component-driven React JSX templates into the exact XML tags that Blogger's template engine requires. It handles complex operations automatically:</p>
+  <ul>
+    <li>Translates JSX components into compliant <code>&lt;b:section&gt;</code>, <code>&lt;b:widget&gt;</code>, and <code>&lt;b:includable&gt;</code> XML blocks.</li>
+    <li>Enforces strict type-safety for conditional constructs (<code>&lt;BIf&gt;</code>) and server loops (<code>&lt;BLoop&gt;</code>).</li>
+    <li>Injects bundled CSS sheets and single-page React apps safely into Blogger's CDATA blocks.</li>
+  </ul>
 
   <hr class="antinna-divider" />
 
   <!-- SECTION 3 -->
   <h2 id="section-3">
-    <span class="antinna-step-badge">Step 3</span> Step-by-Step Guide: Quick Installation and Local Setup
+    <span class="antinna-step-badge">Step 3</span> Understanding the JSX Compiler and Core Exports
   </h2>
-  <p>To begin building structured Blogger themes, make sure you have Node.js installed locally. Initialize a brand-new project and install the compiler via NPM as a dependency. You will also want to install <code>esbuild</code> to take advantage of the client script bundling features:</p>
+  <p>The framework exports a comprehensive suite of typed JSX components that align directly with Blogger's layout tags. This removes the need to write custom TypeScript declarations. Key exports include:</p>
 
-  <div class="antinna-inline-terminal">$ npm init -y</div>
-  <div class="antinna-inline-terminal">$ npm install @antinna/blogger-theme esbuild</div>
-
-  <p>Next, construct a structured workspace to house your theme components. This keeps your development tree clean and organized:</p>
-
-  <div class="antinna-code-wrapper">
-    <div class="antinna-code-header">
-      <div class="antinna-mac-dots">
-        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-      </div>
-      <span class="antinna-code-title">📂 project-structure-preview</span>
-      <button class="antinna-copy-btn">Copy</button>
-    </div>
-    <pre><code class="language-text">my-blogger-theme/
-├── src/
-│   ├── client/
-│   │   ├── index.tsx            # React app entry file
-│   │   └── App.jsx              # React main application file
-│   ├── components/
-│   │   └── BlogHeader.tsx       # TSX header component structure
-│   ├── types/
-│   │   └── blogger-theme.d.ts   # React-compatible JSX Global Typings
-│   └── main.tsx                 # Theme generation entrypoint
-├── tsconfig.json                # TypeScript compiler config
-└── package.json</code></pre>
+  <div class="antinna-table-overflow">
+    <table class="antinna-data-table">
+      <thead>
+        <tr>
+          <th>Exported Component</th>
+          <th>Blogger XML Target</th>
+          <th>Key Attributes / Features</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>BloggerTheme</code></td>
+          <td>Theme Orchestrator</td>
+          <td>Takes document headers, body layouts, and builds the raw theme string.</td>
+        </tr>
+        <tr>
+          <td><code>BSection</code></td>
+          <td><code>&lt;b:section&gt;</code></td>
+          <td>A layout container representing a sidebar, header, or post grid area.</td>
+        </tr>
+        <tr>
+          <td><code>BWidget</code></td>
+          <td><code>&lt;b:widget&gt;</code></td>
+          <td>Represents specific widget assets (like a Header, Blog, or AdSense block).</td>
+        </tr>
+        <tr>
+          <td><code>BIf</code></td>
+          <td><code>&lt;b:if&gt;</code></td>
+          <td>Enforces conditional structures (e.g. testing if the page is a homepage).</td>
+        </tr>
+        <tr>
+          <td><code>BLoop</code></td>
+          <td><code>&lt;b:loop&gt;</code></td>
+          <td>Loops through data arrays like <code>"data:posts"</code>.</td>
+        </tr>
+        <tr>
+          <td><code>BClientScript</code></td>
+          <td>Script CDATA Injection</td>
+          <td>Compiles and embeds external TypeScript/JavaScript app scripts.</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
   <hr class="antinna-divider" />
 
   <!-- SECTION 4 -->
   <h2 id="section-4">
-    <span class="antinna-step-badge">Step 4</span> Step-by-Step Guide: Configuring tsconfig.json for TSX
+    <span class="antinna-step-badge">Step 4</span> Step-by-Step Theme Building with TypeScript
   </h2>
-  <p>To use TSX/JSX syntax in your project, configure your local <code>tsconfig.json</code> file. This instructs the TypeScript compiler to use the automatic JSX runtime provided by <code>@antinna/blogger-theme</code>, mapping JSX elements directly to the library's XML rendering engine:</p>
+  <p>To compile your theme, create a central script file (e.g. <code>theme/src/main.tsx</code>). This script acts as the entry point, defining your layouts and calling the compiler to generate the XML theme file:</p>
 
   <div class="antinna-code-wrapper">
     <div class="antinna-code-header">
       <div class="antinna-mac-dots">
         <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
       </div>
-      <span class="antinna-code-title">📂 tsconfig.json</span>
+      <span class="antinna-code-title">📂 theme/src/main.tsx</span>
       <button class="antinna-copy-btn">Copy</button>
     </div>
-    <pre><code class="language-json">{
-  "compilerOptions": {
-    "target": "ESNext",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "jsx": "react-jsx",
-    "jsxImportSource": "@antinna/blogger-theme",
-    "strict": true
-  }
-}</code></pre>
-  </div>
-
-  <hr class="antinna-divider" />
-
-  <!-- SECTION 5 -->
-  <h2 id="section-5">
-    <span class="antinna-step-badge">Step 5</span> Step-by-Step Guide: Configuring React-Compatible JSX Global Typings (blogger-theme.d.ts)
-  </h2>
-  <p>To enable flawless TypeScript autocomplete and type safety for both standard HTML elements, React component mappings, and specialized Blogger-native tags (like <code>&lt;b:section&gt;</code>, <code>&lt;b:widget&gt;</code>, <code>&lt;b:if&gt;</code>, etc.), configure a global typing definition file named <code>src/types/blogger-theme.d.ts</code> in your project. This maps the elements directly to the core <code>Component</code> class and wraps all parameters to support expression prefixes (<code>expr:*</code>) and inline Blogger conditions:</p>
-
-  <div class="antinna-code-wrapper">
-    <div class="antinna-code-header">
-      <div class="antinna-mac-dots">
-        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-      </div>
-      <span class="antinna-code-title">📂 src/types/blogger-theme.d.ts</span>
-      <button class="antinna-copy-btn">Copy</button>
-    </div>
-    <pre><code class="language-typescript">import { Component } from &#x27;@antinna/blogger-theme&#x27;;
-
-// We export a local JSX namespace to support compilers that resolve JSX types locally (via jsxImportSource).
-// We intentionally avoid declaring a global JSX namespace to prevent conflicts with standard React JSX types
-// when React and blogger-theme are used together in the same workspace.
-export namespace JSX {
-  export type JSXElementConstructor&lt;P&gt; =
-    | ((props: P) =&gt; any)
-    | (new (props: P) =&gt; Component);
-
-  export interface ReactElement&lt;
-    P = any,
-    T extends string | JSXElementConstructor&lt;any&gt; = string | JSXElementConstructor&lt;any&gt;
-  &gt; {
-    type: T;
-    props: P;
-    key: any;
-  }
-
-  export type ElementType = string | JSXElementConstructor&lt;any&gt;;
-
-  export type ReactNode =
-    | ReactElement&lt;any, any&gt;
-    | Component
-    | string
-    | number
-    | boolean
-    | null
-    | undefined
-    | Iterable&lt;ReactNode&gt;;
-
-  export interface Element extends Component {}
-  export interface ElementClass {
-    props?: any;
-  }
-
-  export interface ElementAttributesProperty {
-    props: {};
-  }
-  export interface ElementChildrenAttribute {
-    children: {};
-  }
-
-  export type Booleanish = boolean | &quot;true&quot; | &quot;false&quot;;
-
-  // Standard Blogger enhancement wrapper that adds cond, children, and any expr: prefixed attribute to any type T
-  export type BloggerAttributes&lt;T&gt; = T &amp; {
-    children?: any;
-    cond?: string;
-    [exprAttr: `expr:${string}`]: any;
-    [otherAttr: string]: any;
-  };
-
-  export type DetailedHTMLProps&lt;E, T&gt; = BloggerAttributes&lt;E&gt;;
-
-  export interface HTMLAttributes&lt;T = any&gt; {
-    id?: string;
-    class?: string;
-    className?: string;
-    style?: any;
-    title?: string;
-    name?: string;
-    type?: string;
-    value?: string | number;
-    placeholder?: string;
-    disabled?: boolean;
-    href?: string;
-    target?: string;
-    src?: string;
-    alt?: string;
-    width?: string | number;
-    height?: string | number;
-    async?: boolean | string;
-    defer?: boolean | string;
-    rel?: string;
-    media?: string;
-    method?: string;
-    action?: string;
-    rows?: number;
-    cols?: number;
-    checked?: boolean;
-    selected?: boolean;
-    [attributeName: string]: any;
-  }
-
-  export interface AllHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    accept?: string;
-    acceptCharset?: string;
-    action?: string;
-    allowFullScreen?: boolean;
-    allowTransparency?: boolean;
-    alt?: string;
-    as?: string;
-    async?: boolean;
-    autoComplete?: string;
-    autoPlay?: boolean;
-    capture?: boolean | string;
-    cellPadding?: number | string;
-    cellSpacing?: number | string;
-    charSet?: string;
-    challenge?: string;
-    checked?: boolean;
-    cite?: string;
-    classID?: string;
-    cols?: number;
-    colSpan?: number;
-    controls?: boolean;
-    coords?: string;
-    crossOrigin?: string;
-    data?: string;
-    dateTime?: string;
-    default?: boolean;
-    defer?: boolean;
-    disabled?: boolean;
-    download?: any;
-    encType?: string;
-    form?: string;
-    formAction?: string;
-    formEncType?: string;
-    formMethod?: string;
-    formNoValidate?: boolean;
-    formTarget?: string;
-    frameBorder?: number | string;
-    headers?: string;
-    height?: number | string;
-    high?: number;
-    href?: string;
-    hrefLang?: string;
-    htmlFor?: string;
-    httpEquiv?: string;
-    integrity?: string;
-    keyParams?: string;
-    keyType?: string;
-    kind?: string;
-    label?: string;
-    list?: string;
-    loop?: boolean;
-    low?: number;
-    manifest?: string;
-    marginHeight?: number;
-    marginWidth?: number;
-    max?: number | string;
-    maxLength?: number;
-    media?: string;
-    mediaGroup?: string;
-    method?: string;
-    min?: number | string;
-    minLength?: number;
-    multiple?: boolean;
-    muted?: boolean;
-    name?: string;
-    noValidate?: boolean;
-    open?: boolean;
-    optimum?: number;
-    pattern?: string;
-    placeholder?: string;
-    playsInline?: boolean;
-    poster?: string;
-    preload?: string;
-    readOnly?: boolean;
-    required?: boolean;
-    reversed?: boolean;
-    rows?: number;
-    rowSpan?: number;
-    sandbox?: string;
-    scope?: string;
-    scoped?: boolean;
-    scrolling?: string;
-    seamless?: boolean;
-    selected?: boolean;
-    shape?: string;
-    size?: number;
-    sizes?: string;
-    span?: number;
-    src?: string;
-    srcDoc?: string;
-    srcLang?: string;
-    srcSet?: string;
-    start?: number;
-    step?: number | string;
-    summary?: string;
-    target?: string;
-    type?: string;
-    useMap?: string;
-    value?: string | number;
-    width?: number | string;
-    wmode?: string;
-    wrap?: string;
-  }
-
-  export interface AnchorHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    download?: any;
-    href?: string;
-    hrefLang?: string;
-    media?: string;
-    ping?: string;
-    target?: string;
-    type?: string;
-    referrerPolicy?: string;
-  }
-
-  export interface AudioHTMLAttributes&lt;T = any&gt; extends MediaHTMLAttributes&lt;T&gt; {}
-
-  export interface AreaHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    alt?: string;
-    coords?: string;
-    download?: any;
-    href?: string;
-    hrefLang?: string;
-    media?: string;
-    referrerPolicy?: string;
-    shape?: string;
-    target?: string;
-  }
-
-  export interface BaseHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    href?: string;
-    target?: string;
-  }
-
-  export interface BlockquoteHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    cite?: string;
-  }
-
-  export interface ButtonHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    disabled?: boolean;
-    form?: string;
-    formAction?: string;
-    formEncType?: string;
-    formMethod?: string;
-    formNoValidate?: boolean;
-    formTarget?: string;
-    name?: string;
-    type?: &quot;submit&quot; | &quot;reset&quot; | &quot;button&quot;;
-    value?: string | number;
-  }
-
-  export interface CanvasHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    height?: number | string;
-    width?: number | string;
-  }
-
-  export interface ColHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    span?: number;
-    width?: number | string;
-  }
-
-  export interface ColgroupHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    span?: number;
-  }
-
-  export interface DataHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    value?: string | number;
-  }
-
-  export interface DetailsHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    open?: boolean;
-    name?: string;
-  }
-
-  export interface DelHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    cite?: string;
-    dateTime?: string;
-  }
-
-  export interface DialogHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    open?: boolean;
-  }
-
-  export interface EmbedHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    height?: number | string;
-    src?: string;
-    type?: string;
-    width?: number | string;
-  }
-
-  export interface FieldsetHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    disabled?: boolean;
-    form?: string;
-    name?: string;
-  }
-
-  export interface FormHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    acceptCharset?: string;
-    action?: string;
-    autoComplete?: string;
-    encType?: string;
-    method?: string;
-    name?: string;
-    noValidate?: boolean;
-    target?: string;
-  }
-
-  export interface HtmlHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    manifest?: string;
-  }
-
-  export interface IframeHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    allow?: string;
-    allowFullScreen?: boolean;
-    frameBorder?: number | string;
-    height?: number | string;
-    loading?: string;
-    name?: string;
-    referrerPolicy?: string;
-    sandbox?: string;
-    src?: string;
-    srcDoc?: string;
-    width?: number | string;
-  }
-
-  export interface ImgHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    alt?: string;
-    crossOrigin?: string;
-    decoding?: string;
-    height?: number | string;
-    loading?: string;
-    src?: string;
-    srcSet?: string;
-    useMap?: string;
-    width?: number | string;
-  }
-
-  export interface InsHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    cite?: string;
-    dateTime?: string;
-  }
-
-  export interface InputHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    accept?: string;
-    alt?: string;
-    autoComplete?: string;
-    capture?: boolean | string;
-    checked?: boolean;
-    disabled?: boolean;
-    form?: string;
-    formAction?: string;
-    formEncType?: string;
-    formMethod?: string;
-    formNoValidate?: boolean;
-    formTarget?: string;
-    height?: number | string;
-    list?: string;
-    max?: number | string;
-    maxLength?: number;
-    min?: number | string;
-    minLength?: number;
-    multiple?: boolean;
-    name?: string;
-    pattern?: string;
-    placeholder?: string;
-    readOnly?: boolean;
-    required?: boolean;
-    size?: number;
-    src?: string;
-    step?: number | string;
-    type?: string;
-    value?: string | number;
-    width?: number | string;
-  }
-
-  export interface LabelHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    form?: string;
-    htmlFor?: string;
-  }
-
-  export interface LiHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    value?: string | number;
-  }
-
-  export interface LinkHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    as?: string;
-    crossOrigin?: string;
-    href?: string;
-    hrefLang?: string;
-    integrity?: string;
-    media?: string;
-    sizes?: string;
-    type?: string;
-  }
-
-  export interface MapHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    name?: string;
-  }
-
-  export interface MenuHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    type?: string;
-  }
-
-  export interface MediaHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    autoPlay?: boolean;
-    controls?: boolean;
-    loop?: boolean;
-    muted?: boolean;
-    preload?: string;
-    src?: string;
-  }
-
-  export interface MetaHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    charSet?: string;
-    content?: string;
-    httpEquiv?: string;
-    media?: string;
-    name?: string;
-  }
-
-  export interface MeterHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    form?: string;
-    high?: number;
-    low?: number;
-    max?: number | string;
-    min?: number | string;
-    optimum?: number;
-    value?: string | number;
-  }
-
-  export interface QuoteHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    cite?: string;
-  }
-
-  export interface ObjectHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    classID?: string;
-    data?: string;
-    form?: string;
-    height?: number | string;
-    name?: string;
-    type?: string;
-    useMap?: string;
-    width?: number | string;
-  }
-
-  export interface OlHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    reversed?: boolean;
-    start?: number;
-    type?: &quot;1&quot; | &quot;a&quot; | &quot;A&quot; | &quot;i&quot; | &quot;I&quot;;
-  }
-
-  export interface OptgroupHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    disabled?: boolean;
-    label?: string;
-  }
-
-  export interface OptionHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    disabled?: boolean;
-    label?: string;
-    selected?: boolean;
-    value?: string | number;
-  }
-
-  export interface OutputHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    form?: string;
-    htmlFor?: string;
-    name?: string;
-  }
-
-  export interface ParamHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    name?: string;
-    value?: string | number;
-  }
-
-  export interface ProgressHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    max?: number | string;
-    value?: string | number;
-  }
-
-  export interface SlotHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    name?: string;
-  }
-
-  interface ScriptHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    async?: boolean;
-    crossOrigin?: string;
-    defer?: boolean;
-    integrity?: string;
-    noModule?: boolean;
-    src?: string;
-    type?: string;
-  }
-
-  export interface SelectHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    autoComplete?: string;
-    disabled?: boolean;
-    form?: string;
-    multiple?: boolean;
-    name?: string;
-    required?: boolean;
-    size?: number;
-    value?: string | number;
-  }
-
-  export interface SourceHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    height?: number | string;
-    media?: string;
-    sizes?: string;
-    src?: string;
-    srcSet?: string;
-    type?: string;
-    width?: number | string;
-  }
-
-  export interface StyleHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    media?: string;
-    scoped?: boolean;
-    type?: string;
-  }
-
-  export interface TableHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    align?: &quot;left&quot; | &quot;center&quot; | &quot;right&quot;;
-    border?: number;
-    cellPadding?: number | string;
-    cellSpacing?: number | string;
-    summary?: string;
-    width?: number | string;
-  }
-
-  export interface TextareaHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    autoComplete?: string;
-    cols?: number;
-    disabled?: boolean;
-    form?: string;
-    maxLength?: number;
-    minLength?: number;
-    name?: string;
-    placeholder?: string;
-    readOnly?: boolean;
-    required?: boolean;
-    rows?: number;
-    value?: string | number;
-    wrap?: string;
-  }
-
-  export interface TdHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    align?: &quot;left&quot; | &quot;center&quot; | &quot;right&quot; | &quot;justify&quot; | &quot;char&quot;;
-    colSpan?: number;
-    headers?: string;
-    rowSpan?: number;
-    scope?: string;
-  }
-
-  export interface ThHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    align?: &quot;left&quot; | &quot;center&quot; | &quot;right&quot; | &quot;justify&quot; | &quot;char&quot;;
-    colSpan?: number;
-    headers?: string;
-    rowSpan?: number;
-    scope?: string;
-  }
-
-  export interface TimeHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    dateTime?: string;
-  }
-
-  export interface TrackHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    default?: boolean;
-    kind?: string;
-    label?: string;
-    src?: string;
-    srcLang?: string;
-  }
-
-  export interface VideoHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-    height?: number | string;
-    playsInline?: boolean;
-    poster?: string;
-    width?: number | string;
-  }
-
-  export interface SVGAttributes&lt;T = any&gt; {
-    className?: string;
-    color?: string;
-    height?: number | string;
-    id?: string;
-    style?: any;
-    viewBox?: string;
-    [attributeName: string]: any;
-  }
-
-  export interface IntrinsicElements {
-    a: DetailedHTMLProps&lt;AnchorHTMLAttributes&lt;HTMLAnchorElement&gt;, HTMLAnchorElement&gt;;
-    abbr: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    address: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    area: DetailedHTMLProps&lt;AreaHTMLAttributes&lt;HTMLAreaElement&gt;, HTMLAreaElement&gt;;
-    article: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    aside: DetailedHTMLProps&lt;HTMLAttributes, HTMLElement&gt;;
-    audio: DetailedHTMLProps&lt;AudioHTMLAttributes&lt;HTMLAudioElement&gt;, HTMLAudioElement&gt;;
-    b: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    base: DetailedHTMLProps&lt;BaseHTMLAttributes&lt;HTMLBaseElement&gt;, HTMLBaseElement&gt;;
-    bdi: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    bdo: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    big: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    blockquote: DetailedHTMLProps&lt;BlockquoteHTMLAttributes&lt;HTMLQuoteElement&gt;, HTMLQuoteElement&gt;;
-    body: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLBodyElement&gt;, HTMLBodyElement&gt;;
-    br: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLBRElement&gt;, HTMLBRElement&gt;;
-    button: DetailedHTMLProps&lt;ButtonHTMLAttributes&lt;HTMLButtonElement&gt;, HTMLButtonElement&gt;;
-    canvas: DetailedHTMLProps&lt;CanvasHTMLAttributes&lt;HTMLCanvasElement&gt;, HTMLCanvasElement&gt;;
-    caption: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    center: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    cite: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    code: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    col: DetailedHTMLProps&lt;ColHTMLAttributes&lt;HTMLTableColElement&gt;, HTMLTableColElement&gt;;
-    colgroup: DetailedHTMLProps&lt;ColgroupHTMLAttributes&lt;HTMLTableColElement&gt;, HTMLTableColElement&gt;;
-    data: DetailedHTMLProps&lt;DataHTMLAttributes&lt;HTMLDataElement&gt;, HTMLDataElement&gt;;
-    datalist: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLDataListElement&gt;, HTMLDataListElement&gt;;
-    dd: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    del: DetailedHTMLProps&lt;DelHTMLAttributes&lt;HTMLModElement&gt;, HTMLModElement&gt;;
-    details: DetailedHTMLProps&lt;DetailsHTMLAttributes&lt;HTMLDetailsElement&gt;, HTMLDetailsElement&gt;;
-    dfn: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    dialog: DetailedHTMLProps&lt;DialogHTMLAttributes&lt;HTMLDialogElement&gt;, HTMLDialogElement&gt;;
-    div: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLDivElement&gt;, HTMLDivElement&gt;;
-    dl: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLDListElement&gt;, HTMLDListElement&gt;;
-    dt: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    em: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    embed: DetailedHTMLProps&lt;EmbedHTMLAttributes&lt;HTMLEmbedElement&gt;, HTMLEmbedElement&gt;;
-    fieldset: DetailedHTMLProps&lt;FieldsetHTMLAttributes&lt;HTMLFieldSetElement&gt;, HTMLFieldSetElement&gt;;
-    figcaption: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    figure: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    footer: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    form: DetailedHTMLProps&lt;FormHTMLAttributes&lt;HTMLFormElement&gt;, HTMLFormElement&gt;;
-    h1: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLHeadingElement&gt;, HTMLHeadingElement&gt;;
-    h2: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLHeadingElement&gt;, HTMLHeadingElement&gt;;
-    h3: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLHeadingElement&gt;, HTMLHeadingElement&gt;;
-    h4: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLHeadingElement&gt;, HTMLHeadingElement&gt;;
-    h5: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLHeadingElement&gt;, HTMLHeadingElement&gt;;
-    h6: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLHeadingElement&gt;, HTMLHeadingElement&gt;;
-    head: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLHeadElement&gt;, HTMLHeadElement&gt;;
-    header: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    hgroup: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    hr: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLHRElement&gt;, HTMLHRElement&gt;;
-    html: DetailedHTMLProps&lt;HtmlHTMLAttributes&lt;HTMLHtmlElement&gt;, HTMLHtmlElement&gt;;
-    i: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    iframe: DetailedHTMLProps&lt;IframeHTMLAttributes&lt;HTMLIFrameElement&gt;, HTMLIFrameElement&gt;;
-    img: DetailedHTMLProps&lt;ImgHTMLAttributes&lt;HTMLImageElement&gt;, HTMLImageElement&gt;;
-    input: DetailedHTMLProps&lt;InputHTMLAttributes&lt;HTMLInputElement&gt;, HTMLInputElement&gt;;
-    ins: DetailedHTMLProps&lt;InsHTMLAttributes&lt;HTMLModElement&gt;, HTMLModElement&gt;;
-    kbd: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    keygen: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    label: DetailedHTMLProps&lt;LabelHTMLAttributes&lt;HTMLLabelElement&gt;, HTMLLabelElement&gt;;
-    legend: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLLegendElement&gt;, HTMLLegendElement&gt;;
-    li: DetailedHTMLProps&lt;LiHTMLAttributes&lt;HTMLLIElement&gt;, HTMLLIElement&gt;;
-    link: DetailedHTMLProps&lt;LinkHTMLAttributes&lt;HTMLLinkElement&gt;, HTMLLinkElement&gt;;
-    main: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    map: DetailedHTMLProps&lt;MapHTMLAttributes&lt;HTMLMapElement&gt;, HTMLMapElement&gt;;
-    mark: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    menu: DetailedHTMLProps&lt;MenuHTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    menuitem: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    meta: DetailedHTMLProps&lt;MetaHTMLAttributes&lt;HTMLMetaElement&gt;, HTMLMetaElement&gt;;
-    meter: DetailedHTMLProps&lt;MeterHTMLAttributes&lt;HTMLMeterElement&gt;, HTMLMeterElement&gt;;
-    nav: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    noscript: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    object: DetailedHTMLProps&lt;ObjectHTMLAttributes&lt;HTMLObjectElement&gt;, HTMLObjectElement&gt;;
-    ol: DetailedHTMLProps&lt;OlHTMLAttributes&lt;HTMLOListElement&gt;, HTMLOListElement&gt;;
-    optgroup: DetailedHTMLProps&lt;OptgroupHTMLAttributes&lt;HTMLOptGroupElement&gt;, HTMLOptGroupElement&gt;;
-    option: DetailedHTMLProps&lt;OptionHTMLAttributes&lt;HTMLOptionElement&gt;, HTMLOptionElement&gt;;
-    output: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLOutputElement&gt;, HTMLOutputElement&gt;;
-    p: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLParagraphElement&gt;, HTMLParagraphElement&gt;;
-    param: DetailedHTMLProps&lt;ParamHTMLAttributes&lt;HTMLParamElement&gt;, HTMLParamElement&gt;;
-    picture: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    pre: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLPreElement&gt;, HTMLPreElement&gt;;
-    progress: DetailedHTMLProps&lt;ProgressHTMLAttributes&lt;HTMLProgressElement&gt;, HTMLProgressElement&gt;;
-    q: DetailedHTMLProps&lt;QuoteHTMLAttributes&lt;HTMLQuoteElement&gt;, HTMLQuoteElement&gt;;
-    rp: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    rt: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    ruby: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    s: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    samp: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    search: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    slot: DetailedHTMLProps&lt;SlotHTMLAttributes&lt;HTMLSlotElement&gt;, HTMLSlotElement&gt;;
-    script: DetailedHTMLProps&lt;ScriptHTMLAttributes &amp; { contentInCDATA?: boolean }, HTMLScriptElement&gt;;
-    section: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    select: DetailedHTMLProps&lt;SelectHTMLAttributes&lt;HTMLSelectElement&gt;, HTMLSelectElement&gt;;
-    small: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    source: DetailedHTMLProps&lt;SourceHTMLAttributes&lt;HTMLSourceElement&gt;, HTMLSourceElement&gt;;
-    span: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLSpanElement&gt;, HTMLSpanElement&gt;;
-    strong: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    style: DetailedHTMLProps&lt;StyleHTMLAttributes&lt;HTMLStyleElement&gt;, HTMLStyleElement&gt;;
-    sub: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    summary: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    sup: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    table: DetailedHTMLProps&lt;TableHTMLAttributes&lt;HTMLTableElement&gt;, HTMLTableElement&gt;;
-    template: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLTemplateElement&gt;, HTMLTemplateElement&gt;;
-    tbody: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLTableSectionElement&gt;, HTMLTableSectionElement&gt;;
-    td: DetailedHTMLProps&lt;TdHTMLAttributes&lt;HTMLTableDataCellElement&gt;, HTMLTableDataCellElement&gt;;
-    textarea: DetailedHTMLProps&lt;TextareaHTMLAttributes&lt;HTMLTextAreaElement&gt;, HTMLTextAreaElement&gt;;
-    tfoot: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLTableSectionElement&gt;, HTMLTableSectionElement&gt;;
-    th: DetailedHTMLProps&lt;ThHTMLAttributes&lt;HTMLTableHeaderCellElement&gt;, HTMLTableHeaderCellElement&gt;;
-    thead: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLTableSectionElement&gt;, HTMLTableSectionElement&gt;;
-    time: DetailedHTMLProps&lt;TimeHTMLAttributes&lt;HTMLTimeElement&gt;, HTMLTimeElement&gt;;
-    title: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLTitleElement&gt;, HTMLTitleElement&gt;;
-    tr: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLTableRowElement&gt;, HTMLTableRowElement&gt;;
-    track: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLTrackElement&gt;, HTMLTrackElement&gt;;
-    u: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    ul: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLUListElement&gt;, HTMLUListElement&gt;;
-    var: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-    video: DetailedHTMLProps&lt;VideoHTMLAttributes&lt;HTMLVideoElement&gt;, HTMLVideoElement&gt;;
-    wbr: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-
-    // SVG
-    svg: BloggerAttributes&lt;SVGAttributes&lt;SVGSVGElement&gt;&gt;;
-
-    // Blogger native elements
-    &#x27;b:section&#x27;: BloggerAttributes&lt;{ id: string; class?: string; maxwidgets?: number | string; showaddelement?: boolean | string; growth?: string; preferred?: boolean | string }&gt;;
-    &#x27;b:widget&#x27;: BloggerAttributes&lt;{ id: string; type: string; title?: string; locked?: boolean | string; pageType?: string; mobile?: string; version?: number | string; visible?: boolean | string }&gt;;
-    &#x27;b:widget-settings&#x27;: BloggerAttributes&lt;{}&gt;;
-    &#x27;b:widget-setting&#x27;: BloggerAttributes&lt;{ name: string }&gt;;
-    &#x27;b:if&#x27;: BloggerAttributes&lt;{ cond: string }&gt;;
-    &#x27;b:elseif&#x27;: BloggerAttributes&lt;{ cond: string }&gt;;
-    &#x27;b:else&#x27;: BloggerAttributes&lt;{}&gt;;
-    &#x27;b:loop&#x27;: BloggerAttributes&lt;{ values: string; var: string; index?: string }&gt;;
-    &#x27;b:include&#x27;: BloggerAttributes&lt;{ name: string; data?: string; cond?: string }&gt;;
-    &#x27;b:includable&#x27;: BloggerAttributes&lt;{ id: string; var?: string }&gt;;
-    &#x27;b:attr&#x27;: BloggerAttributes&lt;{ name: string; value: string; cond?: string }&gt;;
-    &#x27;b:class&#x27;: BloggerAttributes&lt;{ name: string; cond: string }&gt;;
-    &#x27;b:tag&#x27;: BloggerAttributes&lt;{ name?: string; cond?: string }&gt;;
-    &#x27;b:eval&#x27;: BloggerAttributes&lt;{ expr: string }&gt;;
-    &#x27;b:with&#x27;: BloggerAttributes&lt;{ var: string; value: string }&gt;;
-    &#x27;b:switch&#x27;: BloggerAttributes&lt;{ var: string }&gt;;
-    &#x27;b:case&#x27;: BloggerAttributes&lt;{ value: string }&gt;;
-    &#x27;b:default&#x27;: BloggerAttributes&lt;{}&gt;;
-    &#x27;b:message&#x27;: BloggerAttributes&lt;{ name: string }&gt;;
-    &#x27;b:comment&#x27;: BloggerAttributes&lt;{}&gt;;
-    &#x27;b:template-skin&#x27;: BloggerAttributes&lt;{}&gt;;
-    &#x27;b:template-script&#x27;: BloggerAttributes&lt;{ name: string; version: string; async?: boolean | string }&gt;;
-    &#x27;b:param&#x27;: BloggerAttributes&lt;{ value?: string }&gt;;
-    &#x27;b:defaultmarkup&#x27;: BloggerAttributes&lt;{ type: string }&gt;;
-    &#x27;b:defaultmarkups&#x27;: BloggerAttributes&lt;{}&gt;;
-
-    // Dynamic tags fallback
-    [elemName: string]: any;
-  }
-}
-export {};\n\ndeclare global {
-  namespace JSX {
-    interface Element extends Component {}
-    interface ElementClass {
-      props?: any;
-    }
-
-    interface ElementAttributesProperty {
-      props: {};
-    }
-    interface ElementChildrenAttribute {
-      children: {};
-    }
-
-    type Booleanish = boolean | &quot;true&quot; | &quot;false&quot;;
-
-    // Standard Blogger enhancement wrapper that adds cond, children, and any expr: prefixed attribute to any type T
-    type BloggerAttributes&lt;T&gt; = T &amp; {
-      children?: any;
-      cond?: string;
-      [exprAttr: `expr:${string}`]: any;
-      [otherAttr: string]: any;
-    };
-
-    type DetailedHTMLProps&lt;E, T&gt; = BloggerAttributes&lt;E&gt;;
-
-    interface HTMLAttributes&lt;T = any&gt; {
-      id?: string;
-      class?: string;
-      className?: string;
-      style?: any;
-      title?: string;
-      name?: string;
-      type?: string;
-      value?: string | number;
-      placeholder?: string;
-      disabled?: boolean;
-      href?: string;
-      target?: string;
-      src?: string;
-      alt?: string;
-      width?: string | number;
-      height?: string | number;
-      async?: boolean | string;
-      defer?: boolean | string;
-      rel?: string;
-      media?: string;
-      method?: string;
-      action?: string;
-      rows?: number;
-      cols?: number;
-      checked?: boolean;
-      selected?: boolean;
-      [attributeName: string]: any;
-    }
-
-    interface AllHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      accept?: string;
-      acceptCharset?: string;
-      action?: string;
-      allowFullScreen?: boolean;
-      allowTransparency?: boolean;
-      alt?: string;
-      as?: string;
-      async?: boolean;
-      autoComplete?: string;
-      autoPlay?: boolean;
-      capture?: boolean | string;
-      cellPadding?: number | string;
-      cellSpacing?: number | string;
-      charSet?: string;
-      challenge?: string;
-      checked?: boolean;
-      cite?: string;
-      classID?: string;
-      cols?: number;
-      colSpan?: number;
-      controls?: boolean;
-      coords?: string;
-      crossOrigin?: string;
-      data?: string;
-      dateTime?: string;
-      default?: boolean;
-      defer?: boolean;
-      disabled?: boolean;
-      download?: any;
-      encType?: string;
-      form?: string;
-      formAction?: string;
-      formEncType?: string;
-      formMethod?: string;
-      formNoValidate?: boolean;
-      formTarget?: string;
-      frameBorder?: number | string;
-      headers?: string;
-      height?: number | string;
-      high?: number;
-      href?: string;
-      hrefLang?: string;
-      htmlFor?: string;
-      httpEquiv?: string;
-      integrity?: string;
-      keyParams?: string;
-      keyType?: string;
-      kind?: string;
-      label?: string;
-      list?: string;
-      loop?: boolean;
-      low?: number;
-      manifest?: string;
-      marginHeight?: number;
-      marginWidth?: number;
-      max?: number | string;
-      maxLength?: number;
-      media?: string;
-      mediaGroup?: string;
-      method?: string;
-      min?: number | string;
-      minLength?: number;
-      multiple?: boolean;
-      muted?: boolean;
-      name?: string;
-      noValidate?: boolean;
-      open?: boolean;
-      optimum?: number;
-      pattern?: string;
-      placeholder?: string;
-      playsInline?: boolean;
-      poster?: string;
-      preload?: string;
-      readOnly?: boolean;
-      required?: boolean;
-      reversed?: boolean;
-      rows?: number;
-      rowSpan?: number;
-      sandbox?: string;
-      scope?: string;
-      scoped?: boolean;
-      scrolling?: string;
-      seamless?: boolean;
-      selected?: boolean;
-      shape?: string;
-      size?: number;
-      sizes?: string;
-      span?: number;
-      src?: string;
-      srcDoc?: string;
-      srcLang?: string;
-      srcSet?: string;
-      start?: number;
-      step?: number | string;
-      summary?: string;
-      target?: string;
-      type?: string;
-      useMap?: string;
-      value?: string | number;
-      width?: number | string;
-      wmode?: string;
-      wrap?: string;
-    }
-
-    interface AnchorHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      download?: any;
-      href?: string;
-      hrefLang?: string;
-      media?: string;
-      ping?: string;
-      target?: string;
-      type?: string;
-      referrerPolicy?: string;
-    }
-
-    interface AudioHTMLAttributes&lt;T = any&gt; extends MediaHTMLAttributes&lt;T&gt; {}
-
-    interface AreaHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      alt?: string;
-      coords?: string;
-      download?: any;
-      href?: string;
-      hrefLang?: string;
-      media?: string;
-      referrerPolicy?: string;
-      shape?: string;
-      target?: string;
-    }
-
-    interface BaseHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      href?: string;
-      target?: string;
-    }
-
-    interface BlockquoteHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      cite?: string;
-    }
-
-    interface ButtonHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      disabled?: boolean;
-      form?: string;
-      formAction?: string;
-      formEncType?: string;
-      formMethod?: string;
-      formNoValidate?: boolean;
-      formTarget?: string;
-      name?: string;
-      type?: &quot;submit&quot; | &quot;reset&quot; | &quot;button&quot;;
-      value?: string | number;
-    }
-
-    interface CanvasHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      height?: number | string;
-      width?: number | string;
-    }
-
-    interface ColHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      span?: number;
-      width?: number | string;
-    }
-
-    interface ColgroupHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      span?: number;
-    }
-
-    interface DataHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      value?: string | number;
-    }
-
-    interface DetailsHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      open?: boolean;
-      name?: string;
-    }
-
-    interface DelHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      cite?: string;
-      dateTime?: string;
-    }
-
-    interface DialogHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      open?: boolean;
-    }
-
-    interface EmbedHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      height?: number | string;
-      src?: string;
-      type?: string;
-      width?: number | string;
-    }
-
-    interface FieldsetHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      disabled?: boolean;
-      form?: string;
-      name?: string;
-    }
-
-    interface FormHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      acceptCharset?: string;
-      action?: string;
-      autoComplete?: string;
-      encType?: string;
-      method?: string;
-      name?: string;
-      noValidate?: boolean;
-      target?: string;
-    }
-
-    interface HtmlHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      manifest?: string;
-    }
-
-    interface IframeHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      allow?: string;
-      allowFullScreen?: boolean;
-      frameBorder?: number | string;
-      height?: number | string;
-      loading?: string;
-      name?: string;
-      referrerPolicy?: string;
-      sandbox?: string;
-      src?: string;
-      srcDoc?: string;
-      width?: number | string;
-    }
-
-    interface ImgHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      alt?: string;
-      crossOrigin?: string;
-      decoding?: string;
-      height?: number | string;
-      loading?: string;
-      src?: string;
-      srcSet?: string;
-      useMap?: string;
-      width?: number | string;
-    }
-
-    interface InsHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      cite?: string;
-      dateTime?: string;
-    }
-
-    interface InputHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      accept?: string;
-      alt?: string;
-      autoComplete?: string;
-      capture?: boolean | string;
-      checked?: boolean;
-      disabled?: boolean;
-      form?: string;
-      formAction?: string;
-      formEncType?: string;
-      formMethod?: string;
-      formNoValidate?: boolean;
-      formTarget?: string;
-      height?: number | string;
-      list?: string;
-      max?: number | string;
-      maxLength?: number;
-      min?: number | string;
-      minLength?: number;
-      multiple?: boolean;
-      name?: string;
-      pattern?: string;
-      placeholder?: string;
-      readOnly?: boolean;
-      required?: boolean;
-      size?: number;
-      src?: string;
-      step?: number | string;
-      type?: string;
-      value?: string | number;
-      width?: number | string;
-    }
-
-    interface LabelHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      form?: string;
-      htmlFor?: string;
-    }
-
-    interface LiHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      value?: string | number;
-    }
-
-    interface LinkHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      as?: string;
-      crossOrigin?: string;
-      href?: string;
-      hrefLang?: string;
-      integrity?: string;
-      media?: string;
-      sizes?: string;
-      type?: string;
-    }
-
-    interface MapHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      name?: string;
-    }
-
-    interface MenuHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      type?: string;
-    }
-
-    interface MediaHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      autoPlay?: boolean;
-      controls?: boolean;
-      loop?: boolean;
-      muted?: boolean;
-      preload?: string;
-      src?: string;
-    }
-
-    interface MetaHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      charSet?: string;
-      content?: string;
-      httpEquiv?: string;
-      media?: string;
-      name?: string;
-    }
-
-    interface MeterHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      form?: string;
-      high?: number;
-      low?: number;
-      max?: number | string;
-      min?: number | string;
-      optimum?: number;
-      value?: string | number;
-    }
-
-    interface QuoteHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      cite?: string;
-    }
-
-    interface ObjectHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      classID?: string;
-      data?: string;
-      form?: string;
-      height?: number | string;
-      name?: string;
-      type?: string;
-      useMap?: string;
-      width?: number | string;
-    }
-
-    interface OlHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      reversed?: boolean;
-      start?: number;
-      type?: &quot;1&quot; | &quot;a&quot; | &quot;A&quot; | &quot;i&quot; | &quot;I&quot;;
-    }
-
-    interface OptgroupHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      disabled?: boolean;
-      label?: string;
-    }
-
-    interface OptionHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      disabled?: boolean;
-      label?: string;
-      selected?: boolean;
-      value?: string | number;
-    }
-
-    interface OutputHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      form?: string;
-      htmlFor?: string;
-      name?: string;
-    }
-
-    interface ParamHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      name?: string;
-      value?: string | number;
-    }
-
-    interface ProgressHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      max?: number | string;
-      value?: string | number;
-    }
-
-    interface SlotHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      name?: string;
-    }
-
-    interface ScriptHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      async?: boolean;
-      crossOrigin?: string;
-      defer?: boolean;
-      integrity?: string;
-      noModule?: boolean;
-      src?: string;
-      type?: string;
-    }
-
-    interface SelectHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      autoComplete?: string;
-      disabled?: boolean;
-      form?: string;
-      multiple?: boolean;
-      name?: string;
-      required?: boolean;
-      size?: number;
-      value?: string | number;
-    }
-
-    interface SourceHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      height?: number | string;
-      media?: string;
-      sizes?: string;
-      src?: string;
-      srcSet?: string;
-      type?: string;
-      width?: number | string;
-    }
-
-    interface StyleHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      media?: string;
-      scoped?: boolean;
-      type?: string;
-    }
-
-    interface TableHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      align?: &quot;left&quot; | &quot;center&quot; | &quot;right&quot;;
-      border?: number;
-      cellPadding?: number | string;
-      cellSpacing?: number | string;
-      summary?: string;
-      width?: number | string;
-    }
-
-    interface TextareaHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      autoComplete?: string;
-      cols?: number;
-      disabled?: boolean;
-      form?: string;
-      maxLength?: number;
-      minLength?: number;
-      name?: string;
-      placeholder?: string;
-      readOnly?: boolean;
-      required?: boolean;
-      rows?: number;
-      value?: string | number;
-      wrap?: string;
-    }
-
-    interface TdHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      align?: &quot;left&quot; | &quot;center&quot; | &quot;right&quot; | &quot;justify&quot; | &quot;char&quot;;
-      colSpan?: number;
-      headers?: string;
-      rowSpan?: number;
-      scope?: string;
-    }
-
-    interface ThHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      align?: &quot;left&quot; | &quot;center&quot; | &quot;right&quot; | &quot;justify&quot; | &quot;char&quot;;
-      colSpan?: number;
-      headers?: string;
-      rowSpan?: number;
-      scope?: string;
-    }
-
-    interface TimeHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      dateTime?: string;
-    }
-
-    interface TrackHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      default?: boolean;
-      kind?: string;
-      label?: string;
-      src?: string;
-      srcLang?: string;
-    }
-
-    interface VideoHTMLAttributes&lt;T = any&gt; extends HTMLAttributes&lt;T&gt; {
-      height?: number | string;
-      playsInline?: boolean;
-      poster?: string;
-      width?: number | string;
-    }
-
-    interface SVGAttributes&lt;T = any&gt; {
-      className?: string;
-      color?: string;
-      height?: number | string;
-      id?: string;
-      style?: any;
-      viewBox?: string;
-      [attributeName: string]: any;
-    }
-
-    interface IntrinsicElements {
-      a: DetailedHTMLProps&lt;AnchorHTMLAttributes&lt;HTMLAnchorElement&gt;, HTMLAnchorElement&gt;;
-      abbr: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      address: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      area: DetailedHTMLProps&lt;AreaHTMLAttributes&lt;HTMLAreaElement&gt;, HTMLAreaElement&gt;;
-      article: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      aside: DetailedHTMLProps&lt;HTMLAttributes, HTMLElement&gt;;
-      audio: DetailedHTMLProps&lt;AudioHTMLAttributes&lt;HTMLAudioElement&gt;, HTMLAudioElement&gt;;
-      b: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      base: DetailedHTMLProps&lt;BaseHTMLAttributes&lt;HTMLBaseElement&gt;, HTMLBaseElement&gt;;
-      bdi: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      bdo: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      big: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      blockquote: DetailedHTMLProps&lt;BlockquoteHTMLAttributes&lt;HTMLQuoteElement&gt;, HTMLQuoteElement&gt;;
-      body: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLBodyElement&gt;, HTMLBodyElement&gt;;
-      br: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLBRElement&gt;, HTMLBRElement&gt;;
-      button: DetailedHTMLProps&lt;ButtonHTMLAttributes&lt;HTMLButtonElement&gt;, HTMLButtonElement&gt;;
-      canvas: DetailedHTMLProps&lt;CanvasHTMLAttributes&lt;HTMLCanvasElement&gt;, HTMLCanvasElement&gt;;
-      caption: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      center: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      cite: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      code: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      col: DetailedHTMLProps&lt;ColHTMLAttributes&lt;HTMLTableColElement&gt;, HTMLTableColElement&gt;;
-      colgroup: DetailedHTMLProps&lt;ColgroupHTMLAttributes&lt;HTMLTableColElement&gt;, HTMLTableColElement&gt;;
-      data: DetailedHTMLProps&lt;DataHTMLAttributes&lt;HTMLDataElement&gt;, HTMLDataElement&gt;;
-      datalist: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLDataListElement&gt;, HTMLDataListElement&gt;;
-      dd: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      del: DetailedHTMLProps&lt;DelHTMLAttributes&lt;HTMLModElement&gt;, HTMLModElement&gt;;
-      details: DetailedHTMLProps&lt;DetailsHTMLAttributes&lt;HTMLDetailsElement&gt;, HTMLDetailsElement&gt;;
-      dfn: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      dialog: DetailedHTMLProps&lt;DialogHTMLAttributes&lt;HTMLDialogElement&gt;, HTMLDialogElement&gt;;
-      div: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLDivElement&gt;, HTMLDivElement&gt;;
-      dl: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLDListElement&gt;, HTMLDListElement&gt;;
-      dt: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      em: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      embed: DetailedHTMLProps&lt;EmbedHTMLAttributes&lt;HTMLEmbedElement&gt;, HTMLEmbedElement&gt;;
-      fieldset: DetailedHTMLProps&lt;FieldsetHTMLAttributes&lt;HTMLFieldSetElement&gt;, HTMLFieldSetElement&gt;;
-      figcaption: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      figure: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      footer: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      form: DetailedHTMLProps&lt;FormHTMLAttributes&lt;HTMLFormElement&gt;, HTMLFormElement&gt;;
-      h1: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLHeadingElement&gt;, HTMLHeadingElement&gt;;
-      h2: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLHeadingElement&gt;, HTMLHeadingElement&gt;;
-      h3: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLHeadingElement&gt;, HTMLHeadingElement&gt;;
-      h4: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLHeadingElement&gt;, HTMLHeadingElement&gt;;
-      h5: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLHeadingElement&gt;, HTMLHeadingElement&gt;;
-      h6: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLHeadingElement&gt;, HTMLHeadingElement&gt;;
-      head: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLHeadElement&gt;, HTMLHeadElement&gt;;
-      header: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      hgroup: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      hr: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLHRElement&gt;, HTMLHRElement&gt;;
-      html: DetailedHTMLProps&lt;HtmlHTMLAttributes&lt;HTMLHtmlElement&gt;, HTMLHtmlElement&gt;;
-      i: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      iframe: DetailedHTMLProps&lt;IframeHTMLAttributes&lt;HTMLIFrameElement&gt;, HTMLIFrameElement&gt;;
-      img: DetailedHTMLProps&lt;ImgHTMLAttributes&lt;HTMLImageElement&gt;, HTMLImageElement&gt;;
-      input: DetailedHTMLProps&lt;InputHTMLAttributes&lt;HTMLInputElement&gt;, HTMLInputElement&gt;;
-      ins: DetailedHTMLProps&lt;InsHTMLAttributes&lt;HTMLModElement&gt;, HTMLModElement&gt;;
-      kbd: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      keygen: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      label: DetailedHTMLProps&lt;LabelHTMLAttributes&lt;HTMLLabelElement&gt;, HTMLLabelElement&gt;;
-      legend: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLLegendElement&gt;, HTMLLegendElement&gt;;
-      li: DetailedHTMLProps&lt;LiHTMLAttributes&lt;HTMLLIElement&gt;, HTMLLIElement&gt;;
-      link: DetailedHTMLProps&lt;LinkHTMLAttributes&lt;HTMLLinkElement&gt;, HTMLLinkElement&gt;;
-      main: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      map: DetailedHTMLProps&lt;MapHTMLAttributes&lt;HTMLMapElement&gt;, HTMLMapElement&gt;;
-      mark: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      menu: DetailedHTMLProps&lt;MenuHTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      menuitem: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      meta: DetailedHTMLProps&lt;MetaHTMLAttributes&lt;HTMLMetaElement&gt;, HTMLMetaElement&gt;;
-      meter: DetailedHTMLProps&lt;MeterHTMLAttributes&lt;HTMLMeterElement&gt;, HTMLMeterElement&gt;;
-      nav: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      noscript: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      object: DetailedHTMLProps&lt;ObjectHTMLAttributes&lt;HTMLObjectElement&gt;, HTMLObjectElement&gt;;
-      ol: DetailedHTMLProps&lt;OlHTMLAttributes&lt;HTMLOListElement&gt;, HTMLOListElement&gt;;
-      optgroup: DetailedHTMLProps&lt;OptgroupHTMLAttributes&lt;HTMLOptGroupElement&gt;, HTMLOptGroupElement&gt;;
-      option: DetailedHTMLProps&lt;OptionHTMLAttributes&lt;HTMLOptionElement&gt;, HTMLOptionElement&gt;;
-      output: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLOutputElement&gt;, HTMLOutputElement&gt;;
-      p: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLParagraphElement&gt;, HTMLParagraphElement&gt;;
-      param: DetailedHTMLProps&lt;ParamHTMLAttributes&lt;HTMLParamElement&gt;, HTMLParamElement&gt;;
-      picture: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      pre: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLPreElement&gt;, HTMLPreElement&gt;;
-      progress: DetailedHTMLProps&lt;ProgressHTMLAttributes&lt;HTMLProgressElement&gt;, HTMLProgressElement&gt;;
-      q: DetailedHTMLProps&lt;QuoteHTMLAttributes&lt;HTMLQuoteElement&gt;, HTMLQuoteElement&gt;;
-      rp: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      rt: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      ruby: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      s: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      samp: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      search: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      slot: DetailedHTMLProps&lt;SlotHTMLAttributes&lt;HTMLSlotElement&gt;, HTMLSlotElement&gt;;
-      script: DetailedHTMLProps&lt;ScriptHTMLAttributes &amp; { contentInCDATA?: boolean }, HTMLScriptElement&gt;;
-      section: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      select: DetailedHTMLProps&lt;SelectHTMLAttributes&lt;HTMLSelectElement&gt;, HTMLSelectElement&gt;;
-      small: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      source: DetailedHTMLProps&lt;SourceHTMLAttributes&lt;HTMLSourceElement&gt;, HTMLSourceElement&gt;;
-      span: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLSpanElement&gt;, HTMLSpanElement&gt;;
-      strong: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      style: DetailedHTMLProps&lt;StyleHTMLAttributes&lt;HTMLStyleElement&gt;, HTMLStyleElement&gt;;
-      sub: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      summary: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      sup: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      table: DetailedHTMLProps&lt;TableHTMLAttributes&lt;HTMLTableElement&gt;, HTMLTableElement&gt;;
-      template: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLTemplateElement&gt;, HTMLTemplateElement&gt;;
-      tbody: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLTableSectionElement&gt;, HTMLTableSectionElement&gt;;
-      td: DetailedHTMLProps&lt;TdHTMLAttributes&lt;HTMLTableDataCellElement&gt;, HTMLTableDataCellElement&gt;;
-      textarea: DetailedHTMLProps&lt;TextareaHTMLAttributes&lt;HTMLTextAreaElement&gt;, HTMLTextAreaElement&gt;;
-      tfoot: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLTableSectionElement&gt;, HTMLTableSectionElement&gt;;
-      th: DetailedHTMLProps&lt;ThHTMLAttributes&lt;HTMLTableHeaderCellElement&gt;, HTMLTableHeaderCellElement&gt;;
-      thead: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLTableSectionElement&gt;, HTMLTableSectionElement&gt;;
-      time: DetailedHTMLProps&lt;TimeHTMLAttributes&lt;HTMLTimeElement&gt;, HTMLTimeElement&gt;;
-      title: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLTitleElement&gt;, HTMLTitleElement&gt;;
-      tr: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLTableRowElement&gt;, HTMLTableRowElement&gt;;
-      track: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLTrackElement&gt;, HTMLTrackElement&gt;;
-      u: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      ul: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLUListElement&gt;, HTMLUListElement&gt;;
-      var: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-      video: DetailedHTMLProps&lt;VideoHTMLAttributes&lt;HTMLVideoElement&gt;, HTMLVideoElement&gt;;
-      wbr: DetailedHTMLProps&lt;HTMLAttributes&lt;HTMLElement&gt;, HTMLElement&gt;;
-
-      // SVG
-      svg: BloggerAttributes&lt;SVGAttributes&lt;SVGSVGElement&gt;&gt;;
-
-      // Blogger native elements
-      &#x27;b:section&#x27;: BloggerAttributes&lt;{ id: string; class?: string; maxwidgets?: number | string; showaddelement?: boolean | string; growth?: string; preferred?: boolean | string }&gt;;
-      &#x27;b:widget&#x27;: BloggerAttributes&lt;{ id: string; type: string; title?: string; locked?: boolean | string; pageType?: string; mobile?: string; version?: number | string; visible?: boolean | string }&gt;;
-      &#x27;b:widget-settings&#x27;: BloggerAttributes&lt;{}&gt;;
-      &#x27;b:widget-setting&#x27;: BloggerAttributes&lt;{ name: string }&gt;;
-      &#x27;b:if&#x27;: BloggerAttributes&lt;{ cond: string }&gt;;
-      &#x27;b:elseif&#x27;: BloggerAttributes&lt;{ cond: string }&gt;;
-      &#x27;b:else&#x27;: BloggerAttributes&lt;{}&gt;;
-      &#x27;b:loop&#x27;: BloggerAttributes&lt;{ values: string; var: string; index?: string }&gt;;
-      &#x27;b:include&#x27;: BloggerAttributes&lt;{ name: string; data?: string; cond?: string }&gt;;
-      &#x27;b:includable&#x27;: BloggerAttributes&lt;{ id: string; var?: string }&gt;;
-      &#x27;b:attr&#x27;: BloggerAttributes&lt;{ name: string; value: string; cond?: string }&gt;;
-      &#x27;b:class&#x27;: BloggerAttributes&lt;{ name: string; cond: string }&gt;;
-      &#x27;b:tag&#x27;: BloggerAttributes&lt;{ name?: string; cond?: string }&gt;;
-      &#x27;b:eval&#x27;: BloggerAttributes&lt;{ expr: string }&gt;;
-      &#x27;b:with&#x27;: BloggerAttributes&lt;{ var: string; value: string }&gt;;
-      &#x27;b:switch&#x27;: BloggerAttributes&lt;{ var: string }&gt;;
-      &#x27;b:case&#x27;: BloggerAttributes&lt;{ value: string }&gt;;
-      &#x27;b:default&#x27;: BloggerAttributes&lt;{}&gt;;
-      &#x27;b:message&#x27;: BloggerAttributes&lt;{ name: string }&gt;;
-      &#x27;b:comment&#x27;: BloggerAttributes&lt;{}&gt;;
-      &#x27;b:template-skin&#x27;: BloggerAttributes&lt;{}&gt;;
-      &#x27;b:template-script&#x27;: BloggerAttributes&lt;{ name: string; version: string; async?: boolean | string }&gt;;
-      &#x27;b:param&#x27;: BloggerAttributes&lt;{ value?: string }&gt;;
-      &#x27;b:defaultmarkup&#x27;: BloggerAttributes&lt;{ type: string }&gt;;
-      &#x27;b:defaultmarkups&#x27;: BloggerAttributes&lt;{}&gt;;
-
-      // Dynamic tags fallback
-      [elemName: string]: any;
-    }
-  }
-}</code></pre>
-  </div>
-
-  <hr class="antinna-divider" />
-
-  <!-- SECTION 6 -->
-  <h2 id="section-6">
-    <span class="antinna-step-badge">Step 6</span> Step-by-Step Guide: Defining Layout Components in TSX
-  </h2>
-  <p>Now let's draft our modular layout component. Notice how we import components like <code>BSection</code>, <code>BWidget</code>, <code>BIf</code>, and <code>BData</code> directly from <code>@antinna/blogger-theme</code>. The global declarations we configured above guarantee full type safety during building!</p>
-
-  <div class="antinna-code-wrapper">
-    <div class="antinna-code-header">
-      <div class="antinna-mac-dots">
-        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-      </div>
-      <span class="antinna-code-title">📂 src/components/BlogHeader.tsx</span>
-      <button class="antinna-copy-btn">Copy</button>
-    </div>
-    <pre><code class="language-tsx">import { BSection, BWidget, BIf, BEval } from &quot;@antinna/blogger-theme&quot;;
-
-export const BlogHeader = () =&gt; (
-  &lt;header
-    class=&quot;header-container&quot;
-    style=&quot;background-color: #fff; border-bottom: 1px solid #ddd;&quot;
-  &gt;
-    &lt;BSection
-      id=&quot;main-header&quot;
-      className=&quot;main-header-sec&quot;
-      maxwidgets={1}
-      showaddelement={true}
-    &gt;
-      &lt;BWidget
-        id=&quot;Header1&quot;
-        type=&quot;Header&quot;
-        title=&quot;My React Blog Header&quot;
-        locked={true}
-      /&gt;
-    &lt;/BSection&gt;
-
-    {/* Example of b:if, b:attr, and expression mapping inside TSX layouts */}
-    &lt;BIf cond=&quot;data:view.isHomepage&quot;&gt;
-      &lt;div class=&quot;homepage-banner&quot; cond=&quot;data:view.isHomepage&quot;&gt;
-        &lt;h1&gt;
-          &lt;BEval expr=&quot;data:blog.title.escaped&quot; /&gt;
-        &lt;/h1&gt;
-        &lt;p&gt;A cutting-edge blog layout engineered entirely in TypeScript.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/BIf&gt;
-  &lt;/header&gt;
-);</code></pre>
-  </div>
-
-  <hr class="antinna-divider" />
-
-  <!-- SECTION 7 -->
-  <h2 id="section-7">
-    <span class="antinna-step-badge">Step 7</span> Step-by-Step Guide: Generating the Blogger Theme XML (main.tsx)
-  </h2>
-  <p>In our main entrypoint file <code>src/main.tsx</code>, we initialize our theme utilizing the declarative TSX style. We import our layout, setup default layout versions, provide our skin CSS definitions, and invoke the generator to output the production template string. We also embed our compiled React application on-demand using <code>&lt;BClientScript /&gt;</code>:</p>
-
-  <div class="antinna-code-wrapper">
-    <div class="antinna-code-header">
-      <div class="antinna-mac-dots">
-        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-      </div>
-      <span class="antinna-code-title">📂 src/main.tsx</span>
-      <button class="antinna-copy-btn">Copy</button>
-    </div>
-    <pre><code class="language-tsx">import * as fs from &quot;fs&quot;;
-import * as path from &quot;path&quot;;
+    <pre><code class="language-tsx">import * as fs from "fs";
+import * as path from "path";
+import { fileURLToPath } from "node:url";
 import {
   BloggerTheme,
   BSection,
@@ -1674,55 +149,103 @@ import {
   BIf,
   BIncludable,
   BInclude,
-  BParam,
+  BLoop,
   BData,
-  Expr,
-  Data,
   BEval,
-} from &quot;@antinna/blogger-theme&quot;;
-import { BlogHeader } from &quot;./components/BlogHeader.js&quot;;
+} from "@antinna/blogger-theme";
 
-const BlogLayout = () =&gt; (
-  &lt;div class=&quot;wrapper-pane&quot;&gt;
+// Polyfill __dirname for ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const ROOT_DIR = path.resolve(__dirname, "../../");
+const DIST_DIR = path.resolve(ROOT_DIR, "dist");
+const OUTPUT_CSS_PATH = path.resolve(DIST_DIR, "output.css");
+const REACT_APP_ENTRY = path.resolve(ROOT_DIR, "app/src/index.tsx");
+
+const BlogHeader = () => (
+  &lt;header className="header-container"&gt;
+    &lt;BSection
+      id="main-header"
+      className="main-header-sec"
+      maxwidgets={1}
+      showaddelement={true}
+    &gt;
+      &lt;BWidget
+        id="Header1"
+        type="Header"
+        title="My React Blog Header"
+        locked={true}
+      /&gt;
+    &lt;/BSection&gt;
+
+    &lt;BIf cond="data:view.isHomepage"&gt;
+      &lt;div className="homepage-banner"&gt;
+        &lt;h1 expr:title="data:blog.title"&gt;
+          Welcome to {new BEval({ expr: "data:blog.title" })}!
+        &lt;/h1&gt;
+        &lt;p&gt;A cutting-edge blog layout engineered entirely in TypeScript.&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/BIf&gt;
+  &lt;/header&gt;
+);
+
+const BlogLayout = () => (
+  &lt;div className="wrapper-pane"&gt;
     &lt;BlogHeader /&gt;
 
-    &lt;main class=&quot;content-area&quot;&gt;
-      {/* Example of Blogger custom inclusion/parameters using TSX */}
-      &lt;BSection
-        id=&quot;main-content&quot;
-        className=&quot;main-content-sec&quot;
-        maxwidgets={1}
-        showaddelement={true}
-      /&gt;
-      {/* 1. This is where our React application will mount! */}
-      &lt;div id=&quot;react-root&quot;&gt;&lt;/div&gt;
+    &lt;main className="content-area"&gt;
+      &lt;BSection id="main-content-sec"&gt;
+        &lt;BWidget id="Blog1" type="Blog"&gt;
+          &lt;BIncludable id="main"&gt;
+            &lt;BLoop values="data:posts" varName="post"&gt;
+              &lt;div className="post-item-view" expr:id="data:post.id"&gt;
+                &lt;h2 expr:class="data:post.class"&gt;
+                  &lt;a expr:href="data:post.url"&gt;
+                    &lt;BData value="post.title" /&gt;
+                  &lt;/a&gt;
+                &lt;/h2&gt;
+                &lt;div className="post-body"&gt;
+                  &lt;BData value="post.body" /&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
 
-      {/* 2. Embedded on-demand script compilation of React App using BClientScript! */}
-      {/* Under the hood, this compiles React, React-DOM, and our App source files,
-          bundling them into a single, minified, self-invoking IIFE block. */}
-      &lt;BClientScript scriptPath=&quot;./src/client/index.tsx&quot; mode=&quot;cdata&quot; /&gt;
+              &lt;BInclude name="postShareButtons" data="post" /&gt;
+            &lt;/BLoop&gt;
+          &lt;/BIncludable&gt;
+        &lt;/BWidget&gt;
+      &lt;/BSection&gt;
+
+      {/* Target element for React SPA mounting */}
+      &lt;div id="react-root"&gt;&lt;/div&gt;
+
+      {/* Embeds your React entry point with hot reloading support */}
+      &lt;BClientScript scriptPath={REACT_APP_ENTRY} mode="cdata" /&gt;
     &lt;/main&gt;
   &lt;/div&gt;
 );
 
 function buildTheme() {
+  if (!fs.existsSync(DIST_DIR)) {
+    fs.mkdirSync(DIST_DIR, { recursive: true });
+  }
+
   const theme = new BloggerTheme({
     attributes: {
-      &quot;b:responsive&quot;: &quot;true&quot;,
-      &quot;b:defaultwidgetversion&quot;: &quot;2&quot;,
-      &quot;b:layoutsversion&quot;: &quot;3&quot;,
+      "b:responsive": "true",
+      "b:defaultwidgetversion": "2",
+      "b:layoutsversion": "3",
     },
     head: [
-      &lt;Title&gt;React Blogger Theme Example&lt;/Title&gt;,
-      &lt;BSkin css=&quot;body { background-color: #f3f4f6; margin: 0; font-family: sans-serif; }&quot; /&gt;,
+      &lt;Title id="ram"&gt;React Blogger Theme Example&lt;/Title&gt;,
+      &lt;BSkin css={OUTPUT_CSS_PATH} /&gt;,
     ],
     body: [&lt;BlogLayout /&gt;],
   });
 
   const xml = theme.generate();
-
-  const outputPath = path.resolve(&quot;dist/theme.xml&quot;);
-  fs.writeFileSync(outputPath, xml, &quot;utf8&quot;);
+  const outputPath = path.resolve(DIST_DIR, "blogger-theme.xml");
+  fs.writeFileSync(outputPath, xml, "utf8");
 
   console.log(`\n🎉 Success! Blogger XML theme generated at: ${outputPath}`);
 }
@@ -1732,186 +255,104 @@ buildTheme();</code></pre>
 
   <hr class="antinna-divider" />
 
-  <!-- SECTION 8 -->
-  <h2 id="section-8">
-    <span class="antinna-step-badge">Step 8</span> Step-by-Step Guide: Bootstrapping a Modern React App (index.tsx &amp; App.jsx)
+  <!-- SECTION 5 -->
+  <h2 id="section-5">
+    <span class="antinna-step-badge">Step 5</span> Integrating an Embedded React App with BClientScript
   </h2>
-  <p>How do we mount a real React 18 single-page app inside Google's legacy Blogger framework? It is incredibly easy! Under our <code>src/client/</code> workspace, we define our React bootstrapping layer inside <code>index.tsx</code>, mapping the render tree directly to the <code>#react-root</code> div defined in our main layout:</p>
+  <p>One of the most powerful features of <code>@antinna/blogger-theme</code> is its ability to bundle a modern React application directly into Blogger's XML output. By utilizing the <code>&lt;BClientScript /&gt;</code> element, you can link to an external React component. The compiler automatically builds, compiles, and embeds this script into CDATA wrappers, allowing you to run a modern, interactive app directly inside Blogger:</p>
 
   <div class="antinna-code-wrapper">
     <div class="antinna-code-header">
       <div class="antinna-mac-dots">
         <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
       </div>
-      <span class="antinna-code-title">📂 src/client/index.tsx</span>
+      <span class="antinna-code-title">📂 app/src/App.tsx</span>
       <button class="antinna-copy-btn">Copy</button>
     </div>
-    <pre><code class="language-tsx">import React from &#x27;react&#x27;;
-import { createRoot } from &#x27;react-dom/client&#x27;;
-import App from &#x27;./App.jsx&#x27;;
+    <pre><code class="language-tsx">import React, { useState } from "react";
 
-const container = document.getElementById(&#x27;react-root&#x27;);
-if (container) {
-  const root = createRoot(container);
-  root.render(&lt;App /&gt;);
-}</code></pre>
-  </div>
-
-  <p>Next, we write our core application logic inside <code>src/client/App.jsx</code>. It supports standard React hooks, modular layouts, and event-driven components. During the template build stage, the package reads this entrypoint, resolves references, compiles the TSX syntax, and embeds the minified code block directly inside Blogger:</p>
-
-  <div class="antinna-code-wrapper">
-    <div class="antinna-code-header">
-      <div class="antinna-mac-dots">
-        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-      </div>
-      <span class="antinna-code-title">📂 src/client/App.jsx</span>
-      <button class="antinna-copy-btn">Copy</button>
-    </div>
-    <pre><code class="language-tsx">import React, { useState } from &#x27;react&#x27;;
-
-export default function App() {
-  const [likes, setLikes] = useState(0);
+export const App = () => {
+  const [count, setCount] = useState(0);
 
   return (
-    &lt;div style={{
-      fontFamily: &#x27;system-ui, sans-serif&#x27;,
-      padding: &#x27;20px&#x27;,
-      border: &#x27;1px solid #ddd&#x27;,
-      borderRadius: &#x27;8px&#x27;,
-      maxWidth: &#x27;400px&#x27;,
-      margin: &#x27;20px auto&#x27;,
-      boxShadow: &#x27;0 4px 6px rgba(0,0,0,0.1)&#x27;,
-      backgroundColor: &#x27;#ffffff&#x27;
-    }}&gt;
-      &lt;h2 style={{ color: &#x27;#ff5a5f&#x27;, marginTop: 0 }}&gt;⚛️ React in Blogger!&lt;/h2&gt;
-      &lt;p style={{ color: &#x27;#555&#x27;, lineHeight: &#x27;1.5&#x27; }}&gt;
-        This application was written in React, compiled to a self-invoking IIFE via &lt;strong&gt;@antinna/blogger-theme&lt;/strong&gt; and esbuild, and embedded dynamically into the theme XML.
-      &lt;/p&gt;
-
-      &lt;div style={{ display: &#x27;flex&#x27;, alignItems: &#x27;center&#x27;, gap: &#x27;10px&#x27;, marginTop: &#x27;20px&#x27; }}&gt;
-        &lt;button
-          onClick={() =&gt; setLikes(likes + 1)}
-          style={{
-            backgroundColor: &#x27;#ff5a5f&#x27;,
-            color: &#x27;white&#x27;,
-            border: &#x27;none&#x27;,
-            padding: &#x27;10px 16px&#x27;,
-            borderRadius: &#x27;4px&#x27;,
-            cursor: &#x27;pointer&#x27;,
-            fontWeight: &#x27;bold&#x27;,
-            transition: &#x27;opacity 0.2s&#x27;
-          }}
-          onMouseOver={(e) =&gt; (e.currentTarget.style.opacity = &#x27;0.9&#x27;)}
-          onMouseOut={(e) =&gt; (e.currentTarget.style.opacity = &#x27;1&#x27;)}
-        &gt;
-          ❤️ Like React App
-        &lt;/button&gt;
-        &lt;span style={{ fontWeight: &#x27;bold&#x27;, fontSize: &#x27;16px&#x27;, color: &#x27;#333&#x27; }}&gt;
-          {likes} {likes === 1 ? &#x27;like&#x27; : &#x27;likes&#x27;}
-        &lt;/span&gt;
-      &lt;/div&gt;
+    &lt;div className="p-6 bg-blue-50 rounded-xl border border-blue-200"&gt;
+      &lt;h2 className="text-xl font-bold text-blue-900"&gt;Embedded React App 🚀&lt;/h2&gt;
+      &lt;p className="text-blue-700 mt-1"&gt;This component is bundled into Blogger CDATA.&lt;/p&gt;
+      &lt;button
+        onClick={() =&gt; setCount((c) =&gt; c + 1)}
+        className="mt-4 px-4 py-2 bg-blue-600 text-white font-medium rounded-lg shadow hover:bg-blue-700 transition-colors cursor-pointer"
+      &gt;
+        Clicks: {count}
+      &lt;/button&gt;
     &lt;/div&gt;
   );
-}</code></pre>
+};</code></pre>
   </div>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 6 -->
+  <h2 id="section-6">
+    <span class="antinna-step-badge">Step 6</span> Styling with Tailwind CSS and Building the Pipeline
+  </h2>
+  <p>To style your layout elements, write standard CSS inside a source file like <code>style/src/input.css</code> using standard Tailwind CSS classes. When you run the compilation command, the build pipeline processes your classes, compiles the Tailwind bundle into <code>dist/output.css</code>, and embeds it directly into the XML theme output via <code>&lt;BSkin css={OUTPUT_CSS_PATH} /&gt;</code>!</p>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 7 -->
+  <h2 id="section-7">
+    <span class="antinna-step-badge">Step 7</span> Quickstart Template Repository and Installation
+  </h2>
+  <p>To help you get started quickly, a pre-configured starter template is available. This template sets up the monorepo structure, Tailwind CSS build scripts, and React configurations automatically.</p>
+
+  <div class="antinna-callout antinna-callout-info">
+    <div class="antinna-callout-title">📂 Open Source Quickstart Template</div>
+    <p class="antinna-callout-body">
+      Avoid manual setup by cloning the official template repository:<br />
+      👉 <strong>Tailwind React Blogger Template:</strong> <a href="https://github.com/mg3994/Blogger-Tailwind-React" target="_blank" rel="noopener">github.com/mg3994/Blogger-Tailwind-React</a>
+    </p>
+  </div>
+
+  <p>To run and compile the template locally:</p>
+
+  <div class="antinna-inline-terminal">$ git clone https://github.com/mg3994/Blogger-Tailwind-React.git</div>
+  <div class="antinna-inline-terminal">$ cd Blogger-Tailwind-React &amp;&amp; npm install</div>
+  <div class="antinna-inline-terminal">$ npm run dev</div>
+
+  <p>The compiler will watch your React components and stylesheet modifications, compiling them automatically into <code>dist/blogger-theme.xml</code>. Simply copy and paste this compiled XML file directly into Blogger's theme editor!</p>
+
+  <hr class="antinna-divider" />
+
+  <!-- SECTION 8 -->
+  <h2 id="section-8">
+    <span class="antinna-step-badge">Step 8</span> Benefits of this Modern Approach
+  </h2>
+  <p>Moving your theme development to <code>@antinna/blogger-theme</code> brings several major benefits:</p>
+  <ul>
+    <li><strong>Fully Component-Driven:</strong> Organize your theme using small, self-contained files (e.g. <code>Header.tsx</code>, <code>Sidebar.tsx</code>, <code>Footer.tsx</code>) instead of a single massive file.</li>
+    <li><strong>Robust Type-Safety:</strong> All properties, arrays, and Blogger constructs are fully typed, catching potential errors during development.</li>
+    <li><strong>Tailwind &amp; React Integration:</strong> Use your favorite frontend libraries and styling tools directly inside Blogger, raising it to the standard of modern CMS systems.</li>
+  </ul>
 
   <hr class="antinna-divider" />
 
   <!-- SECTION 9 -->
   <h2 id="section-9">
-    <span class="antinna-step-badge">Step 9</span> Advanced Feature: On-Demand Client Script Bundling with multiple compilation modes
+    <span class="antinna-step-badge success">Complete</span> Conclusion &amp; Next Steps
   </h2>
-  <p>To support various browser environments and Blogger template engines, the latest release of <code>@antinna/blogger-theme</code> introduces three distinct script encapsulation modes inside <code>&lt;BClientScript /&gt;</code>. These determine exactly how the compiled JS string is wrapped and escaped inside the final theme output:</p>
+  <p>Developing templates for Blogger no longer requires writing rigid, unmanageable XML files. With <code>@antinna/blogger-theme</code>, you can build layouts using component-driven, type-safe React JSX files, styled with Tailwind CSS, and compiled automatically.</p>
 
-  <div class="antinna-table-overflow">
-    <table class="antinna-data-table">
-      <thead>
-        <tr>
-          <th>Mode</th>
-          <th>Usage Syntax</th>
-          <th>Output Style &amp; Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>cdata</strong></td>
-          <td><code>&lt;BClientScript scriptPath="..." mode="cdata" /&gt;</code></td>
-          <td>Wraps the minified bundle inside classic XML CDATA blocks (<code>&lt;![CDATA[ ... ]]&gt;</code>). This is the default recommended mode for robust, script-safe, error-free Blogger templates.</td>
-        </tr>
-        <tr>
-          <td><strong>raw</strong></td>
-          <td><code>&lt;BClientScript scriptPath="..." mode="raw" /&gt;</code></td>
-          <td>Outputs the bundled IIFE code directly inside a standard script container without CDATA tags. Ideal for minimal templates or code blocks that do not use XML-reserved characters.</td>
-        </tr>
-        <tr>
-          <td><strong>escaped</strong></td>
-          <td><code>&lt;BClientScript scriptPath="..." mode="escaped" /&gt;</code></td>
-          <td>Forces the compiler to HTML-encode all XML entity characters (like <code>&amp;</code>, <code>&lt;</code>, <code>&gt;</code>) inside the output. This satisfies strict validation parsers.</td>
-        </tr>
-      </tbody>
-    </table>
+  <!-- CALLOUT SUCCESS -->
+  <div class="antinna-callout antinna-callout-success">
+    <div class="antinna-callout-title">🎉 Start Building Today!</div>
+    <p class="antinna-callout-body">Clone the template repository, run <code>npm install</code>, and start customizing your layout using clean JSX components. Your compiled, responsive Blogger theme XML will be ready in seconds!</p>
   </div>
-
-  <hr class="antinna-divider" />
-
-  <!-- SECTION 10 -->
-  <h2 id="section-10">
-    <span class="antinna-step-badge">Step 10</span> Step-by-Step Guide: Compiling Your Theme via CLI and fallbacks
-  </h2>
-  <p>To compile your theme entry file easily, configure short package scripts that automatically ensure target distribution folders exist before running the compiler. This prevents directory-not-found errors during compilation:</p>
-
-  <div class="antinna-code-wrapper">
-    <div class="antinna-code-header">
-      <div class="antinna-mac-dots">
-        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-      </div>
-      <span class="antinna-code-title">📂 package.json</span>
-      <button class="antinna-copy-btn">Copy</button>
-    </div>
-    <pre><code class="language-json">{
-  "scripts": {
-    "build": "node -e \"require('fs').mkdirSync('dist', { recursive: true })\" &amp;&amp; npx @antinna/blogger-theme ./src/main.tsx --out ./dist/theme.xml",
-    "watch": "node -e \"require('fs').mkdirSync('dist', { recursive: true })\" &amp;&amp; npx @antinna/blogger-theme ./src/main.tsx --out ./dist/theme.xml --watch"
-  }
-}</code></pre>
-  </div>
-
-  <p>Execute the automated build command. The compiler will aggregate and process your layout tree, compile your assets, and output the target theme.xml file in less than 50 milliseconds:</p>
-
-  <div class="antinna-inline-terminal">$ npm run build</div>
-
-  <p>Voila! Open your <code>dist/theme.xml</code> file, copy its compiled text, and paste it directly into the HTML editor of your Blogger dashboard. You now have an advanced, robust, and lightning-fast theme built with modern, structured TypeScript coding practices!</p>
-
-  <hr class="antinna-divider" />
-
-  <!-- SECTION 11 -->
-  <h2 id="section-11">
-    <span class="antinna-step-badge">Step 11</span> Best Practices for Developing High-Performance Blogger Themes
-  </h2>
-  <p>To maximize your site speed, maintain clean structures, and ensure proper schema validation, keep these key best practices in mind:</p>
-  <ol>
-    <li><strong>Leverage BClientScript</strong>: Avoid inline scripts inside layouts. Keeping JS in separate TypeScript files ensures full syntax checks, type safety, and automatic render-time bundling.</li>
-    <li><strong>Use Scoped CSS</strong>: Since XML files can grow large, write scoped CSS classes inside specific component functions or use utility frameworks to prevent styles from leaking.</li>
-    <li><strong>Keep Elements Nested Correctly</strong>: Ensure that interactive Blogger tags (like <code>BData</code>, <code>BIf</code>, and nested <code>BWidget</code> elements) are nested inside parent <code>BSection</code> wrappers to satisfy standard Blogger platform rules.</li>
-    <li><strong>Enable Strict Types</strong>: Do not bypass TypeScript compiler alerts. Correct type checks prevent layout variables from rendering empty tags.</li>
-  </ol>
-
-  <hr class="antinna-divider" />
-
-  <!-- SECTION 12 -->
-  <h2 id="section-12">
-    <span class="antinna-step-badge">Step 12</span> Summary and Next Steps
-  </h2>
-  <p>Designing modern, responsive themes for Google's Blogger platform no longer requires struggling with messy monolithic XML files. By utilizing the declarative compiler power of <code>@antinna/blogger-theme</code>, you can build modular, type-safe templates with React-like TSX layouts, automated CDATA client-script bundling, and full esbuild integration.</p>
-
-  <p>Take control of your template directories today by checking out the official package on npm:</p>
-  <div class="antinna-inline-terminal">$ npm view @antinna/blogger-theme</div>
 
   <hr class="antinna-divider" />
 
   <!-- CLOSING SECTION -->
-  <h3>📄 Contributions &amp; Licensing</h3>
-  <p>The <code>@antinna/blogger-theme</code> package is published under the permissive MIT License. Have questions about setting up modular build systems? Join the discussion or leave a comment below!</p>
+  <h3>📄 Contributions &amp; Feedback</h3>
+  <p>We believe this modern development workflow makes building templates for Blogger both elegant and fun. What features are you planning to build with React and TypeScript inside your next Blogger theme? Let us know in the comments below!</p>
 
 </div>
 <!-- END .antinna-blog-container -->
@@ -1922,8 +363,6 @@ export default function App() {
   rel="stylesheet"
 />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-tsx.min.js"></script>
@@ -2099,15 +538,12 @@ export default function App() {
   }
   .antinna-callout-success .antinna-callout-body {
     color: #276749 !important;
-    margin: 0 !important;
   }
   .antinna-callout-warning .antinna-callout-body {
     color: #9c4221 !important;
-    margin: 0 !important;
   }
   .antinna-callout-info .antinna-callout-body {
     color: #2a69ac !important;
-    margin: 0 !important;
   }
 
   /* 6. Table of Contents */
@@ -2297,12 +733,11 @@ export default function App() {
     color: #1a202c !important;
     padding: 14px 16px !important;
     border-bottom: 2px solid #e2e8f0 !important;
-    vertical-align: middle !important;
   }
   .antinna-data-table td {
     padding: 14px 16px !important;
     border-bottom: 1px solid #e2e8f0 !important;
-    vertical-align: middle !important;
+    vertical-align: top !important;
     color: #2d3748 !important;
   }
   .antinna-data-table tr:last-child td {
